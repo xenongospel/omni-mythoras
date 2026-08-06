@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Mythoras — MVP UI Shell v2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+/* ============================================================
+   MYTHORAS MVP UI SHELL v2 — single-file prototype
+   Sections: 0 Reset/Vars, 1 Panel/Bevel system, 2 Foundation-select,
+   3 Zonal Map + tiles, 4 Dev rail, 5 Workspace overlay, 6 Battle Arena
+   ============================================================ */
+
+:root{
+  --bg-void:#0d0906;
+  --stone-900:#1b140d;
+  --stone-800:#2a1f14;
+  --stone-700:#3c2c1c;
+  --stone-600:#54402a;
+  --stone-500:#6e5638;
+  --parchment:#d9c6a3;
+  --parchment-dim:#a89474;
+  --gold:#c99a3e;
+  --gold-bright:#f0c766;
+  --ember:#c9552f;
+  --bevel-light:rgba(255,231,180,0.28);
+  --bevel-dark:rgba(0,0,0,0.55);
+
+  --attr-authority:#a3372f;
+  --attr-invictus:#3f7fae;
+  --attr-animus:#7a4bb0;
+  --attr-order:#c99a3e;
+  --attr-wanderer:#4a9686;
+
+  --dt-inferno:#d8592c;
+  --dt-glacial:#7fd0e8;
+  --dt-voltaic:#e8d548;
+  --dt-eldergrove:#5b9e4d;
+  --dt-blight:#7a8a3a;
+  --dt-tidal:#2f6fa8;
+  --dt-psionic:#8a5cc9;
+  --dt-fae:#d968b0;
+  --dt-phantom:#9a95b8;
+  --dt-physical:#a9885f;
+  --dt-tectonic:#8a7862;
+
+  --dev-bg:#12181a;
+  --dev-panel:#1c2528;
+  --dev-cyan:#5fd0d6;
+  --dev-text:#a9c2c4;
+
+  font-size:16px;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html,body{
+  margin:0; padding:0; width:100%; height:100%; overflow:hidden;
+  background:var(--bg-void); color:var(--parchment);
+  font-family:Georgia,"Times New Roman",serif;
+  -webkit-font-smoothing:antialiased;
+}
+#app{ position:relative; width:100vw; height:100vh; overflow:hidden; }
+button{ font-family:inherit; cursor:pointer; }
+.hidden{ display:none !important; }
+.mono{ font-family:"Courier New",Courier,monospace; }
+
+/* ---------- 1. Panel / bevel / notch system (NO border-radius) ---------- */
+.panel{
+  position:relative;
+  background:linear-gradient(150deg, var(--stone-700) 0%, var(--stone-800) 55%, var(--stone-900) 100%);
+  clip-path:polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px);
+  box-shadow:
+    inset 3px 3px 0 var(--bevel-light),
+    inset -3px -3px 0 var(--bevel-dark);
+  border:1px solid #14100a;
+  padding:14px 16px;
+}
+.panel::before{ /* corner rivet ornament, top-left */
+  content:"";
+  position:absolute; top:6px; left:6px; width:9px; height:9px;
+  background:linear-gradient(135deg,var(--gold-bright),var(--stone-600));
+  clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);
+  box-shadow:0 0 4px rgba(0,0,0,0.6);
+}
+.panel::after{ /* corner rivet ornament, bottom-right (near the cut notch) */
+  content:"";
+  position:absolute; bottom:9px; right:9px; width:8px; height:8px;
+  background:linear-gradient(135deg,var(--stone-600),var(--gold));
+  clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);
+  opacity:0.85;
+}
+.panel-title{
+  display:flex; align-items:center; gap:8px;
+  font-family:"Trebuchet MS",Georgia,serif; letter-spacing:0.09em; text-transform:uppercase;
+  font-size:0.82rem; color:var(--gold-bright); margin:0 0 10px 0; padding-bottom:8px;
+  border-bottom:1px solid var(--stone-600);
+  position:relative;
+}
+.panel-title::before{ /* bracket ornament with real thickness */
+  content:""; display:inline-block; width:14px; height:14px; flex:0 0 auto;
+  background:linear-gradient(135deg,var(--gold),var(--ember));
+  clip-path:polygon(0 0,70% 0,100% 30%,100% 100%,30% 100%,0 70%);
+}
+
+.notch-btn{
+  background:linear-gradient(150deg,var(--stone-600),var(--stone-800));
+  color:var(--parchment); border:1px solid #100c07;
+  clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);
+  box-shadow:inset 2px 2px 0 var(--bevel-light), inset -2px -2px 0 var(--bevel-dark);
+  padding:8px 18px; font-size:0.85rem; letter-spacing:0.06em; text-transform:uppercase;
+  transition:filter .15s;
+}
+.notch-btn:hover{ filter:brightness(1.25); }
+.notch-btn.primary{ background:linear-gradient(150deg,var(--gold),#8a5f1e); color:#241608; font-weight:bold; }
+.notch-btn:disabled{ opacity:0.35; cursor:not-allowed; }
+
+.chip{
+  display:inline-flex; align-items:center; gap:5px;
+  padding:2px 8px 2px 6px; font-size:0.68rem; letter-spacing:0.03em;
+  clip-path:polygon(6px 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%,0 6px);
+  border:1px solid rgba(0,0,0,0.4);
+  color:#fff; text-shadow:0 1px 1px rgba(0,0,0,0.6);
+}
+.chip .swatch{ width:8px; height:8px; display:inline-block; flex:0 0 auto; }
+
+/* ---------- Screens ---------- */
+.screen{ position:absolute; inset:0; }
+
+/* ================= FOUNDATION SELECT ================= */
+#screen-foundation{
+  background:
+    radial-gradient(ellipse at 50% 30%, #3a2814 0%, #150e08 65%, #0a0603 100%);
+  display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
+  padding:28px 24px 18px;
+}
+.fs-header{ text-align:center; margin-bottom:6px; }
+.fs-title{ font-size:2rem; letter-spacing:0.16em; color:var(--gold-bright); text-transform:uppercase;
+  text-shadow:0 2px 6px rgba(0,0,0,0.8); margin:0; }
+.fs-sub{ color:var(--parchment-dim); font-size:0.85rem; font-style:italic; margin:4px 0 0; }
+
+.fs-stage{ flex:1; display:flex; width:100%; max-width:1180px; gap:20px; align-items:stretch; min-height:0; margin-top:14px; }
+
+.fs-portrait-wrap{
+  flex:1.1; position:relative; display:flex; align-items:center; justify-content:center;
+  background:radial-gradient(ellipse at 50% 60%, rgba(201,154,62,0.14), transparent 70%);
+  clip-path:polygon(22px 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%,0 22px);
+  border:1px solid var(--stone-600);
+}
+.fs-portrait-wrap svg{ width:70%; height:85%; filter:drop-shadow(0 10px 18px rgba(0,0,0,0.7)); }
+
+.fs-info{ flex:1; display:flex; flex-direction:column; gap:12px; min-width:0; }
+.fs-name{ font-size:1.5rem; color:var(--gold-bright); margin:0; letter-spacing:0.03em; }
+.fs-attr-row{ display:flex; align-items:center; gap:10px; }
+.fs-attr-badge{
+  padding:5px 14px; font-size:0.78rem; letter-spacing:0.08em; text-transform:uppercase; color:#160f08; font-weight:bold;
+  clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);
+  box-shadow:inset 2px 2px 0 rgba(255,255,255,0.35), inset -2px -2px 0 rgba(0,0,0,0.35);
+}
+.fs-line{ font-size:0.86rem; color:var(--parchment); line-height:1.5; margin:0; }
+.fs-flavor{ font-style:italic; color:var(--parchment-dim); font-size:0.83rem; line-height:1.55; margin:0; }
+.fs-note{ font-size:0.7rem; color:#7a6a53; margin-top:auto; padding-top:8px; border-top:1px dashed var(--stone-600); }
+
+.fs-roster{ display:flex; gap:10px; justify-content:center; margin-top:16px; flex-wrap:nowrap; }
+.fs-thumb{
+  width:78px; height:92px; position:relative; cursor:pointer;
+  background:linear-gradient(150deg,var(--stone-600),var(--stone-900));
+  clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);
+  border:2px solid var(--stone-700);
+  display:flex; align-items:center; justify-content:center;
+  transition:border-color .15s, transform .15s;
+}
+.fs-thumb svg{ width:60%; height:70%; opacity:0.85; }
+.fs-thumb.active{ border-color:var(--gold-bright); transform:translateY(-6px); box-shadow:0 6px 14px rgba(0,0,0,0.6); }
+.fs-thumb-label{ position:absolute; bottom:2px; left:0; right:0; text-align:center; font-size:0.55rem; color:var(--parchment-dim); letter-spacing:0.04em; }
+
+.fs-actions{ display:flex; justify-content:center; gap:16px; margin-top:16px; }
+
+/* ================= ZONAL MAP ================= */
+#screen-zonal{ background:#07100c; display:flex; flex-direction:column; }
+.zonal-topbar{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:8px 16px; font-size:0.72rem; color:var(--parchment-dim); letter-spacing:0.05em;
+  border-bottom:1px solid var(--stone-800); background:rgba(0,0,0,0.25); z-index:5;
+}
+.zonal-topbar .hint{ color:var(--gold); }
+
+.zone-stage-outer{ flex:1; position:relative; min-height:0; display:flex; }
+.zone-stage{
+  position:relative; flex:1; overflow:hidden;
+  background:
+    radial-gradient(ellipse at 50% 40%, #1c2f22 0%, #0e1912 55%, #060a08 100%);
+}
+.zone-vignette{ position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(ellipse at 50% 45%, transparent 45%, rgba(0,0,0,0.55) 85%, rgba(0,0,0,0.85) 100%);
+  z-index:4;
+}
+.zone-fog{ position:absolute; left:0; right:0; bottom:0; height:22%; pointer-events:none;
+  background:linear-gradient(to top, rgba(6,10,8,0.9), transparent);
+  z-index:3;
+}
+#tile-layer{ position:absolute; }
+.tile{
+  position:absolute; transform-origin:center;
+  filter:drop-shadow(0 3px 2px rgba(0,0,0,0.5));
+}
+.tile-face{ width:100%; height:100%; position:relative; }
+.tile-encounter{ animation:encounterPulse 1.8s ease-in-out infinite; }
+@keyframes encounterPulse{ 0%,100%{ filter:drop-shadow(0 0 6px rgba(216,89,44,0.6)); } 50%{ filter:drop-shadow(0 0 16px rgba(216,89,44,0.95)); } }
+
+.landmark{ position:absolute; pointer-events:none; z-index:2; }
+.token{ position:absolute; z-index:6; transition:left 0.45s ease, top 0.45s ease; cursor:pointer; }
+.token svg{ filter:drop-shadow(0 4px 4px rgba(0,0,0,0.7)); }
+
+.zonal-portraits{
+  display:flex; align-items:flex-end; justify-content:center; gap:10px;
+  padding:10px 16px 12px; background:rgba(10,7,4,0.55); border-top:1px solid var(--stone-800); z-index:5;
+  position:relative;
+}
+.squad-slot{
+  width:64px; height:78px; position:relative; cursor:pointer;
+  background:linear-gradient(150deg,var(--stone-600),var(--stone-900));
+  clip-path:polygon(9px 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%,0 9px);
+  border:2px solid var(--stone-700);
+  display:flex; align-items:center; justify-content:center;
+}
+.squad-slot svg{ width:62%; height:72%; }
+.squad-slot.bench{ width:48px; height:60px; opacity:0.55; filter:grayscale(0.3); align-self:flex-end; }
+.squad-slot .role-tag{ position:absolute; top:-8px; left:50%; transform:translateX(-50%);
+  font-size:0.5rem; letter-spacing:0.06em; color:var(--gold); background:#0d0906; padding:0 4px; }
+
+.overlay-card{
+  position:absolute; bottom:88px; padding:12px 14px; width:220px; z-index:20;
+  pointer-events:none;
+}
+.overlay-card .oc-name{ font-size:0.95rem; color:var(--gold-bright); margin:0 0 6px; }
+.overlay-card .oc-row{ display:flex; justify-content:space-between; font-size:0.72rem; margin:3px 0; color:var(--parchment); }
+.overlay-card .oc-flavor{ font-size:0.68rem; font-style:italic; color:var(--parchment-dim); margin-top:6px; }
+
+/* ---------- Dev rail (segregated, distinct from game chrome) ---------- */
+.dev-rail{
+  width:78px; flex:0 0 auto; background:var(--dev-bg); border-left:3px solid #303a3c;
+  display:flex; flex-direction:column; align-items:center; gap:10px; padding:10px 6px;
+  font-family:"Courier New",monospace; color:var(--dev-text); position:relative;
+  margin-left:10px; /* visible gutter separating from game panel */
+}
+.dev-rail::before{ content:"DEV"; font-size:0.65rem; letter-spacing:0.2em; color:var(--dev-cyan);
+  border:1px solid var(--dev-cyan); padding:2px 4px; margin-bottom:4px; }
+.dev-btn{
+  width:100%; background:var(--dev-panel); color:var(--dev-text); border:1px solid #2c3a3d;
+  font-family:"Courier New",monospace; font-size:0.6rem; padding:6px 3px; text-align:center;
+  letter-spacing:0.02em; line-height:1.3;
+}
+.dev-btn.on{ background:#22403f; color:var(--dev-cyan); border-color:var(--dev-cyan); }
+.dev-label{ font-size:0.55rem; color:#5a6f72; text-align:center; }
+
+/* ================= WORKSPACE OVERLAY ================= */
+#workspace-overlay{
+  position:absolute; inset:0; z-index:40; pointer-events:none;
+}
+#workspace-overlay.active{ pointer-events:auto; }
+.ws-scrim{ position:absolute; inset:0; background:rgba(4,3,2,0); transition:background .4s; }
+#workspace-overlay.active .ws-scrim{ background:rgba(4,3,2,0.55); }
+.ws-grid{
+  position:absolute; inset:0; display:grid;
+  grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr;
+  gap:14px; padding:30px; align-items:stretch; justify-items:stretch;
+}
+.ws-dock{
+  opacity:0; transform:scale(0.85);
+  transition:opacity .35s ease, transform .35s ease; overflow:auto;
+}
+#workspace-overlay.active .ws-dock{ opacity:1; transform:scale(1); }
+.ws-dock-body{ display:flex; flex-direction:column; gap:8px; height:calc(100% - 34px); overflow:auto; }
+
+/* Motherboard Grid dock */
+.mg-grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:6px; flex:1; }
+.mg-node{ position:relative; aspect-ratio:1; background:var(--stone-800); border:1px solid var(--stone-600);
+  clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%); }
+.mg-node.alloc{ background:var(--gold); box-shadow:0 0 8px var(--gold-bright); }
+.mg-cluster-label{ position:absolute; font-size:0.55rem; letter-spacing:0.05em; padding:1px 4px; color:#160f08; font-weight:bold; }
+
+/* Forge Terminal dock */
+.forge-item{ display:flex; gap:10px; align-items:center; }
+.forge-icon{ width:46px; height:46px; flex:0 0 auto; background:linear-gradient(150deg,var(--stone-600),var(--stone-900));
+  clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px); border:1px solid var(--stone-700); }
+.forge-affix-list{ display:flex; flex-direction:column; gap:3px; font-size:0.68rem; }
+.forge-affix-list div{ display:flex; justify-content:space-between; padding:2px 6px; background:rgba(255,255,255,0.03); }
+.forge-currency-row{ display:flex; gap:8px; margin-top:4px; }
+.forge-currency{ display:flex; flex-direction:column; align-items:center; font-size:0.55rem; gap:3px; }
+.forge-currency .cur-icon{ width:22px; height:22px; clip-path:polygon(50% 0,100% 38%,82% 100%,18% 100%,0 38%); }
+
+/* Cipher Network dock */
+.cn-graph{ position:relative; flex:1; min-height:120px; }
+.cn-node{ position:absolute; width:30px; height:30px; background:var(--stone-800); border:1px solid var(--dt-psionic);
+  clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%); display:flex; align-items:center; justify-content:center;
+  font-size:0.6rem; color:var(--gold-bright); }
+.cn-line{ position:absolute; background:rgba(138,92,201,0.4); height:2px; transform-origin:0 0; }
+.cn-quality{ display:flex; gap:2px; margin-top:6px; }
+.cn-quality span{ flex:1; height:8px; background:var(--stone-700); }
+.cn-quality span.filled{ background:var(--dt-psionic); }
+
+/* Dossier Log dock */
+.dl-row{ display:flex; align-items:center; gap:8px; font-size:0.68rem; padding:4px 6px; background:rgba(255,255,255,0.03); }
+.dl-time{ color:var(--gold); flex:0 0 68px; font-family:monospace; font-size:0.62rem; }
+.dl-source{ flex:1; color:var(--parchment); }
+.dl-bar{ width:50px; height:6px; background:var(--stone-700); position:relative; flex:0 0 auto; }
+.dl-bar i{ position:absolute; left:0; top:0; bottom:0; background:var(--attr-order); display:block; }
+
+/* ================= BATTLE ARENA ================= */
+#screen-battle{ background:#080d09; display:flex; flex-direction:column; }
+.battle-hud-top{ display:flex; justify-content:space-between; padding:8px 16px; z-index:5; }
+.hud-readout{ display:flex; gap:8px; }
+.hud-readout .panel{ padding:8px 12px; min-width:110px; }
+.hud-readout .ro-label{ font-size:0.6rem; letter-spacing:0.08em; color:var(--parchment-dim); text-transform:uppercase; }
+.hud-readout .ro-value{ font-size:1.1rem; color:var(--gold-bright); }
+
+.phase-indicator{ display:flex; gap:6px; align-items:center; }
+.phase-pill{ padding:6px 16px; font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase;
+  clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);
+  background:var(--stone-800); color:var(--parchment-dim); border:1px solid var(--stone-600); }
+.phase-pill.active.plan{ background:var(--attr-invictus); color:#08131a; }
+.phase-pill.active.exec{ background:var(--ember); color:#1a0a04; }
+
+.battle-stage-outer{ flex:1; display:flex; min-height:0; }
+.battle-stage{ flex:1; position:relative; overflow:hidden;
+  background:radial-gradient(ellipse at 50% 40%, #1b2a1e 0%, #0d1710 60%, #050805 100%); }
+
+.combat-text{ position:absolute; font-weight:bold; font-size:0.95rem; color:var(--ember);
+  text-shadow:0 2px 3px rgba(0,0,0,0.8); pointer-events:none; z-index:10; animation:floatUp 1.1s ease-out forwards; }
+@keyframes floatUp{ 0%{ transform:translateY(0); opacity:1; } 100%{ transform:translateY(-46px); opacity:0; } }
+
+.battle-info-bar{ padding:10px 16px; z-index:5; }
+.battle-info-bar .panel{ display:flex; gap:16px; align-items:center; min-height:44px; }
+.battle-bottom-actions{ display:flex; justify-content:space-between; padding:8px 16px 14px; z-index:5; }
+
+/* Attribute badge color helper classes */
+.c-authority{ background:var(--attr-authority); }
+.c-invictus{ background:var(--attr-invictus); }
+.c-animus{ background:var(--attr-animus); }
+.c-order{ background:var(--attr-order); }
+.c-wanderer{ background:var(--attr-wanderer); }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ================= SCREEN 1: FOUNDATION SELECT ================= -->
+  <section id="screen-foundation" class="screen">
+    <div class="fs-header">
+      <h1 class="fs-title">Choose Your Foundation</h1>
+      <p class="fs-sub">An immutable first compile. This choice roots a Technician's entire Grid — a different bias later means a new Technician.</p>
+    </div>
+
+    <div class="fs-stage">
+      <div class="fs-portrait-wrap" id="fs-portrait-wrap"></div>
+      <div class="fs-info panel">
+        <h2 class="fs-name" id="fs-name">—</h2>
+        <div class="fs-attr-row">
+          <span class="fs-attr-badge" id="fs-attr-badge">—</span>
+          <span class="chip" id="fs-attr-defense" style="background:#2a1f14;"></span>
+        </div>
+        <p class="fs-line" id="fs-line">—</p>
+        <p class="fs-flavor" id="fs-flavor">—</p>
+        <p class="fs-note" id="fs-note"></p>
+      </div>
+    </div>
+
+    <div class="fs-roster" id="fs-roster"></div>
+    <div class="fs-actions">
+      <button class="notch-btn primary" id="fs-confirm">Confirm Foundation &amp; Enter Zone</button>
+    </div>
+  </section>
+
+  <!-- ================= SCREEN 2: ZONAL MAP ================= -->
+  <section id="screen-zonal" class="screen hidden">
+    <div class="zonal-topbar">
+      <span>ZONE: <strong style="color:var(--gold-bright)">Marsh Hollow — Section 3</strong></span>
+      <span class="hint">[Tab] Workspace &nbsp;·&nbsp; Arrow keys / click tile to move</span>
+    </div>
+    <div class="zonal-topbar" style="border-top:none; border-bottom:1px solid var(--stone-800); padding-top:0;">
+      <span style="font-size:0.68rem; color:#6a7a70;">World Map &gt; Region: Ashfen &gt; Zone: Marsh Hollow &gt; Section 3</span>
+      <span></span>
+    </div>
+    <div style="display:flex; flex:1; min-height:0;">
+      <div class="zone-stage-outer">
+        <div class="zone-stage" id="zone-stage">
+          <div id="tile-layer"></div>
+          <div class="zone-fog"></div>
+          <div class="zone-vignette"></div>
+        </div>
+      </div>
+      <div class="dev-rail">
+        <div class="dev-label">VIEW MODE</div>
+        <button class="dev-btn on" id="dev-iso">ISOMETRIC</button>
+        <button class="dev-btn" id="dev-topdown">TOP-DOWN</button>
+        <div class="dev-label" style="margin-top:8px;">DEBUG</div>
+        <button class="dev-btn" id="dev-coords">show coords</button>
+        <div class="dev-label mono" id="dev-status" style="margin-top:auto; font-size:0.5rem; line-height:1.4;">mode: iso<br>tile: —</div>
+      </div>
+    </div>
+    <div class="zonal-portraits" id="zonal-portraits"></div>
+  </section>
+
+  <!-- ================= WORKSPACE OVERLAY ================= -->
+  <div id="workspace-overlay">
+    <div class="ws-scrim"></div>
+    <div class="ws-grid">
+      <div class="panel ws-dock" id="dock-motherboard">
+        <div class="panel-title">Motherboard Grid</div>
+        <div class="ws-dock-body">
+          <div class="mg-grid" id="mg-grid"></div>
+          <div style="font-size:0.62rem; color:var(--parchment-dim);">Allocated nodes: <span id="mg-count">3</span> / 25 · Command Charges available: 2</div>
+        </div>
+      </div>
+      <div class="panel ws-dock" id="dock-forge">
+        <div class="panel-title">Forge Terminal</div>
+        <div class="ws-dock-body">
+          <div class="forge-item">
+            <div class="forge-icon"></div>
+            <div style="flex:1;">
+              <div style="font-size:0.78rem; color:var(--gold-bright);">Compiled Greatblade, Unresolved</div>
+              <div style="font-size:0.62rem; color:var(--parchment-dim);">Authority-scaling · Physical base type</div>
+            </div>
+          </div>
+          <div class="forge-affix-list">
+            <div><span>Physical Damage</span><span>+14–22</span></div>
+            <div><span>Crit Multiplier</span><span>+18%</span></div>
+            <div><span>Accuracy</span><span>+9%</span></div>
+            <div><span>Attack Speed</span><span>+6%</span></div>
+            <div><span>Ailment Magnitude</span><span>+11%</span></div>
+            <div><span>Socket</span><span>Empty</span></div>
+          </div>
+          <div class="forge-currency-row">
+            <div class="forge-currency"><div class="cur-icon" style="background:var(--dt-inferno);"></div>Compiled Ember ×7</div>
+            <div class="forge-currency"><div class="cur-icon" style="background:var(--dt-psionic);"></div>Cipher Shard ×3</div>
+            <div class="forge-currency"><div class="cur-icon" style="background:var(--dt-tectonic);"></div>Binding Resin ×12</div>
+            <div class="forge-currency"><div class="cur-icon" style="background:var(--dt-phantom);"></div>Null Fragment ×1</div>
+          </div>
+        </div>
+      </div>
+      <div class="panel ws-dock" id="dock-cipher">
+        <div class="panel-title">Cipher Network</div>
+        <div class="ws-dock-body">
+          <div class="cn-graph" id="cn-graph"></div>
+          <div style="font-size:0.62rem; color:var(--parchment-dim);">Instrument Quality</div>
+          <div class="cn-quality" id="cn-quality"></div>
+        </div>
+      </div>
+      <div class="panel ws-dock" id="dock-dossier">
+        <div class="panel-title">Dossier Log</div>
+        <div class="ws-dock-body" id="dossier-rows"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SCREEN 3: BATTLE ARENA ================= -->
+  <section id="screen-battle" class="screen hidden">
+    <div class="battle-hud-top">
+      <div class="hud-readout">
+        <div class="panel"><div class="ro-label">Turn</div><div class="ro-value" id="battle-turn">1</div></div>
+        <div class="panel"><div class="ro-label">Command Charges</div><div class="ro-value" id="battle-charges">2</div></div>
+        <div class="panel"><div class="ro-label">Active: Mana</div><div class="ro-value" id="battle-mana">44 / 60</div></div>
+      </div>
+      <div class="phase-indicator">
+        <div class="phase-pill plan active" id="phase-plan">Planning Phase</div>
+        <div class="phase-pill exec" id="phase-exec">Execution Phase</div>
+      </div>
+    </div>
+    <div class="battle-stage-outer">
+      <div class="battle-stage" id="battle-stage"></div>
+    </div>
+    <div class="battle-info-bar">
+      <div class="panel" id="battle-info-panel">
+        <span style="font-size:0.62rem; color:var(--parchment-dim); text-transform:uppercase; letter-spacing:0.06em;">Under Cursor:</span>
+        <span id="battle-info-text" style="font-size:0.78rem;">Hover a tile or unit for detail.</span>
+      </div>
+    </div>
+    <div class="battle-bottom-actions">
+      <button class="notch-btn" id="battle-retreat">Retreat / End Battle</button>
+      <button class="notch-btn primary" id="battle-endturn">End Turn</button>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ============================================================
+   PART A DATA — real vocabulary only
+   ============================================================ */
+const ATTRS = {
+  authority:{name:"Authority", defense:"Armour", identity:"Strength, raw power, endurance", color:"var(--attr-authority)"},
+  invictus:{name:"Invictus", defense:"Evasion (Dodge + Buffer)", identity:"Precision, speed, lethality", color:"var(--attr-invictus)"},
+  animus:{name:"Animus", defense:"Oura", identity:"Supernatural mastery", color:"var(--attr-animus)"},
+  order:{name:"Order", defense:"Barrier", identity:"Discipline, control, structure", color:"var(--attr-order)"},
+  wanderer:{name:"Wanderer", defense:"(generalist — all layers, lightly)", identity:"Unbound generalist aptitude", color:"var(--attr-wanderer)"}
+};
+
+const DTYPES = {
+  Inferno:"var(--dt-inferno)", Glacial:"var(--dt-glacial)", Voltaic:"var(--dt-voltaic)",
+  Eldergrove:"var(--dt-eldergrove)", Blight:"var(--dt-blight)", Tidal:"var(--dt-tidal)",
+  Psionic:"var(--dt-psionic)", Fae:"var(--dt-fae)", Phantom:"var(--dt-phantom)",
+  Physical:"var(--dt-physical)", Tectonic:"var(--dt-tectonic)"
+};
+
+const FOUNDATIONS = [
+  { key:"orsoth", name:"Commandant: Orsoth", attr:"authority",
+    line:"Grid start: Authority bastion — an Armour-biased opening lattice.",
+    flavor:"Compiled from siege-oath and iron; Orsoth's first instruction is simple — hold.",
+    svg:"warrior" },
+  { key:"interceptor", name:"Interceptor", attr:"invictus",
+    line:"Grid start: Invictus vanguard — an Evasion-biased opening lattice.",
+    flavor:"A precision routine married to reflex; the fastest subroutine in any Grid.",
+    svg:"rogue" },
+  { key:"luminary", name:"Luminary Arbiter", attr:"animus",
+    line:"Grid start: Animus conduit — an Oura-biased opening lattice.",
+    flavor:"Where mysticism compiles into shielding light — Oura made flesh.",
+    svg:"mage" },
+  { key:"architect", name:"Architect", attr:"order",
+    line:"Grid start: Order framework — a Barrier-biased opening lattice.",
+    flavor:"Discipline as architecture; every Barrier a load-bearing clause.",
+    svg:"warden" },
+  { key:"errant", name:"Adverse Errant", attr:"wanderer",
+    line:"Grid start: Wanderer's open lattice — no fixed bias, all paths unresolved.",
+    flavor:"An unresolved variable, free to compile toward any Attribute in time.",
+    svg:"wanderer" }
+];
+
+const SQUAD = [
+  { name:"Fieldwarden Kessa", role:"field", primary:"Tectonic", secondary:"Physical", speed:62, flavor:"A ridge-forged bulwark, slow to answer, slower to fall.", svg:"warrior" },
+  { name:"Glasswing Sprite", role:"field", primary:"Fae", secondary:"Voltaic", speed:91, flavor:"Compiled light with wings; strikes before its own shadow lands.", svg:"sprite" },
+  { name:"Emberhollow Drake", role:"field", primary:"Inferno", secondary:"Tectonic", speed:74, flavor:"A furnace given posture; molten seams under old scale.", svg:"drake" },
+  { name:"Marsh Cipher", role:"bench", primary:"Blight", secondary:"Tidal", speed:55, flavor:"Rot-logic and brine, patient as an unresolved query.", svg:"mage" },
+  { name:"Hollowmourn Wisp", role:"bench", primary:"Phantom", secondary:"Psionic", speed:88, flavor:"A half-rendered thought that learned to haunt.", svg:"wisp" }
+];
+
+const ENEMIES = [
+  { name:"Silt Reaver", primary:"Tidal", secondary:"Blight", svg:"brute" },
+  { name:"Cinderjaw", primary:"Inferno", secondary:"Physical", svg:"beast" },
+  { name:"Choir Wisp", primary:"Psionic", secondary:"Fae", svg:"wisp" }
+];
+
+/* ============================================================
+   SVG SILHOUETTES — recognizable creature/humanoid shapes
+   ============================================================ */
+function humanoidSVG(fill, accent, kind){
+  kind = kind || "warrior";
+  const body = {
+    warrior: `<path d="M50 8 a10 10 0 1 0 0.1 0z" fill="${fill}"/>
+      <path d="M32 40 L40 30 L60 30 L68 40 L64 78 L54 96 L46 96 L36 78 Z" fill="${fill}"/>
+      <rect x="20" y="34" width="10" height="34" fill="${accent}"/>
+      <rect x="70" y="34" width="10" height="34" fill="${accent}"/>
+      <rect x="40" y="82" width="8" height="16" fill="${fill}"/>
+      <rect x="52" y="82" width="8" height="16" fill="${fill}"/>`,
+    rogue: `<circle cx="50" cy="16" r="9" fill="${fill}"/>
+      <path d="M36 38 L42 26 L58 26 L64 38 L58 74 L52 92 L48 92 L42 74 Z" fill="${fill}"/>
+      <path d="M22 30 L38 40 L30 58 Z" fill="${accent}"/>
+      <path d="M78 30 L62 40 L70 58 Z" fill="${accent}"/>`,
+    mage: `<circle cx="50" cy="14" r="8" fill="${fill}"/>
+      <path d="M28 92 L38 34 L62 34 L72 92 Z" fill="${fill}"/>
+      <path d="M50 20 L50 4" stroke="${accent}" stroke-width="4"/>
+      <circle cx="50" cy="2" r="4" fill="${accent}"/>`,
+    warden: `<path d="M50 8 a9 9 0 1 0 0.1 0z" fill="${fill}"/>
+      <path d="M30 42 L40 28 L60 28 L70 42 L66 88 L34 88 Z" fill="${fill}"/>
+      <rect x="24" y="40" width="52" height="10" fill="${accent}"/>`,
+    wanderer: `<circle cx="50" cy="15" r="8" fill="${fill}"/>
+      <path d="M34 40 L44 28 L56 28 L66 40 L60 90 L40 90 Z" fill="${fill}"/>
+      <path d="M18 55 L34 45 L38 60 Z" fill="${accent}"/>
+      <path d="M82 55 L66 45 L62 60 Z" fill="${accent}"/>`,
+    sprite: `<ellipse cx="50" cy="52" rx="14" ry="26" fill="${fill}"/>
+      <circle cx="50" cy="20" r="9" fill="${fill}"/>
+      <path d="M36 40 C10 30 8 60 34 62 Z" fill="${accent}" opacity="0.85"/>
+      <path d="M64 40 C90 30 92 60 66 62 Z" fill="${accent}" opacity="0.85"/>`,
+    drake: `<ellipse cx="50" cy="58" rx="26" ry="20" fill="${fill}"/>
+      <path d="M50 38 L38 14 L58 24 Z" fill="${fill}"/>
+      <path d="M24 44 L4 30 L20 56 Z" fill="${accent}"/>
+      <path d="M76 44 L96 30 L80 56 Z" fill="${accent}"/>
+      <path d="M40 76 L34 94 M60 76 L66 94" stroke="${fill}" stroke-width="8" stroke-linecap="round"/>`,
+    wisp: `<ellipse cx="50" cy="50" rx="20" ry="30" fill="${fill}" opacity="0.9"/>
+      <circle cx="50" cy="30" r="7" fill="${accent}"/>
+      <path d="M38 74 Q50 96 62 74" fill="${fill}" opacity="0.6"/>`,
+    brute: `<path d="M50 10 a11 11 0 1 0 0.1 0z" fill="${fill}"/>
+      <path d="M26 40 L36 26 L64 26 L74 40 L68 86 L32 86 Z" fill="${fill}"/>
+      <rect x="14" y="36" width="14" height="40" fill="${accent}"/>
+      <rect x="72" y="36" width="14" height="40" fill="${accent}"/>`,
+    beast: `<ellipse cx="50" cy="55" rx="30" ry="22" fill="${fill}"/>
+      <path d="M22 44 L4 32 L18 52 Z" fill="${accent}"/>
+      <path d="M78 44 L96 32 L82 52 Z" fill="${accent}"/>
+      <circle cx="35" cy="46" r="4" fill="#1a0a04"/>
+      <circle cx="65" cy="46" r="4" fill="#1a0a04"/>`
+  };
+  return `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">${body[kind] || body.warrior}</svg>`;
+}
+
+/* ============================================================
+   STATE
+   ============================================================ */
+const state = {
+  selectedFoundationIdx: 0,
+  viewMode: "iso",
+  showCoords: false,
+  playerTile: {x:2, y:3},
+  workspaceOpen: false,
+  battle: { turn:1, phase:"plan", charges:2 }
+};
+
+/* ============================================================
+   ZONE TILE DATA — organic bounded island (not a bare rectangle)
+   ============================================================ */
+const ZONE_MASK = []; // {x,y,type}
+const rowRanges = [ [2,6],[1,7],[0,8],[0,8],[0,8],[1,7],[2,6] ]; // y=0..6
+const specialTypes = {
+  "4,1":"raised", "6,2":"moss", "2,2":"cracked", "3,5":"water", "5,5":"water",
+  "1,3":"moss", "7,3":"cracked", "4,4":"raised"
+};
+const ENCOUNTER_TILE = {x:6, y:4};
+rowRanges.forEach((range, y)=>{
+  for(let x=range[0]; x<=range[1]; x++){
+    const key = x+","+y;
+    let type = specialTypes[key] || "grass";
+    if(x===ENCOUNTER_TILE.x && y===ENCOUNTER_TILE.y) type = "encounter";
+    ZONE_MASK.push({x,y,type});
+  }
+});
+function zoneHas(x,y){ return ZONE_MASK.some(t=>t.x===x && t.y===y); }
+
+const TILE_COLORS = {
+  grass:["#2f5a34","#20401f"], moss:["#3a6b3a","#264a26"], cracked:["#4a4530","#2e2c1c"],
+  raised:["#4a6b3f","#2f4a28"], water:["#1c4a63","#0e2a3a"], encounter:["#6b3524","#3a1a10"]
+};
+
+/* ============================================================
+   BATTLE FOOTPRINT — irregular / asymmetric, never NxN
+   ============================================================ */
+const BATTLE_TILES = [
+  {x:5,y:2},{x:6,y:2},
+  {x:5,y:3},{x:6,y:3},{x:7,y:3},
+  {x:4,y:4},{x:5,y:4},{x:7,y:4},{x:8,y:4}, // gap at 6,4 = water hazard
+  {x:5,y:5},{x:6,y:5}
+];
+const BATTLE_HAZARD = {x:6,y:4};
+
+/* ============================================================
+   FOUNDATION SELECT SCREEN
+   ============================================================ */
+const fsPortraitWrap = document.getElementById("fs-portrait-wrap");
+const fsName = document.getElementById("fs-name");
+const fsAttrBadge = document.getElementById("fs-attr-badge");
+const fsAttrDefense = document.getElementById("fs-attr-defense");
+const fsLine = document.getElementById("fs-line");
+const fsFlavor = document.getElementById("fs-flavor");
+const fsNote = document.getElementById("fs-note");
+const fsRoster = document.getElementById("fs-roster");
+
+function renderFoundation(idx){
+  state.selectedFoundationIdx = idx;
+  const f = FOUNDATIONS[idx];
+  const attr = ATTRS[f.attr];
+  fsPortraitWrap.innerHTML = humanoidSVG(attr.color, "#f0c766", f.svg);
+  fsName.textContent = f.name;
+  fsAttrBadge.textContent = attr.name.toUpperCase();
+  fsAttrBadge.style.background = attr.color;
+  fsAttrDefense.textContent = "Defense layer: " + attr.defense;
+  fsLine.textContent = f.line;
+  fsFlavor.textContent = "“" + f.flavor + "”";
+  fsNote.textContent = "Note: an earlier canon draft used a different Foundation name set (Warlord / Bladedancer / Architect / Channeler). The five names shown here — Commandant: Orsoth, Interceptor, Luminary Arbiter, Architect, Adverse Errant — are the more recently reaffirmed set.";
+  [...fsRoster.children].forEach((el,i)=> el.classList.toggle("active", i===idx));
+}
+
+FOUNDATIONS.forEach((f,i)=>{
+  const attr = ATTRS[f.attr];
+  const thumb = document.createElement("div");
+  thumb.className = "fs-thumb";
+  thumb.innerHTML = humanoidSVG(attr.color, "#f0c766", f.svg) + `<div class="fs-thumb-label">${f.name.split(":")[0]}</div>`;
+  thumb.addEventListener("click", ()=>renderFoundation(i));
+  fsRoster.appendChild(thumb);
+});
+renderFoundation(0);
+
+document.getElementById("fs-confirm").addEventListener("click", ()=>{
+  document.getElementById("screen-foundation").classList.add("hidden");
+  document.getElementById("screen-zonal").classList.remove("hidden");
+  requestAnimationFrame(()=>{ renderZone(); renderSquadRail(); });
+});
+
+/* ============================================================
+   ZONAL MAP — tile projection (iso / top-down toggle from DEV rail)
+   ============================================================ */
+const zoneStage = document.getElementById("zone-stage");
+const tileLayer = document.getElementById("tile-layer");
+
+function tileGeom(){
+  // Determine tile size so the rendered island fills >=60% of the shorter
+  // dimension of the stage viewport (measured, not assumed).
+  const rect = zoneStage.getBoundingClientRect();
+  const shorter = Math.min(rect.width, rect.height);
+  const cols = 9, rows = 7;
+  let tw, th;
+  if(state.viewMode === "iso"){
+    // bounding box of iso projection: width = (cols+rows)*tw/2, height=(cols+rows)*th/2
+    const span = cols + rows;
+    tw = (shorter*0.82) / (span/2) ;
+    th = tw*0.62;
+  } else {
+    tw = (rect.width*0.72)/cols;
+    th = (rect.height*0.78)/rows;
+    const size = Math.min(tw,th);
+    tw = size; th = size*0.82;
+  }
+  return {rect, tw, th, cols, rows};
+}
+
+function projectTopdown(x,y,g){
+  const originX = g.rect.width/2 - (g.cols*g.tw)/2;
+  const originY = g.rect.height/2 - (g.rows*g.th)/2;
+  return { sx: originX + x*g.tw, sy: originY + y*g.th };
+}
+function projectIso(x,y,g){
+  const originX = g.rect.width/2;
+  const originY = g.rect.height*0.22;
+  const sx = originX + (x - y)*(g.tw/2);
+  const sy = originY + (x + y)*(g.th/2);
+  return { sx: sx - g.tw/2, sy };
+}
+function project(x,y,g){ return state.viewMode==="iso" ? projectIso(x,y,g) : projectTopdown(x,y,g); }
+
+function tileShapeStyle(g){
+  if(state.viewMode==="iso"){
+    return `clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);`;
+  }
+  return `clip-path:polygon(10% 0,90% 0,100% 15%,100% 100%,0 100%,0 15%);`;
+}
+
+let hoverInfoEl = null;
+function renderZone(){
+  const g = tileGeom();
+  tileLayer.innerHTML = "";
+  tileLayer.style.left = "0"; tileLayer.style.top = "0";
+  ZONE_MASK.forEach(t=>{
+    const {sx, sy} = project(t.x, t.y, g);
+    const div = document.createElement("div");
+    div.className = "tile" + (t.type==="encounter" ? " tile-encounter" : "");
+    div.style.left = sx+"px"; div.style.top = sy+"px";
+    div.style.width = g.tw+"px"; div.style.height = g.th+"px";
+    const colors = TILE_COLORS[t.type];
+    const shapeCss = tileShapeStyle(g);
+    // 2 extra material layers: inner bevel line + seam/rim-light + variant texture
+    div.innerHTML = `<div class="tile-face" style="${shapeCss} background:linear-gradient(155deg, ${colors[0]}, ${colors[1]});
+        box-shadow:inset 0 2px 0 rgba(255,255,255,0.18), inset 0 -3px 5px rgba(0,0,0,0.45);">
+        <div style="position:absolute; inset:12% ; ${shapeCss} border:1px solid rgba(255,255,255,0.08);"></div>
+        <div style="position:absolute; left:20%; top:8%; width:60%; height:2px; background:rgba(255,255,255,0.15); transform:rotate(1deg);"></div>
+      </div>`;
+    if(state.showCoords){
+      div.innerHTML += `<div style="position:absolute; top:40%; left:0; right:0; text-align:center; font-size:9px; color:rgba(255,255,255,0.5); font-family:monospace;">${t.x},${t.y}</div>`;
+    }
+    div.dataset.x = t.x; div.dataset.y = t.y; div.dataset.type = t.type;
+    div.addEventListener("click", ()=> movePlayerTo(t.x,t.y));
+    tileLayer.appendChild(div);
+  });
+
+  // landmark: standing stone (scale reference) at (4,1)
+  const lm = project(4,1,g);
+  const landmark = document.createElement("div");
+  landmark.className = "landmark";
+  const lw = g.tw*0.5, lh = g.th*3.4;
+  landmark.style.left = (lm.sx + g.tw*0.25)+"px";
+  landmark.style.top = (lm.sy - lh + g.th*0.75)+"px";
+  landmark.style.width = lw+"px"; landmark.style.height = lh+"px";
+  landmark.innerHTML = `<svg viewBox="0 0 20 100" width="100%" height="100%">
+      <path d="M4 100 L2 30 L10 4 L18 30 L16 100 Z" fill="#5c5648"/>
+      <path d="M6 30 L14 30 L14 40 L6 40 Z" fill="#c99a3e" opacity="0.6"/>
+      <path d="M10 4 L18 30 L16 100 L14 100 L12 34 Z" fill="#3a362c"/>
+    </svg>`;
+  tileLayer.appendChild(landmark);
+
+  // player token
+  const pt = project(state.playerTile.x, state.playerTile.y, g);
+  let token = document.getElementById("player-token");
+  if(!token){
+    token = document.createElement("div");
+    token.id = "player-token";
+    token.className = "token";
+    token.innerHTML = humanoidSVG(ATTRS[FOUNDATIONS[state.selectedFoundationIdx].attr].color, "#f0c766", FOUNDATIONS[state.selectedFoundationIdx].svg);
+    token.addEventListener("mouseenter", ()=> showHint("Your Technician's active creature stands here."));
+    tileLayer.appendChild(token);
+  } else { tileLayer.appendChild(token); }
+  const tw2 = g.tw*0.78, th2 = g.th*2.1;
+  token.style.width = tw2+"px"; token.style.height = th2+"px";
+  token.style.left = (pt.sx + g.tw/2 - tw2/2)+"px";
+  token.style.top = (pt.sy + g.th/2 - th2 + g.th*0.35)+"px";
+
+  updateDevStatus();
+}
+window.addEventListener("resize", ()=>{ if(!document.getElementById("screen-zonal").classList.contains("hidden")) renderZone(); });
+
+function movePlayerTo(x,y){
+  if(!zoneHas(x,y)) return;
+  state.playerTile = {x,y};
+  renderZone();
+  if(x===ENCOUNTER_TILE.x && y===ENCOUNTER_TILE.y){
+    setTimeout(enterBattle, 500);
+  }
+}
+document.addEventListener("keydown", (e)=>{
+  if(document.getElementById("screen-zonal").classList.contains("hidden")) return;
+  if(!state.workspaceOpen === false) {} // no-op guard
+  const {x,y} = state.playerTile;
+  if(e.key==="ArrowUp") movePlayerTo(x,y-1);
+  else if(e.key==="ArrowDown") movePlayerTo(x,y+1);
+  else if(e.key==="ArrowLeft") movePlayerTo(x-1,y);
+  else if(e.key==="ArrowRight") movePlayerTo(x+1,y);
+  else if(e.key==="Tab"){ e.preventDefault(); toggleWorkspace(); }
+});
+
+function updateDevStatus(){
+  document.getElementById("dev-status").innerHTML = "mode: "+state.viewMode+"<br>tile: "+state.playerTile.x+","+state.playerTile.y;
+}
+document.getElementById("dev-iso").addEventListener("click", ()=>{
+  state.viewMode = "iso";
+  document.getElementById("dev-iso").classList.add("on");
+  document.getElementById("dev-topdown").classList.remove("on");
+  renderZone();
+});
+document.getElementById("dev-topdown").addEventListener("click", ()=>{
+  state.viewMode = "topdown";
+  document.getElementById("dev-topdown").classList.add("on");
+  document.getElementById("dev-iso").classList.remove("on");
+  renderZone();
+});
+document.getElementById("dev-coords").addEventListener("click", (e)=>{
+  state.showCoords = !state.showCoords;
+  e.target.classList.toggle("on", state.showCoords);
+  renderZone();
+});
+
+/* ---------- Squad portrait rail ---------- */
+const zonalPortraits = document.getElementById("zonal-portraits");
+function renderSquadRail(){
+  zonalPortraits.innerHTML = "";
+  SQUAD.forEach(c=>{
+    const slot = document.createElement("div");
+    slot.className = "squad-slot" + (c.role==="bench" ? " bench" : "");
+    const col = DTYPES[c.primary];
+    slot.innerHTML = `<span class="role-tag">${c.role==="field"?"FIELD":"BENCH"}</span>` + humanoidSVG(col, DTYPES[c.secondary], c.svg);
+    slot.addEventListener("mouseenter", (e)=> showCreatureOverlay(c, slot));
+    slot.addEventListener("mouseleave", hideCreatureOverlay);
+    zonalPortraits.appendChild(slot);
+  });
+}
+let overlayEl = null;
+function showCreatureOverlay(c, slot){
+  hideCreatureOverlay();
+  overlayEl = document.createElement("div");
+  overlayEl.className = "panel overlay-card";
+  const rect = slot.getBoundingClientRect();
+  overlayEl.style.left = Math.max(8, rect.left-70)+"px";
+  overlayEl.innerHTML = `<div class="oc-name">${c.name}</div>
+    <div class="oc-row"><span>Primary Type</span><span class="chip" style="background:${DTYPES[c.primary]}"><span class="swatch" style="background:${DTYPES[c.primary]}"></span>${c.primary}</span></div>
+    <div class="oc-row"><span>Secondary Type</span><span class="chip" style="background:${DTYPES[c.secondary]}"><span class="swatch"></span>${c.secondary}</span></div>
+    <div class="oc-row"><span>Speed</span><span>${c.speed}</span></div>
+    <div class="oc-flavor">${c.flavor}</div>`;
+  document.getElementById("screen-zonal").appendChild(overlayEl);
+}
+function hideCreatureOverlay(){ if(overlayEl){ overlayEl.remove(); overlayEl=null; } }
+function showHint(){}
+
+/* ============================================================
+   WORKSPACE OVERLAY (Tab toggle)
+   ============================================================ */
+function toggleWorkspace(){
+  state.workspaceOpen = !state.workspaceOpen;
+  document.getElementById("workspace-overlay").classList.toggle("active", state.workspaceOpen);
+  document.getElementById("zone-stage").style.transform = state.workspaceOpen ? "scale(0.72)" : "scale(1)";
+  document.getElementById("zone-stage").style.transition = "transform .4s ease";
+  document.getElementById("zone-stage").style.filter = state.workspaceOpen ? "brightness(0.5) blur(1px)" : "none";
+}
+
+/* Motherboard Grid dock content */
+(function buildMotherboard(){
+  const grid = document.getElementById("mg-grid");
+  const allocated = new Set(["1,1","2,2","3,1"]);
+  const labels = [ {r:0,c:0,attr:"authority"}, {r:0,c:4,attr:"invictus"}, {r:4,c:4,attr:"animus"}, {r:4,c:0,attr:"order"}, {r:2,c:2,attr:"wanderer"} ];
+  for(let r=0;r<5;r++){
+    for(let c=0;c<5;c++){
+      const node = document.createElement("div");
+      node.className = "mg-node" + (allocated.has(r+","+c) ? " alloc" : "");
+      const lab = labels.find(l=>l.r===r && l.c===c);
+      if(lab){
+        node.style.background = ATTRS[lab.attr].color;
+        node.title = ATTRS[lab.attr].name;
+      }
+      grid.appendChild(node);
+    }
+  }
+})();
+
+/* Cipher Network dock content */
+(function buildCipher(){
+  const graph = document.getElementById("cn-graph");
+  const nodes = [ {x:10,y:20,t:"I"},{x:35,y:8,t:"I"},{x:60,y:18,t:"II"},{x:85,y:10,t:"II"},
+                  {x:20,y:55,t:"II"},{x:48,y:50,t:"III"},{x:75,y:55,t:"III"},{x:55,y:85,t:"IV"} ];
+  const edges = [[0,1],[1,2],[2,3],[0,4],[1,5],[2,5],[5,6],[4,5],[5,7]];
+  edges.forEach(([a,b])=>{
+    const n1=nodes[a], n2=nodes[b];
+    const dx=n2.x-n1.x, dy=n2.y-n1.y;
+    const len = Math.sqrt(dx*dx+dy*dy);
+    const ang = Math.atan2(dy,dx)*180/Math.PI;
+    const line = document.createElement("div");
+    line.className = "cn-line";
+    line.style.left = n1.x+"%"; line.style.top = n1.y+"%";
+    line.style.width = len+"%";
+    line.style.transform = `rotate(${ang}deg)`;
+    graph.appendChild(line);
+  });
+  nodes.forEach(n=>{
+    const el = document.createElement("div");
+    el.className = "cn-node";
+    el.style.left = n.x+"%"; el.style.top = n.y+"%";
+    el.textContent = n.t;
+    graph.appendChild(el);
+  });
+  const quality = document.getElementById("cn-quality");
+  for(let i=0;i<10;i++){
+    const seg = document.createElement("span");
+    if(i<6) seg.classList.add("filled");
+    quality.appendChild(seg);
+  }
+})();
+
+/* Dossier Log dock content */
+(function buildDossier(){
+  const rows = [
+    {t:"Cycle 014.2", s:"Zonal Incursion: Marsh Hollow", frac:0.6},
+    {t:"Cycle 013.9", s:"Cipher Network: Node Compile II", frac:1.0},
+    {t:"Cycle 013.4", s:"Forge Terminal: Affix Recompile", frac:0.3},
+    {t:"Cycle 012.7", s:"Motherboard Grid: Authority Bastion", frac:0.8},
+    {t:"Cycle 011.1", s:"Dossier: Origin Survey — Scalesbourne", frac:0.45},
+    {t:"Cycle 010.5", s:"Command Deck: Charge Recovery Study", frac:1.0}
+  ];
+  const container = document.getElementById("dossier-rows");
+  rows.forEach(r=>{
+    const row = document.createElement("div");
+    row.className = "dl-row";
+    row.innerHTML = `<span class="dl-time">${r.t}</span><span class="dl-source">${r.s}</span>
+      <div class="dl-bar"><i style="width:${r.frac*100}%"></i></div>`;
+    container.appendChild(row);
+  });
+})();
+
+/* ============================================================
+   BATTLE ARENA
+   ============================================================ */
+const battleStage = document.getElementById("battle-stage");
+function enterBattle(){
+  document.getElementById("screen-zonal").classList.add("hidden");
+  document.getElementById("screen-battle").classList.remove("hidden");
+  state.battle.turn = 1; state.battle.phase = "plan";
+  updateBattleHud();
+  renderBattle();
+}
+
+function battleGeom(){
+  const rect = battleStage.getBoundingClientRect();
+  const shorter = Math.min(rect.width, rect.height);
+  const tw = (shorter*0.82)/6;
+  const th = tw*0.62;
+  return {rect, tw, th};
+}
+function battleProject(x,y,g){
+  const minX = Math.min(...BATTLE_TILES.map(t=>t.x));
+  const maxX = Math.max(...BATTLE_TILES.map(t=>t.x));
+  const minY = Math.min(...BATTLE_TILES.map(t=>t.y));
+  const maxY = Math.max(...BATTLE_TILES.map(t=>t.y));
+  const cx = (minX+maxX)/2, cy=(minY+maxY)/2;
+  const originX = g.rect.width/2;
+  const originY = g.rect.height*0.3;
+  const rx = x-cx, ry = y-cy;
+  const sx = originX + (rx-ry)*(g.tw/2) - g.tw/2;
+  const sy = originY + (rx+ry)*(g.th/2);
+  return {sx, sy};
+}
+
+let battleUnits = [];
+function renderBattle(){
+  const g = battleGeom();
+  battleStage.innerHTML = "";
+  BATTLE_TILES.forEach(t=>{
+    const {sx,sy} = battleProject(t.x,t.y,g);
+    const div = document.createElement("div");
+    div.className = "tile";
+    div.style.left = sx+"px"; div.style.top = sy+"px";
+    div.style.width = g.tw+"px"; div.style.height = g.th+"px";
+    div.innerHTML = `<div class="tile-face" style="clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);
+      background:linear-gradient(155deg,#3a4a2c,#22301a);
+      box-shadow:inset 0 2px 0 rgba(255,255,255,0.16), inset 0 -3px 5px rgba(0,0,0,0.5);">
+      <div style="position:absolute; inset:14%; clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%); border:1px solid rgba(255,255,255,0.08);"></div>
+      </div>`;
+    div.addEventListener("mouseenter", ()=>{
+      document.getElementById("battle-info-text").textContent = `Tile (${t.x},${t.y}) — footprint cell, irregular cluster.`;
+    });
+    battleStage.appendChild(div);
+  });
+  // hazard marker in the gap
+  const hz = battleProject(BATTLE_HAZARD.x, BATTLE_HAZARD.y, g);
+  const hazard = document.createElement("div");
+  hazard.style.position="absolute"; hazard.style.left=(hz.sx)+"px"; hazard.style.top=(hz.sy)+"px";
+  hazard.style.width=g.tw+"px"; hazard.style.height=g.th+"px";
+  hazard.innerHTML = `<svg viewBox="0 0 100 60" width="100%" height="100%"><ellipse cx="50" cy="30" rx="46" ry="22" fill="#1c4a63" opacity="0.75"/></svg>`;
+  battleStage.appendChild(hazard);
+
+  battleUnits = [];
+  // player unit
+  const playerBattleTile = BATTLE_TILES[3];
+  battleUnits.push({tile:playerBattleTile, team:"ally", data:SQUAD[0]});
+  // enemies
+  const enemyTiles = [BATTLE_TILES[0], BATTLE_TILES[8], BATTLE_TILES[10]];
+  ENEMIES.forEach((en,i)=> battleUnits.push({tile:enemyTiles[i], team:"enemy", data:en}));
+
+  battleUnits.forEach(u=>{
+    const {sx,sy} = battleProject(u.tile.x, u.tile.y, g);
+    const el = document.createElement("div");
+    el.className = "token";
+    const tw2 = g.tw*0.7, th2 = g.th*2.0;
+    el.style.width = tw2+"px"; el.style.height = th2+"px";
+    el.style.left = (sx + g.tw/2 - tw2/2)+"px";
+    el.style.top = (sy + g.th/2 - th2 + g.th*0.3)+"px";
+    const primaryColor = DTYPES[u.data.primary];
+    const secondaryColor = DTYPES[u.data.secondary];
+    el.innerHTML = humanoidSVG(u.team==="enemy" ? "#8a3535" : primaryColor, secondaryColor, u.data.svg);
+    if(u.team==="enemy") el.style.filter = "brightness(0.95) saturate(1.2) drop-shadow(0 4px 4px rgba(0,0,0,0.8))";
+    el.addEventListener("mouseenter", ()=>{
+      document.getElementById("battle-info-text").textContent =
+        `${u.data.name} — Primary: ${u.data.primary}, Secondary: ${u.data.secondary}${u.team==="ally" && u.data.speed? (", Speed: "+u.data.speed):""}`;
+    });
+    el.addEventListener("click", ()=>{
+      if(state.battle.phase !== "exec") return;
+      spawnCombatText(el, u.team==="enemy" ? "-" + (8+Math.floor(Math.random()*14)) : "+0");
+    });
+    battleStage.appendChild(el);
+  });
+}
+window.addEventListener("resize", ()=>{ if(!document.getElementById("screen-battle").classList.contains("hidden")) renderBattle(); });
+
+function spawnCombatText(anchorEl, text){
+  const rect = anchorEl.getBoundingClientRect();
+  const stageRect = battleStage.getBoundingClientRect();
+  const el = document.createElement("div");
+  el.className = "combat-text";
+  el.textContent = text;
+  el.style.left = (rect.left - stageRect.left + rect.width/2 - 10)+"px";
+  el.style.top = (rect.top - stageRect.top)+"px";
+  battleStage.appendChild(el);
+  setTimeout(()=> el.remove(), 1150);
+}
+
+function updateBattleHud(){
+  document.getElementById("battle-turn").textContent = state.battle.turn;
+  document.getElementById("battle-charges").textContent = state.battle.charges;
+  document.getElementById("phase-plan").classList.toggle("active", state.battle.phase==="plan");
+  document.getElementById("phase-exec").classList.toggle("active", state.battle.phase==="exec");
+}
+
+document.getElementById("battle-endturn").addEventListener("click", ()=>{
+  if(state.battle.phase === "plan"){
+    state.battle.phase = "exec";
+    updateBattleHud();
+    // simulate resolution combat text on random enemies
+    const enemyEls = [...battleStage.querySelectorAll(".token")].slice(1);
+    enemyEls.forEach((el,i)=> setTimeout(()=> spawnCombatText(el, "-"+(6+Math.floor(Math.random()*16))), 250*(i+1)));
+  } else {
+    state.battle.phase = "plan";
+    state.battle.turn += 1;
+    updateBattleHud();
+  }
+});
+
+document.getElementById("battle-retreat").addEventListener("click", ()=>{
+  document.getElementById("screen-battle").classList.add("hidden");
+  document.getElementById("screen-zonal").classList.remove("hidden");
+  requestAnimationFrame(renderZone);
+});
+
+/* ============================================================
+   INIT
+   ============================================================ */
+window.addEventListener("load", ()=>{
+  // nothing else required; Foundation screen is shown by default
+});
+})();
+</script>
+</body>
+</html>

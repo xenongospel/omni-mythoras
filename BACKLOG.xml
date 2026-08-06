@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  BACKLOG.xml
+  ============
+  GATED IDEA STORE
+  Written to by agents during any session when a new idea, better approach,
+  or GDD conflict is discovered. NEVER auto-promoted to active tasks.
+  Human reviews all backlog items in Planning Room sessions.
+
+  Item types:
+    implementation-idea  — better way to build something
+    gdd-amendment        — proposed change to GDD guidelines
+    new-feature          — new game mechanic or system idea
+    technical-debt       — code issue to fix later
+    scope-expansion      — something beyond current phase scope
+    conflict             — GDD section conflicts with another
+
+  Status: pending | accepted | rejected | deferred | merged
+-->
+
+<backlog version="1.0" project="mythoras">
+
+  <meta>
+    <total-items>31</total-items>
+    <pending-review>31</pending-review>
+    <last-reviewed>Never — seeded by bootstrap planning (items added 2026-06-28, 2026-07-03)</last-reviewed>
+    <next-review-session>Skill ownership + Stream type chart grill (BL-027, BL-028). Stream type chart session (BL-026) subsumed into BL-028 structure pass.</next-review-session>
+    <projects>
+      <project tag="ADE" items="6" description="Agentic Development Environment — generic development workroom"/>
+      <project tag="builder" items="5" description="Mythoras Builder — build simulation and Forge crafting calculator"/>
+      <project tag="mythoras" items="6" description="Game code tasks — added as GDD phases complete"/>
+      <project tag="mythoras-design" items="13" description="Game design exploration and decisions — Brainstorm/Planning Room sessions"/>
+    </projects>
+  </meta>
+
+  <!-- Initial items — seeded by bootstrap planning session -->
+
+  <item id="BL-001" type="new-feature" status="pending"
+        session="S001" call="0" added="2026-06-15" project="ADE">
+    <agent role="orchestrator"/>
+    <title>ADE MVP — Task control plane with kanban board</title>
+    <description>Core task management: task creation with AGENT-BRIEF format, kanban view (todo → in-progress → in-review → complete), triage state machine, .out-of-scope/ checking. The minimum for an ADE session to be managed inside the tool itself.</description>
+    <context>ADE platform parallel build — seeded from bootstrap planning</context>
+    <gdd-ref>None — ADE project</gdd-ref>
+    <urgency>high</urgency>
+    <review-notes/>
+  </item>
+
+  <item id="BL-002" type="new-feature" status="pending"
+        session="S001" call="0" added="2026-06-15" project="ADE">
+    <agent role="orchestrator"/>
+    <title>ADE MVP — Room-based session launcher with CLI adapter routing</title>
+    <description>Session type selection (Planning/Architect/Explore/Build/Review/Recover/Brainstorm), CLI adapter choice (Claude Code/Cursor/Codex) per session type per harness.config.xml room recommendations, PTY terminal integration for live agent output.</description>
+    <context>ADE platform parallel build</context>
+    <gdd-ref>None — ADE project</gdd-ref>
+    <urgency>high</urgency>
+    <review-notes/>
+  </item>
+
+  <item id="BL-003" type="new-feature" status="pending"
+        session="S001" call="0" added="2026-06-15" project="ADE">
+    <agent role="orchestrator"/>
+    <title>ADE MVP — Skill management panel with progressive disclosure</title>
+    <description>Skill library browser showing index (name + one-line description). Skill invocation UI. Skill editor for project-specific skills. Arguments/flags configuration per invocation.</description>
+    <context>ADE platform parallel build</context>
+    <gdd-ref>None — ADE project</gdd-ref>
+    <urgency>medium</urgency>
+    <review-notes/>
+  </item>
+
+  <item id="BL-004" type="new-feature" status="pending"
+        session="S001" call="0" added="2026-06-15" project="ADE">
+    <agent role="orchestrator"/>
+    <title>ADE MVP — Vertical slice decomposition view with dependency DAG</title>
+    <description>Visual representation of task dependencies as a directed acyclic graph. Identifies which tasks can run in parallel vs which are blocked. Shows the critical path. Feeds into the swarm orchestration view.</description>
+    <context>ADE platform parallel build</context>
+    <gdd-ref>None — ADE project</gdd-ref>
+    <urgency>medium</urgency>
+    <review-notes/>
+  </item>
+
+  <item id="BL-005" type="new-feature" status="pending"
+        session="S001" call="0" added="2026-06-15" project="ADE">
+    <agent role="orchestrator"/>
+    <title>ADE — DECISION_LOG viewer and BACKLOG management UI</title>
+    <description>Human-readable view of DECISION_LOG.xml with flag highlighting, severity colour coding, and checkpoint timeline. BACKLOG.xml management: review items, promote to tasks, reject to .out-of-scope/, tag and filter by project.</description>
+    <context>ADE platform parallel build</context>
+    <gdd-ref>None — ADE project</gdd-ref>
+    <urgency>medium</urgency>
+    <review-notes/>
+  </item>
+
+  <item id="BL-006" type="new-feature" status="pending"
+        session="S001" call="0" added="2026-06-15" project="builder">
+    <agent role="orchestrator"/>
+    <title>Builder MVP — Motherboard Grid simulator with Discipline starting positions</title>
+    <description>Interactive passive tree (the Motherboard Grid) with node allocation, Discipline starting positions (Warlord/Bladedancer/Architect/Channeler), point spending, notable and keystone node effects. Foundation of all other Builder features — without this nothing else calculates correctly.</description>
+    <context>Mythoras Builder parallel build</context>
+    <gdd-ref>DOC_v3_new §10 — Motherboard Grid</gdd-ref>
+    <urgency>critical</urgency>
+    <review-notes>CORRECTION 2026-06-28: Grid model is global route + 5 slot-local subroutes (not per-creature). 'Discipline starting positions' should be 'Foundation starting positions' (Warlord/Bladedancer/Architect/Channeler). See CONTEXT.md Motherboard Grid entry.</review-notes>
+  </item>
+
+  <item id="BL-007" type="new-feature" status="pending"
+        session="S001" call="0" added="2026-06-15" project="builder">
+    <agent role="orchestrator"/>
+    <title>Builder MVP — Creature configuration and Skill Card linking</title>
+    <description>Creature selection by species, Skill Card assignment to slots, Support Card linking with Polarity configuration, per-creature stat display (base + bonuses). The core build expression layer.</description>
+    <context>Mythoras Builder parallel build</context>
+    <gdd-ref>DOC_v3_new §14-§16 — Skill Cards and Support Cards</gdd-ref>
+    <urgency>critical</urgency>
+    <review-notes/>
+  </item>
+
+  <item id="BL-008" type="new-feature" status="pending"
+        session="S001" call="0" added="2026-06-15" project="builder">
+    <agent role="orchestrator"/>
+    <title>Builder MVP — Damage pipeline calculator with Stream Resonance</title>
+    <description>Full damage calculation: base damage → Stream modifiers → Resonance multiplier (per-Stream stacking) → Ailment application → Load threshold effects. Live DPS display. Breakdown by damage type. This is the core formula that ports directly to Mythoras Phase 2 game code.</description>
+    <context>Mythoras Builder parallel build — formulas become game code</context>
+    <gdd-ref>DOC_v2_new — Combat Systems (needs update), DOC_v3_new §11 — Stream Resonance</gdd-ref>
+    <urgency>critical</urgency>
+    <review-notes/>
+  </item>
+
+  <item id="BL-009" type="new-feature" status="pending"
+        session="S001" call="0" added="2026-06-15" project="builder">
+    <agent role="orchestrator"/>
+    <title>Builder MVP — Warbanner and Domain configuration</title>
+    <description>Warbanner selection (optional modifiers applied to battle parameters), Domain deployment configuration, Domain-specific bonuses. Shows how optional high-risk modifiers affect calculated output.</description>
+    <context>Mythoras Builder parallel build</context>
+    <gdd-ref>DOC_v2_new — Warbanners, DOC_v3_new §19 — Domains</gdd-ref>
+    <urgency>high</urgency>
+    <review-notes/>
+  </item>
+
+  <item id="BL-010" type="new-feature" status="pending"
+        session="S001" call="0" added="2026-06-15" project="builder">
+    <agent role="orchestrator"/>
+    <title>Builder — Forge Terminal crafting simulator with probability display</title>
+    <description>Simulate Agent application to gear: mod pool display, probability of hitting target modifiers, expected Agent cost for target outcome. The build planning tool that lets players plan crafting projects before spending resources. Community-facing killer feature.</description>
+    <context>Mythoras Builder parallel build — community-facing feature</context>
+    <gdd-ref>DOC_v5_new §38 — Forge System</gdd-ref>
+    <urgency>medium</urgency>
+    <review-notes/>
+  </item>
+
+  <item id="BL-011" type="new-feature" status="pending"
+        session="S001" call="0" added="2026-06-15" project="builder">
+    <agent role="orchestrator"/>
+    <title>Builder — Build sharecode import/export</title>
+    <description>Encode complete build configuration (Grid allocation, squad, Skill Cards, gear, Warbanners) as a compact sharecode string. Community sharing, build comparison, and import from URL. The feature that makes the Builder a community tool rather than a solo calculator.</description>
+    <context>Mythoras Builder parallel build — community milestone</context>
+    <gdd-ref>None — Builder feature</gdd-ref>
+    <urgency>medium</urgency>
+    <review-notes/>
+  </item>
+
+  <!-- Items added 2026-06-28 from correction and design session -->
+
+  <item id="BL-012" type="new-feature" status="pending"
+        session="S001" call="0" added="2026-06-28" project="mythoras-design">
+    <agent role="orchestrator"/>
+    <title>Brainstorm Room — Damage architecture revisit (Channel/Stream/Tags review)</title>
+    <description>The current Channel → Stream → Tags damage architecture is a working answer, not a final one. Run a Brainstorm Room session inspired by PoE's damage pipeline that reconsiders Mythoras's type/damage system from first principles — what are we trying to do, what does Pokemon's type system inspire, what does PoE's pipeline enable, and what is distinctly Mythoras? Grill-with-docs approach. Output: a design direction for DOC_v2_new rewrite.</description>
+    <context>Flagged as under review 2026-06-28. DOC_v2_new cannot be rewritten until this session completes.</context>
+    <gdd-ref>DOC_v2_new — Combat Systems</gdd-ref>
+    <urgency>critical</urgency>
+    <review-notes>Must happen BEFORE DOC_v2_new rewrite begins</review-notes>
+  </item>
+
+  <item id="BL-013" type="new-feature" status="pending"
+        session="S001" call="0" added="2026-06-28" project="mythoras-design">
+    <agent role="orchestrator"/>
+    <title>Grill-with-docs session — UI design language for Mythoras</title>
+    <description>Arcane Cartographer is not locked. The world's cosmological register (technological biology, compiled signal, structural power — not mystical or elemental) suggests a UI language that feels native to that world. Reference framework: RuneScape's data-heavy surrounding frame as primary inspiration for information density, PoE's panel workspace for spatial organisation, Football Manager for the management layer philosophy. The goal: a UI design language that could work across multiple Mythoras-style games, not just this one. Session output: design axioms, not a complete spec.</description>
+    <context>Flagged as open design question 2026-06-28. Arcane Cartographer was a starting direction, not a final commitment.</context>
+    <gdd-ref>DOC_v6_new §53 — Design System (treat as draft, not final)</gdd-ref>
+    <urgency>high</urgency>
+    <review-notes>SUPERSEDED IN PART 2026-07-15: OD-004 session decisions now lock World View as default and player-invoked Workspace View; no permanent surrounding management panels. Field Studio is retired. Visual-language details remain open. See SESSION_DECISIONS_2026-07-15.md.</review-notes>
+  </item>
+
+  <item id="BL-014" type="new-feature" status="pending"
+        session="S001" call="0" added="2026-06-28" project="mythoras-design">
+    <agent role="orchestrator"/>
+    <title>Naming session — Oura (temp) and defensive layer vocabulary</title>
+    <description>Oura is a temporary name for the fourth defensive resource/layer. Needs a name that fits the world's cosmological register (compiled signal, technological biology — not mystical or organic). Also needs to clarify: what is this resource's mechanical identity now that it is NOT a mandatory secondary HP pool? What does the player invest into to make it a meaningful defensive layer? Output: name, mechanical identity statement, and vocabulary for all defensive layers.</description>
+    <context>Flagged 2026-06-28. Agents must use "Oura (temp)" until this resolves.</context>
+    <gdd-ref>DOC_v2_new §combat — defensive systems</gdd-ref>
+    <urgency>high</urgency>
+    <review-notes/>
+  </item>
+
+  <item id="BL-015" type="new-feature" status="pending"
+        session="S001" call="0" added="2026-06-28" project="mythoras-design">
+    <agent role="orchestrator"/>
+    <title>Design session — Regional competition structure and Mythoras identity</title>
+    <description>Regional competition needs a distinctly Mythoras identity. References to synthesise (not copy): Pokémon's athlete-journey and gym-badge progression, older Japanese dojo-challenge stories, PoE's varied regional subquests with build-specific rewards (extra passive points, optional strategic paths), Trial of Ancestors faction competition structure (champion-their-tribe escalation, champion status as both achievement and obligation). The Cipher endgame is where Champions participate after winning regional competition — this should feel like a natural continuation, not a mode switch. Open question: keep athlete-journey as the main thrust like Pokémon, or carve something entirely different?</description>
+    <context>Flagged 2026-06-28. Competition structure is the backbone of the campaign narrative.</context>
+    <gdd-ref>DOC_v4_new — World and Campaign</gdd-ref>
+    <urgency>medium</urgency>
+    <review-notes>REOPENED 2026-07-15: competition wrapper plus Examiner/gym-leader naming are not locked. Preserve these references as history only; do not treat the Athletic Circuit/Accreditation/Examiner framing as current canon. See SESSION_DECISIONS_2026-07-15.md.</review-notes>
+  </item>
+
+  <item id="BL-016" type="new-feature" status="pending"
+        session="S001" call="0" added="2026-06-28" project="mythoras-design">
+    <agent role="orchestrator"/>
+    <title>Design session — Zone static fixture grammar and map editor spec</title>
+    <description>Zones need a static fixture grammar: recognisable landmarks in consistent positional relationships within procedurally generated layouts. Reference: PoE Act 2 Crossroads (waypoint always at the fork, web textures near spider cave, Alira's camp always left from waypoint). The Mythoras Builder's map editor is the right tool to design and test this — build the zone's default structure pre-proceduralization, then the procedural system arranges it. Output: a fixture grammar spec for Region 1's zones, and a map editor feature spec for the Builder.</description>
+    <context>Flagged 2026-06-28. Static fixtures enable player pattern recognition and guide-able knowledge without removing discovery.</context>
+    <gdd-ref>DOC_v4_new — Zone design</gdd-ref>
+    <urgency>medium</urgency>
+    <review-notes>Map editor spec ties to BL-009 (Builder zone fixture design)</review-notes>
+  </item>
+
+  <item id="BL-017" type="implementation-idea" status="pending"
+        session="S001" call="0" added="2026-06-28" project="mythoras-design">
+    <agent role="orchestrator"/>
+    <title>Research — RuneScape UI framework analysis for Mythoras data-heavy interface</title>
+    <description>RuneScape's UI interface achieves something rare: a data-heavy frame surrounding real-time action without cluttering the play space. It manages information density better than almost any other game in a way that suits data-heavy games (Football Manager, PoE, creature management games). Launch a subagent to analyse RuneScape's UI framework — what structural decisions make it work, what the information hierarchy looks like, how it handles real-time action vs management panels, and what principles could be extracted for Mythoras's own data-heavy UI design. Output feeds into BL-013 (UI design language session).</description>
+    <context>Flagged 2026-06-28. This analysis should happen before the UI grill-with-docs session.</context>
+    <gdd-ref>None — research task</gdd-ref>
+    <urgency>medium</urgency>
+    <review-notes>Output feeds into BL-013</review-notes>
+  </item>
+
+  <!-- Items added 2026-06-28 — June 28 design session: GDD amendments, naming conflicts, blocking sessions -->
+
+  <item id="BL-018" type="gdd-amendment" status="pending"
+        session="S002" call="0" added="2026-06-28" project="mythoras">
+    <agent role="orchestrator"/>
+    <title>GDD Amendment — Motherboard Grid is global + 5 slot-local subroutes</title>
+    <description>The Motherboard Grid was incorrectly described as per-creature in DOC_v2_new and DOC_v3_new. The correct model: ONE global passive tree for the Technician. ONE global route carved by the Technician that benefits all creatures. 5 slot-local subroutes branch off the global route — modifiers apply to the creature in THAT SLOT, not the creature entity permanently. Swapping a creature into a slot changes which slot-local bonuses apply, but not the creature's permanent build. This must be reflected in DOC_v3_new (Progression) §10 and DOC_v2_new wherever Grid is referenced.</description>
+    <context>Surfaced in June 28 2026 design session. Also triggers correction to BL-006 — see that item's review-notes.</context>
+    <gdd-ref>DOC_v3_new §10 — Motherboard Grid; DOC_v2_new — all Grid references</gdd-ref>
+    <urgency>critical</urgency>
+    <review-notes>Blocks DOC_v3_new update and DOC_v2_new rewrite. BL-006 already annotated with correction note.</review-notes>
+  </item>
+
+  <item id="BL-019" type="gdd-amendment" status="pending"
+        session="S002" call="0" added="2026-06-28" project="mythoras">
+    <agent role="orchestrator"/>
+    <title>GDD Amendment — Remove Priority tier classification from combat skills</title>
+    <description>Skills currently carry High/Normal/Slow Priority labels. This is removed. Initiative ordering should emerge from Speed stats, Support Card costs, and build investment — players optimise this naturally. The Priority table in DOC_v2_new §Turn Program model must be removed and replaced with Speed-based initiative ordering. Design philosophy decision: classification tiers invite min-maxing shortcuts and remove interesting decision vectors.</description>
+    <context>Surfaced in June 28 2026 design session as a design philosophy correction.</context>
+    <gdd-ref>DOC_v2_new §Turn Program model — Priority table</gdd-ref>
+    <urgency>high</urgency>
+    <review-notes>Blocks DOC_v2_new rewrite. Replace Priority table with Speed-based initiative ordering spec.</review-notes>
+  </item>
+
+  <item id="BL-020" type="new-feature" status="pending"
+        session="S002" call="0" added="2026-06-28" project="mythoras">
+    <agent role="orchestrator"/>
+    <title>Brainstorm Room — Damage architecture alternatives to Channel/Stream/Tags</title>
+    <description>Channel → Stream → Tags was a working answer, not a final answer. The brainstorm must ask: what is the damage architecture's PRIMARY JOB in Mythoras? How does the Protocol's cosmological register (structural/compiled/biological, not elemental fantasy) suggest a different framing? How does the squad-based Turn Program change what counterplay and damage targeting should do? Output of this session feeds the DOC_v2_new rewrite. Inputs: PoE damage pipeline analysis, Pokémon type system analysis, Mythoras-unique factors (squad, Turn Program, slots, Protocol world register).</description>
+    <context>Surfaced in June 28 2026 design session. T08 DOC_v2_new is blocked on this session completing. See also BL-012 for earlier framing of this same design question.</context>
+    <gdd-ref>DOC_v2_new — Combat Systems</gdd-ref>
+    <urgency>blocking</urgency>
+    <review-notes>Blocking T08 DOC_v2_new. Must complete before any damage system sections of DOC_v2_new are written or rewritten.</review-notes>
+  </item>
+
+  <item id="BL-021" type="gdd-amendment" status="pending"
+        session="S002" call="0" added="2026-06-28" project="mythoras">
+    <agent role="orchestrator"/>
+    <title>Naming session — Oura (temp) defensive resource needs a canonical name</title>
+    <description>"Oura" is a placeholder name for the Technician's defensive resource/layer. It needs a name session before it can be used in GDD, UI, or game systems. Additional clarification needed: Oura is NOT a mandatory parallel HP pool. With build investment, it can become a meaningful defensive layer. The naming session should also confirm the mechanical framing so the name fits the function. Candidates should fit The Protocol's cosmological register (structural/compiled/biological — not mystical).</description>
+    <context>Surfaced in June 28 2026 design session. Agents must use "Oura (temp)" in all documents until this resolves.</context>
+    <gdd-ref>DOC_v2_new — defensive systems; all documents referencing Oura</gdd-ref>
+    <urgency>high</urgency>
+    <review-notes>Blocks all defensive layer references in DOC_v2_new. See also BL-014 for earlier framing of this question.</review-notes>
+  </item>
+
+  <item id="BL-022" type="conflict" status="pending"
+        session="S002" call="0" added="2026-06-28" project="mythoras">
+    <agent role="orchestrator"/>
+    <title>Conflict — 'Domain' means two different things</title>
+    <description>"Domain" currently refers to (1) one of the four fundamental alignments governing Stream affinity and creature identity (Authority/Invictus/Animus/Order context), AND (2) Psionic deployable terrain in combat. These are two distinct concepts with the same name. One must be renamed before DOC_v2_new can be written consistently. This also conflicts with the harness vocabulary where Domain is a software concept.</description>
+    <context>Surfaced in June 28 2026 design session during DOC_v2_new planning.</context>
+    <gdd-ref>DOC_v2_new — all Domain references; DOC_v3_new §19 — Domains (combat terrain)</gdd-ref>
+    <urgency>high</urgency>
+    <review-notes>Blocks DOC_v2_new consistency. Must resolve before writing or rewriting any section referencing Domain in either sense. One concept must be renamed — decide which.</review-notes>
+  </item>
+
+  <item id="BL-023" type="new-feature" status="pending"
+        session="S002" call="0" added="2026-06-28" project="ADE">
+    <agent role="orchestrator"/>
+    <title>Design exploration — UI language and visual system for Mythoras</title>
+    <description>Arcane Cartographer was a starting direction, not a locked system. A proper design exploration session is needed, informed by: RuneScape's data-heavy surrounding frame (functional information density), PoE's panel workspace (floating panels, dense state management), Football Manager's information density philosophy (data as the UI), and The Protocol's cosmological register (technological biology, compiled signal, structural power). This exploration must happen before P1-01 (app shell) begins. Output: a design brief that replaces or evolves Arcane Cartographer as the guiding system.</description>
+    <context>Surfaced in June 28 2026 design session. Informs both Mythoras game UI and ADE UI. See also BL-013 (earlier framing) and BL-017 (RuneScape UI analysis research task).</context>
+    <gdd-ref>DOC_v6_new §53 — Design System (treat as draft, not final)</gdd-ref>
+    <urgency>high</urgency>
+    <review-notes>SUPERSEDED IN PART 2026-07-15: World View / Workspace View direction is captured and the permanent framed shell is rejected. Field Studio is retired. Remaining visual-language work must begin from SESSION_DECISIONS_2026-07-15.md, not DOC_v6's shell.</review-notes>
+  </item>
+
+  <item id="BL-024" type="gdd-amendment" status="pending"
+        session="S002" call="0" added="2026-06-28" project="mythoras">
+    <agent role="orchestrator"/>
+    <title>Design session — Regional competition structure, Mythoras-specific framing</title>
+    <description>The regional competition structure (how the player progresses through each Region, earns Champion status, and gains entry to the Cipher Network) needs a Mythoras-specific identity. Current reference points: Pokémon gym-badge journey (escalating challenges, geographic progression) and PoE Trial of Ancestors (faction identity, escalating competition, Champion as obligation not just title). Neither should be copied directly — the structure needs to feel native to The Protocol and its regional cultures. OD-008.</description>
+    <context>Surfaced in June 28 2026 design session. See also BL-015 for earlier framing of this question.</context>
+    <gdd-ref>DOC_v4_new — World and Campaign; OD-008</gdd-ref>
+    <urgency>medium</urgency>
+    <review-notes>REOPENED 2026-07-15: competition wrapper, Examiner naming, and gym-leader analogues are open. Historical references remain useful, but do not lock the old framework. See SESSION_DECISIONS_2026-07-15.md.</review-notes>
+  </item>
+
+  <!-- Items appended here by agents during sessions -->
+  <!-- Template:
+
+  <item id="BL-XXX" type="[type]" status="pending"
+        session="SXXX" call="[N]" added="YYYY-MM-DD">
+    <agent role="[role]"/>
+    <title>[Short descriptive title]</title>
+    <description>[Full description of the idea, conflict, or proposal]</description>
+    <context>[What was being built when this was discovered]</context>
+    <gdd-ref>[Relevant GDD section, or 'None']</gdd-ref>
+    <urgency>[blocking|high|medium|low]</urgency>
+    <review-notes/>
+  </item>
+
+  -->
+
+  <!-- Example item for reference — remove before production use:
+  <item id="BL-001" type="implementation-idea" status="pending"
+        session="S001" call="12" added="2026-06-15">
+    <agent role="worker-primary"/>
+    <title>Panel workspace could use CSS Grid subgrid instead of absolute positioning</title>
+    <description>While building the panel layout engine, discovered that CSS Grid subgrid (now widely supported) would give better alignment behaviour across panel boundaries than the current absolute positioning approach. Would require refactoring the PanelRenderer component but would eliminate the resize edge cases.</description>
+    <context>Building P1-01 — panel workspace layout engine</context>
+    <gdd-ref>DOC_v6_new §61.3 Panel Layout Engine</gdd-ref>
+    <urgency>medium</urgency>
+    <review-notes/>
+  </item>
+  -->
+
+  <item id="BL-025" type="new-feature" status="resolved"
+        session="S003" call="0" added="2026-07-03" project="mythoras-design">
+    <agent role="orchestrator"/>
+    <title>RESOLVED — Q10 automatic Turn Program ordering (OD-010 CLOSED)</title>
+    <description>Resolved 2026-07-06: no manual sequence assignment. Turn Program order resolves automatically from Speed + skill-inherent timing + support costs. Combos are emergent from skill selection, ailments, Resonance, and execution order. Prior options remain in GRILL_HANDOFF.md as historical deliberation.</description>
+    <context>GRILL_HANDOFF.md Q10 is authoritative. OD-010 is CLOSED. DOC_v2.md §16 reconciled 2026-07-15.</context>
+    <gdd-ref>DOC_v2.md §16 Turn Program</gdd-ref>
+    <urgency>critical</urgency>
+    <review-notes>CLOSED. Automatic Speed-driven ordering is locked; do not reopen from historical deliberation.</review-notes>
+  </item>
+
+  <item id="BL-026" type="new-feature" status="pending"
+        session="S003" call="0" added="2026-07-03" project="mythoras-design">
+    <agent role="orchestrator"/>
+    <title>Stream type effectiveness table (type chart) — Planning Room session</title>
+    <description>Dedicated Planning Room session to design the formal Stream type effectiveness table: which Streams deal amplified/reduced damage against which creature Stream profiles. This is the creature-defender type chart referenced in Q6 (grill decision: species-level AND build-earned). 
+The concept is referenced throughout the docs as "type advantage" but the formal multipliers, the number of tiers (neutral / weak / strong), and the full Stream-vs-Stream matrix do not exist anywhere.
+Must decide: number of effectiveness tiers, specific multipliers, whether Physical is always neutral as the baseline, whether Phenomena Streams have separate rules, how Origin interacts with Stream resistance. Output: a formal type chart table to be integrated into DOC_v2_new §6 or a dedicated §6a.</description>
+    <context>GRILL_HANDOFF.md parked items. Q6 locked (species + build-earned). Blocks type-advantage math in DOC_v2_new.</context>
+    <gdd-ref>DOC_v2.md §6 Channels and Streams; §9 Combat Archetype System</gdd-ref>
+    <urgency>high</urgency>
+    <review-notes>Do not invent multipliers in advance. The table must be designed holistically — each Stream's interaction with all 11 others is a deliberate design choice, not a formula output. Structure locked (July 2026 grill): 11×11 Primary vs Primary; soft tiers (0.5/0.75/1.0/1.25/1.5); chart + tag immunities; Secondary as small bias layer ±0.1-0.15×; no base 0× immunities on chart (except authored pairs); Physical as neutral baseline axis.</review-notes>
+  </item>
+
+  <item id="BL-029" type="new-feature" status="pending"
+        session="S005" call="0" added="2026-07-11" project="mythoras-design">
+    <agent role="orchestrator"/>
+    <title>Design session — Skill delivery systems (Mines, Traps, Hazards in Turn Program)</title>
+    <description>Define trade-off profiles for each delivery tag in Turn Program context: [Mine] (pre-placed, manually detonated, stackable — kills may not trigger creature-local recovery/leech), [Trap] (triggered on enemy entry, single use), [Hazard] (persistent tile damage), [Delayed] (cross-round timing). Key questions: does detonation use Setup or Initiative Window? Do mine/trap kills trigger creature kill-condition effects? How does multi-mine detonation interact with Turn Program commitment model? Reference: PoE Reap+mines as design template (poor self-cast → multiple vectors via mines; mine recovery trade-off). Sandbox identity: proxies circumvent skill weaknesses and create positional depth.</description>
+    <context>Raised in grill session July 2026 as off-topic sidebar. Framework tags exist in DOC_v2.md §3.6. Turn Program commitment model (no live intervention) changes some dynamics vs PoE real-time.</context>
+    <gdd-ref>DOC_v2.md §3.6 Skill Delivery Tags; §16 Turn Program</gdd-ref>
+    <urgency>medium</urgency>
+    <review-notes>Setup Window vs Initiative Window placement for mine-laying is the key decision. Pre-placement across rounds is the Mythoras-specific value (not cast time mitigation as in PoE).</review-notes>
+  </item>
+
+  <item id="BL-030" type="gdd-amendment" status="pending"
+        session="S005" call="0" added="2026-07-11" project="mythoras-design">
+    <agent role="orchestrator"/>
+    <title>Design session — Phenomena resistance vocabulary (replaces Fortitude)</title>
+    <description>Fortitude is scrapped as a name. Need Protocol-voice replacement for Phenomena-category damage mitigation mechanic. The concept itself is also not fully locked — resistance layer for Psionic, Fae, Phantom. Naming session should find vocabulary fitting the Protocol cosmological register (structural, compiled, biological — not mystical). Resolve whether resistance concept for Phenomena follows same model as Elemental resistance or has distinct character.</description>
+    <context>Fortitude scrapped in July 2026 grill. Decoupled from offensive damage architecture discussion. Phenomena = Psionic, Fae, Phantom (Phantom locked July 2026).</context>
+    <gdd-ref>DOC_v2.md §5.5</gdd-ref>
+    <urgency>medium</urgency>
+    <review-notes>Do not rename until naming session. Use "Phenomena resistance (TBD)" in docs.</review-notes>
+  </item>
+
+  <item id="BL-027" type="gdd-amendment" status="pending"
+        session="S004" call="0" added="2026-07-07" project="mythoras-design">
+    <agent role="orchestrator"/>
+    <title>Grill session — Skill Card ownership scope (creature-local vs Technician-global)</title>
+    <description>Lock the ownership model: Skill Cards, Skill Frame, Support links, Breakthrough, and creature Mana are creature-local. Technician owns Motherboard Grid (global + slot subroutes), Command Deck, Lanes, Warbanner/Inscription authority. Resolve inventory model (shared Skill Card items vs creature-bound), Breakthrough binding on card swap, bench Frame editing rules. See GRILL_PREP_SKILL_OWNERSHIP_TYPE.md Track A.</description>
+    <context>2026-07-07 research pass. DOC_v2.md §9.1 had "creature's Grid investment" error; POE_RESEARCH.md had per-creature Grid error.</context>
+    <gdd-ref>CONTEXT.md Ownership &amp; Scope; DOC_v3.md §10–§11; DOC_v2.md §15</gdd-ref>
+    <urgency>high</urgency>
+    <review-notes>Prerequisite for economy/UI spec and Builder creature config scope.</review-notes>
+  </item>
+
+  <item id="BL-028" type="gdd-amendment" status="pending"
+        session="S004" call="0" added="2026-07-07" project="mythoras-design">
+    <agent role="orchestrator"/>
+    <title>Grill session — Stream type chart structure (Pokémon transpose)</title>
+    <description>Formalize attacker Stream (Skill Card) vs defender Stream profile (creature Primary + Secondary) effectiveness table. Confirm Channel is NOT on the chart. Decide tier count, immunity policy, dual-type resolution, build-earned offensive affinity layer (Q6). See GRILL_PREP_SKILL_OWNERSHIP_TYPE.md Track B. Output: DOC_v2.md §6.0/§6a table stub with structure locked.</description>
+    <context>Extends BL-026. Q6 locked conceptually; multipliers and matrix scope undecided.</context>
+    <gdd-ref>DOC_v2.md §6.0; CONTEXT.md Type System Mapping</gdd-ref>
+    <urgency>critical</urgency>
+    <review-notes>Blocks combat math, Builder damage calculator, squad coverage UI.</review-notes>
+  </item>
+
+  <item id="BL-031" type="new-feature" status="pending"
+        session="S006" call="0" added="2026-07-15" project="mythoras-design">
+    <agent role="orchestrator"/>
+    <title>Grill and prototype — Dossier-system targeted progression</title>
+    <description>Run a dedicated design grill followed by a minimal prototype for the Divination-Card-inspired dossier direction. Test source-first teaching; biome/Region primary binding with elevated map weights; expected completion-time classes; area-wide versus boss-only communication; hybrid exact versus family/tier/category rewards; operator rewards coupled to crafting and other systems; and a dual tradable/non-tradable hypothesis. Prototype Cipher rotation remapping and source discernment using Cipher traits, rotation signals, and run evidence without copying Scrying. Compare open representations (cards, idol/residue, summon-like media, evidence objects, or another form) without selecting a final name or art form in advance.</description>
+    <context>Direction captured 2026-07-15 after PoE Divination Card research. The interface is a known design risk. Gambling incomplete progress and community-submission workflow remain parked until the base cadence is stable.</context>
+    <gdd-ref>MYTHORAS_DOSSIER_SYSTEM.md; SESSION_DECISIONS_2026-07-15.md</gdd-ref>
+    <urgency>medium</urgency>
+    <review-notes>Not locked. Validate completion feel, teaching burden, economic effects, and rotation readability before promotion.</review-notes>
+  </item>
+
+</backlog>

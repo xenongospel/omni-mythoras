@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  AGENT_STATE.xml
+  ================
+  MACHINE-READABLE OPERATIONAL STATE
+  Loaded at the start of every session by every agent role.
+  Updated at session close or on major state transitions.
+  Human-readable companion: AGENT_STATE.html (generated from this file)
+
+  Rules:
+  - Never edited mid-session except by checkpoint writes and backlog appends
+  - All writes require ask-user permission (see harness.config.xml)
+  - If this file is malformed, halt and alert — do not guess state
+-->
+
+<agent-state version="1.0" project="mythoras" updated="2026-07-15">
+
+  <!-- ═══════════════════════════════════════════
+       PHASE & ACTIVE TASK
+  ══════════════════════════════════════════════ -->
+  <current>
+    <phase id="P0" name="GDD Completion" status="active"/>
+    <sprint id="S0-10" description="OD-004 expanded session decisions captured. GDD reconciliation in progress; DOC_v2 and stale world/UI drafts being aligned."/>
+    <build-phase status="not-started" note="No Phase 1 code until GDD reconciliation is current; World View / Workspace View is the authoritative UI architecture direction."/>
+    <session-count total="5"/>
+  </current>
+
+  <!-- ═══════════════════════════════════════════
+       TASK GRAPH
+       Nodes represent tasks. Edges are dependencies.
+       Status: pending | active | complete | blocked | deferred
+       Rendered as graph in dev-log.html
+  ══════════════════════════════════════════════ -->
+  <task-graph>
+    <node id="T01" status="complete" phase="P0" priority="high">
+      <title>Write DOC_v4_new (World &amp; Campaign)</title>
+      <completed>2026-03-18</completed>
+    </node>
+    <node id="T02" status="complete" phase="P0" priority="high">
+      <title>Write DOC_v5_new (Economy &amp; Crafting)</title>
+      <completed>2026-03-26</completed>
+    </node>
+    <node id="T03" status="complete" phase="P0" priority="high">
+      <title>Rewrite DOC_v3_new (Progression Systems)</title>
+      <completed>2026-04-07</completed>
+    </node>
+    <node id="T04" status="complete" phase="P0" priority="high">
+      <title>Rewrite DOC_v1_new (Foundation)</title>
+      <completed>2026-04-07</completed>
+    </node>
+    <node id="T05" status="complete" phase="P0" priority="high">
+      <title>Rewrite DOC_v6_new (Technical Design)</title>
+      <completed>2026-04-07</completed>
+    </node>
+    <node id="T06" status="complete" phase="P0" priority="high">
+      <title>Define Mythoras Harness Protocol</title>
+      <completed>2026-06-15</completed>
+    </node>
+    <node id="T07" status="complete" phase="P0" priority="high">
+      <title>Refresh MYTHORAS_PROJECT_STATUS.md + OUTLINE_DOC_new.md</title>
+      <completed>2026-04-07</completed>
+    </node>
+    <node id="T08" status="active" phase="P0" priority="critical">
+      <title>Update DOC_v2.md — Combat Systems</title>
+      <note>Q10 resolved and reconciled in §16: automatic ordering from Speed + skill-inherent timing + support costs; OD-010 closed. Type system grill complete (2026-07-11). Major remaining design work: §6 full architecture rewrite and type chart. Phenomena resistance concept remains TBD; Fortitude is rejected.</note>
+      <depends-on/>
+    </node>
+    <node id="T09" status="pending" phase="P0" priority="high">
+      <title>Update DOC_v4_new — World &amp; Campaign</title>
+      <depends-on>T08</depends-on>
+    </node>
+    <node id="T10" status="pending" phase="P0" priority="high">
+      <title>Update DOC_v5_new — Economy &amp; Crafting</title>
+      <depends-on>T08</depends-on>
+    </node>
+    <node id="T11" status="pending" phase="P0" priority="high">
+      <title>Domain naming session ([DOMAIN_A]–[DOMAIN_D])</title>
+      <note>Blocks Part I lore and DOC_v5_new §44</note>
+      <depends-on/>
+    </node>
+    <node id="T12" status="pending" phase="P0" priority="medium">
+      <title>Agent naming session (Fracture + Snapshot)</title>
+      <depends-on/>
+    </node>
+    <node id="T13" status="pending" phase="P0" priority="medium">
+      <title>Region 1 rewrite — biome variety, real-place naming</title>
+      <depends-on>T09</depends-on>
+    </node>
+    <node id="T14" status="pending" phase="P0" priority="medium">
+      <title>Principal tree concrete design — 3-5 species × 3 Principals</title>
+      <depends-on>T08</depends-on>
+    </node>
+    <node id="T15" status="pending" phase="P0" priority="medium">
+      <title>Unique item MVP roster — ~30-40 Uniques</title>
+      <depends-on>T08,T10</depends-on>
+    </node>
+    <node id="T16" status="pending" phase="P0" priority="medium">
+      <title>Write missing context files — code-standards, library-docs, ui-registry</title>
+      <note>CONTEXT.md created 2026-06-28. Remaining: code-standards.md, library-docs.md, ui-registry.md</note>
+      <depends-on>T05</depends-on>
+    </node>
+    <node id="T17" status="pending" phase="P0" priority="medium">
+      <title>Author five skill files — architect, explore, brainstorm, review, recover, remember, imprint</title>
+      <depends-on>T16</depends-on>
+    </node>
+    <node id="T18" status="complete" phase="P0" priority="critical">
+      <title>Damage Architecture Brainstorm Session</title>
+      <completed>2026-07-02</completed>
+      <note>Q1–Q9 resolved (July 1–2 grill session). Q10 resolved (July 2026): automatic ordering. See GRILL_HANDOFF.md for full decision record.</note>
+    </node>
+    <node id="T21" status="complete" phase="P0" priority="critical">
+      <title>Type System Grill</title>
+      <completed>2026-07-11</completed>
+      <note>11 damage types across 4 categories locked. Chart structure (11×11 Primary, soft tiers, C model). Tag system (D+C). Immunity model (C). Phantom named. Fortitude scrapped. Pokémon transpose analysis. See GRILL_HANDOFF.md Type System Grill section.</note>
+    </node>
+    <node id="T22" status="complete" phase="P0" priority="critical">
+      <title>Expanded UI/world session decisions (OD-004)</title>
+      <completed>2026-07-15</completed>
+      <note>World View / Workspace View direction locked. Permanent surrounding shell rejected; Field Studio retired. Rendering pipeline and detailed visual language remain open. See SESSION_DECISIONS_2026-07-15.md.</note>
+      <depends-on/>
+    </node>
+    <node id="T23" status="pending" phase="P0" priority="high">
+      <title>Type Chart Planning Room — 11×11 multipliers</title>
+      <note>Structure locked (grill). Actual multipliers need dedicated Planning Room. Which types beat which. Anchor triads: Inferno→Eldergrove→Tidal; Voltaic↔Tidal; Glacial↔Inferno. Do not invent multipliers.</note>
+      <depends-on/>
+    </node>
+    <node id="T24" status="pending" phase="P0" priority="high">
+      <title>Defensive Layer Grill</title>
+      <note>Resistance per category (Primal-Elemental, Biotic-Elemental, Phenomena). Oura naming (OD-005). Fortitude replacement vocab (BL-030). Armour+Physical/Tectonic locked. Glass cannon viable.</note>
+      <depends-on/>
+    </node>
+    <node id="T19" status="pending" phase="P0" priority="high">
+      <title>Oura (temp) naming session</title>
+      <note>OD-005. Unblocks all defensive layer references.</note>
+    </node>
+    <node id="T20" status="pending" phase="P0" priority="medium">
+      <title>Remaining UI visual-language exploration</title>
+      <note>Begin from locked World View / Workspace View direction. Permanent shell and Field Studio are retired. Detailed visual language and rendering pipeline remain open.</note>
+      <depends-on>T18</depends-on>
+    </node>
+    <!-- Phase 1 tasks — locked until P0 complete -->
+    <node id="P1-01" status="locked" phase="P1" priority="critical">
+      <title>World View + player-invoked Workspace View shell</title>
+      <depends-on>T08,T09,T10,T16,T17,ADE-01</depends-on>
+      <note>Gate: all P0 GDD docs current AND ADE MVP usable. Implement the 2026-07-15 World View / Workspace View direction; do not revive DOC_v6's permanent surrounding-panel shell.</note>
+    </node>
+    <node id="P1-02" status="locked" phase="P1" priority="critical">
+      <title>World View rendering — pipeline TBD, zone traversal</title>
+      <depends-on>P1-01</depends-on>
+    </node>
+    <node id="P1-03" status="locked" phase="P1" priority="high">
+      <title>Active Squad panel — creature card components</title>
+      <depends-on>P1-01</depends-on>
+    </node>
+    <node id="P1-04" status="locked" phase="P1" priority="high">
+      <title>Backpack panel — inventory slot grid</title>
+      <depends-on>P1-01</depends-on>
+    </node>
+
+    <!-- ADE parallel track — builds alongside P0 GDD completion -->
+    <node id="ADE-00" status="active" phase="ADE" priority="critical" project="ADE">
+      <title>ADE Phase 0 — Validate omni-agents vertical slice</title>
+      <depends-on/>
+      <note>NO FORK of omni-agents. Use upstream at /Users/xenonheat/sites/omni-agents directly. Vertical slice already exists (kanban, PTY terminals, CLI adapters). Phase 0 = validate: task card → terminal pane → CLI agent → status update. Document mapping to Mythoras Build Room. Note gaps vs ADE_VERTICAL_SLICE_SPEC.md. No GDD dependency — can start anytime. OmniSpace 0.1.1 at /Applications/OmniSpace.app.</note>
+    </node>
+    <node id="ADE-01" status="pending" phase="ADE" priority="high" project="ADE">
+      <title>ADE Phase 1 — Mythoras workspace defaults + harness XML viewers</title>
+      <depends-on>ADE-00</depends-on>
+      <note>BL-005. Default workspace → this repo. Viewers for BACKLOG.xml, AGENT_STATE.xml, DECISION_LOG.xml. Not greenfield build — extend existing omni-agents.</note>
+    </node>
+    <node id="ADE-02" status="locked" phase="ADE" priority="high" project="ADE">
+      <title>ADE — Skill management panel + DAG view + DECISION_LOG viewer</title>
+      <depends-on>ADE-01</depends-on>
+      <note>BL-003 + BL-004 + BL-005. ADE becomes self-hostable at this point.</note>
+    </node>
+
+    <!-- Builder parallel track — builds alongside ADE and P0 -->
+    <node id="BLD-00" status="pending" phase="BUILDER" priority="critical" project="builder">
+      <title>Builder — Architect Room session (grill-with-docs + feature plan)</title>
+      <depends-on>T06,T08</depends-on>
+      <note>DOC_v2_new update must be complete before Builder formulas can be specified. Run in parallel with ADE-00.</note>
+    </node>
+    <node id="BLD-01" status="locked" phase="BUILDER" priority="critical" project="builder">
+      <title>Builder MVP — Motherboard Grid + creature config + Skill Card linking</title>
+      <depends-on>BLD-00</depends-on>
+      <note>BL-006 + BL-007. Foundation of all calculations. One week target.</note>
+    </node>
+    <node id="BLD-02" status="locked" phase="BUILDER" priority="critical" project="builder">
+      <title>Builder MVP — Damage pipeline + Stream Resonance calculator</title>
+      <depends-on>BLD-01</depends-on>
+      <note>BL-008. Core formulas — these port directly to Mythoras Phase 2 game code.</note>
+    </node>
+    <node id="BLD-03" status="locked" phase="BUILDER" priority="high" project="builder">
+      <title>Builder — Warbanner + Domain configuration + Forge Terminal simulator</title>
+      <depends-on>BLD-02</depends-on>
+      <note>BL-009 + BL-010. Builder becomes community-useful at this milestone.</note>
+    </node>
+    <node id="BLD-04" status="locked" phase="BUILDER" priority="high" project="builder">
+      <title>Builder — Build sharecode import/export</title>
+      <depends-on>BLD-03</depends-on>
+      <note>BL-011. Community sharing milestone. Builder ready for public release.</note>
+    </node>
+  </task-graph>
+
+  <!-- ═══════════════════════════════════════════
+       CALL COUNTER
+       Reset per session. Used by checkpoint scalar.
+  ══════════════════════════════════════════════ -->
+  <session-telemetry>
+    <calls-this-session>0</calls-this-session>
+    <checkpoints-this-session>0</checkpoints-this-session>
+    <session-id>SESSION_REPLACE_ON_START</session-id>
+    <started>REPLACE_ON_START</started>
+  </session-telemetry>
+
+  <!-- ═══════════════════════════════════════════
+       LAST SESSION HANDOFF
+       What the next session must know before starting.
+       Cleared when integrated into a new session brief.
+  ══════════════════════════════════════════════ -->
+  <handoff>
+    <last-completed>Expanded OD-004 session decisions captured 2026-07-15: World View / Workspace View direction, adaptive continuity, variable asymmetric battle footprints, campaign/endgame/build commitments, Squad/Party vocabulary, and retired placeholders. GDD reconciliation is in progress.</last-completed>
+    <next-session-notes>
+      IMMEDIATE PRIORITY: reconcile GDD documents against SESSION_DECISIONS_2026-07-15.md. OD-004 session decisions are captured; NEXT_SESSION_PROMPT.md is historical.
+
+      KEY DECISIONS FROM SESSIONS 4–5:
+      1. Damage types renamed: Stream → Damage Type; Channel → Category (loose classifier)
+      2. 4 categories: Physical / Primal-Elemental / Biotic-Elemental / Phenomena
+      3. Phantom replaces Shadow. Fortitude scrapped. Tectonic stays in Physical.
+      4. Type chart: 11×11 Primary, soft tiers, no base 0× immunities (chart) — immunities authored
+      5. Tag system: D+C hybrid; universal Origin tags + tendency + exceptional species
+      6. Flying type → Winged tag; Fighting type → Martial Origin
+      7. Skill Cards creature-local confirmed. Warbanners = Skill Cards.
+      8. OD-006 and OD-010 closed.
+
+      RUN ORDER: (1) finish GDD reconciliation, (2) DOC_v2.md §6 architecture work, (3) Type chart Planning Room, (4) Defensive layer grill, (5) ADE Phase 0 (no dependency — can run parallel)
+    </next-session-notes>
+    <open-decisions>
+      <decision id="OD-001" priority="high">Domain naming — [DOMAIN_A]–[DOMAIN_D] need legendary-quality names</decision>
+      <decision id="OD-002" priority="high">Principal tree concrete mechanical designs — 3-5 species × 3 Principals each</decision>
+      <decision id="OD-003" priority="medium">Warbanner naming — Protocol / Standard / Edict / Sigil candidates. Note: Warbanners are now Skill Cards.</decision>
+      <decision id="OD-004" status="direction-locked">World View / Workspace View direction captured 2026-07-15. Permanent framed shell rejected; Field Studio retired. Detailed visual language and rendering pipeline remain open.</decision>
+      <decision id="OD-005" priority="high">Oura (temp) naming — placeholder. Part of defensive layer grill (OD-012).</decision>
+      <decision id="OD-006" status="closed">CLOSED — Damage architecture locked (type system grill 2026-07-11).</decision>
+      <decision id="OD-007" priority="high">Domain naming collision — "Domain" = elemental alignment AND Psionic terrain. One must be renamed.</decision>
+      <decision id="OD-008" priority="medium">Regional competition structure — Mythoras-specific framing needed.</decision>
+      <decision id="OD-009" priority="medium">Zone static fixture grammar — map editor design session needed.</decision>
+      <decision id="OD-010" status="closed">CLOSED — Q10 resolved: automatic ordering (Speed + skill-inherent timing; emergent combos).</decision>
+      <decision id="OD-011" priority="high">Type chart multipliers — 11×11 structure locked; actual values need Planning Room. Do not invent.</decision>
+      <decision id="OD-012" priority="high">Defensive layers — resistance per category; Oura naming; Phenomena resistance vocab (Fortitude scrapped). Dedicated grill required.</decision>
+    </open-decisions>
+  </handoff>
+
+  <!-- ═══════════════════════════════════════════
+       GDD DOCUMENT STATUS
+       Quick-reference. Full authority hierarchy in harness.config.xml
+  ══════════════════════════════════════════════ -->
+  <gdd-status>
+    <doc id="DOC_v2.md" status="in-progress" tier="2" updated="2026-07-15" note="Q10 §16 reconciled to automatic ordering. Phantom terminology applied. Fortitude replaced by explicitly TBD Phenomena resistance concept. Major remaining: §6 full architecture rewrite and type chart."/>
+    <doc id="DOC_v3.md" status="in-progress" tier="1" updated="2026-07-11" note="§8 Motherboard Grid correct (global + slot-local subroutes). §10-§11 Skill Frame scope added. 3 Creature Branches references remain. Cross-refs still say DOC_v*_new."/>
+    <doc id="DOC_v4.md" status="stale-reopened" tier="2" updated="2026-07-15" note="Velden retired; competition/Examiner wrapper reopened; adaptive-continuity correction banner added."/>
+    <doc id="DOC_v5.md" status="needs-update" tier="2" updated="2026-03-26"/>
+    <doc id="DOC_v6.md" status="stale-superseded" tier="1" updated="2026-07-15" note="Permanent shell and Field Studio retired. Superseded by World View / Workspace View direction in SESSION_DECISIONS_2026-07-15.md."/>
+  </gdd-status>
+
+</agent-state>

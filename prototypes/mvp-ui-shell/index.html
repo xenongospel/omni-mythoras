@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Mythoras — MVP UI Shell (Prototype)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+/* ============================================================
+   MYTHORAS — MVP UI SHELL PROTOTYPE
+   Disposable interaction prototype. Single-file, no deps.
+   ============================================================ */
+
+:root{
+  --void-0: #0a0a0d;
+  --void-1: #101015;
+  --void-2: #16161d;
+  --void-3: #1e1e28;
+  --void-4: #292933;
+  --ink-0: #e8e6df;
+  --ink-1: #b6b3ab;
+  --ink-2: #817e78;
+  --gold: #d9a54a;
+  --gold-bright: #f3c268;
+  --gold-dim: #8a6a30;
+  --teal: #3fd9c7;
+  --teal-bright: #7cf0e2;
+  --teal-dim: #1f6b62;
+  --crimson: #d9524a;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+*{ box-sizing: border-box; }
+html,body{ height:100%; margin:0; padding:0; }
+body{
+  background: radial-gradient(ellipse at 50% -10%, #201c14 0%, var(--void-0) 55%);
+  color: var(--ink-0);
+  font-family: var(--font);
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+button{ font-family: inherit; cursor: pointer; }
+svg{ display:block; }
+
+/* ---------- faceted / bevel frame treatment ---------- */
+.frame{
+  position: relative;
+  background: linear-gradient(180deg, #1b1b23 0%, #131318 100%);
+  border: 1px solid rgba(217,165,74,0.35);
+  border-radius: 3px;
+  box-shadow:
+    inset 0 0 0 1px rgba(0,0,0,0.65),
+    inset 0 1px 0 rgba(255,255,255,0.05),
+    inset 0 -1px 0 rgba(0,0,0,0.5),
+    0 2px 8px rgba(0,0,0,0.5);
+}
+.frame::before, .frame::after{
+  content:"";
+  position:absolute;
+  width:7px; height:7px;
+  border: 1px solid rgba(217,165,74,0.55);
+  pointer-events:none;
+}
+.frame::before{ top:-1px; left:-1px; border-right:none; border-bottom:none; }
+.frame::after{ bottom:-1px; right:-1px; border-left:none; border-top:none; }
+
+.frame-teal{ border-color: rgba(63,217,199,0.4); }
+.frame-teal::before, .frame-teal::after{ border-color: rgba(63,217,199,0.6); }
+
+.panel-title{
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gold-bright);
+  padding: 6px 10px 5px;
+  border-bottom: 1px solid rgba(217,165,74,0.25);
+  display:flex; align-items:center; gap:6px;
+}
+.panel-title .dot{ width:5px; height:5px; background: var(--gold); border-radius:50%; box-shadow:0 0 6px var(--gold); }
+
+.btn{
+  background: linear-gradient(180deg, #2b2b36, #1a1a22);
+  color: var(--ink-0);
+  border: 1px solid rgba(217,165,74,0.4);
+  border-radius: 3px;
+  padding: 8px 18px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), inset 0 0 0 1px rgba(0,0,0,0.5);
+  transition: all 0.12s ease;
+}
+.btn:hover{ border-color: var(--gold-bright); color: var(--gold-bright); box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 0 8px rgba(217,165,74,0.35); }
+.btn:active{ transform: translateY(1px); }
+.btn.teal{ border-color: rgba(63,217,199,0.5); }
+.btn.teal:hover{ border-color: var(--teal-bright); color: var(--teal-bright); box-shadow: 0 0 8px rgba(63,217,199,0.4); }
+.btn.primary{ background: linear-gradient(180deg, #3a2c14, #251b0c); border-color: var(--gold); color: var(--gold-bright); }
+.btn.primary:hover{ box-shadow: 0 0 12px rgba(217,165,74,0.5); }
+.btn:disabled{ opacity:0.4; cursor:default; }
+.btn:disabled:hover{ box-shadow:none; border-color: rgba(217,165,74,0.4); color: var(--ink-0); }
+
+::-webkit-scrollbar{ width:8px; height:8px; }
+::-webkit-scrollbar-thumb{ background: var(--void-4); border-radius: 4px; }
+
+/* ============================================================
+   SCREEN: FOUNDATION SELECT
+   ============================================================ */
+#screen-foundation{
+  position: fixed; inset: 0;
+  display:flex; flex-direction: column; align-items:center; justify-content:center;
+  background:
+    radial-gradient(ellipse at 50% 20%, rgba(217,165,74,0.08), transparent 60%),
+    repeating-linear-gradient(135deg, rgba(255,255,255,0.012) 0 2px, transparent 2px 4px),
+    var(--void-0);
+  z-index: 10;
+  transition: opacity 0.4s ease;
+}
+#screen-foundation.hidden{ opacity:0; pointer-events:none; }
+
+.fs-title{
+  text-align:center; margin-bottom: 22px;
+}
+.fs-title h1{
+  margin:0; font-size: 34px; letter-spacing: 0.3em; font-weight:800;
+  color: var(--ink-0);
+  text-shadow: 0 0 24px rgba(217,165,74,0.35);
+}
+.fs-title h1 span{ color: var(--gold-bright); }
+.fs-title p{ margin: 6px 0 0; color: var(--ink-2); letter-spacing:0.08em; font-size:11px; text-transform:uppercase; }
+
+.fs-main{
+  display:flex; gap: 22px; width: min(980px, 92vw);
+  height: 460px;
+}
+.fs-art{
+  flex: 1.1;
+  display:flex; align-items:center; justify-content:center;
+  position: relative;
+  overflow:hidden;
+}
+.fs-art .glow{
+  position:absolute; inset:0;
+  background: radial-gradient(circle at 50% 40%, var(--fg-color, rgba(217,165,74,0.25)), transparent 65%);
+  transition: background 0.4s ease;
+}
+.fs-card{
+  flex: 0.85;
+  display:flex; flex-direction:column;
+  padding: 16px;
+  gap: 10px;
+}
+.fs-card h2{ margin:0; font-size:20px; letter-spacing:0.05em; color: var(--gold-bright); }
+.fs-card .flavor{ font-size:12.5px; color: var(--ink-1); line-height:1.5; font-style:italic; }
+.fs-stats{ display:flex; flex-direction:column; gap:6px; margin-top:6px; }
+.fs-stat-row{ display:flex; justify-content:space-between; font-size:12px; border-bottom:1px dashed rgba(255,255,255,0.08); padding-bottom:4px; }
+.fs-stat-row b{ color: var(--teal-bright); font-weight:700; }
+
+.fs-thumbs{
+  display:flex; gap: 12px; margin-top: 20px;
+}
+.fs-thumb{
+  width: 92px; height: 92px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
+  cursor:pointer;
+  opacity: 0.62;
+  transition: all 0.15s ease;
+}
+.fs-thumb:hover{ opacity: 0.9; }
+.fs-thumb.active{
+  opacity:1;
+  border-color: var(--gold-bright);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.65), 0 0 14px rgba(217,165,74,0.45);
+}
+.fs-thumb .ic{ width:34px; height:34px; }
+.fs-thumb .nm{ font-size:9.5px; letter-spacing:0.06em; text-transform:uppercase; color: var(--ink-1); }
+.fs-thumb.active .nm{ color: var(--gold-bright); }
+
+.fs-actions{ display:flex; gap:12px; margin-top:20px; }
+
+/* ============================================================
+   SCREEN: WORLD (+ workspace transform + battle overlay live here)
+   ============================================================ */
+#screen-world{
+  position: fixed; inset:0;
+  opacity:0; pointer-events:none;
+  transition: opacity 0.5s ease;
+}
+#screen-world.active{ opacity:1; pointer-events:auto; }
+
+#world-core{
+  position:absolute; inset:0;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  transition: transform 0.55s cubic-bezier(.65,0,.35,1);
+  transform-origin: 50% 50%;
+}
+body.workspace-active #world-core{
+  transform: scale(0.52);
+  filter: saturate(0.75) brightness(0.85);
+}
+
+#grid-wrap{
+  position:relative;
+  width: min(1100px, 94vw);
+  height: min(620px, 74vh);
+}
+#grid-svg{ width:100%; height:100%; }
+
+.tile-group{ cursor:pointer; }
+.tile-group:hover .tile-top{ filter: brightness(1.35); }
+.tile-group:hover .tile-top-td{ filter: brightness(1.35); }
+.tile-top-td{ transition: filter .1s; }
+
+/* top hint / hotkey label */
+.world-hint{
+  position:absolute; top:14px; left:14px;
+  font-size:11px; letter-spacing:0.08em; color: var(--ink-2);
+  padding:6px 10px; text-transform:uppercase;
+  z-index:5;
+}
+.world-hint b{ color: var(--gold-bright); }
+
+/* view mode toggle */
+.view-toggle{
+  position:absolute; top:14px; right:14px;
+  display:flex; z-index:5; overflow:hidden; border-radius:3px;
+}
+.view-toggle button{
+  border:none; background: var(--void-3); color: var(--ink-1);
+  padding:7px 12px; font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase;
+  border-right: 1px solid rgba(0,0,0,0.5);
+}
+.view-toggle button:last-child{ border-right:none; }
+.view-toggle button.active{ background: var(--gold-dim); color:#fff; }
+
+/* portraits rail */
+#portrait-rail{
+  position:absolute; bottom: 4%; left:50%; transform: translateX(-50%);
+  display:flex; align-items:flex-end; gap:14px;
+  z-index:6;
+}
+body.battle-active #portrait-rail{ opacity:0; pointer-events:none; }
+.portrait-slot{
+  width:58px; height:58px;
+  display:flex; align-items:center; justify-content:center;
+  position:relative;
+  transition: box-shadow .15s, transform .15s;
+}
+.portrait-slot:hover{ transform: translateY(-3px); box-shadow: 0 0 14px rgba(217,165,74,0.4); }
+.portrait-slot.field{ border-color: rgba(217,165,74,0.5); }
+.portrait-slot.bench{ width:46px; height:46px; opacity:0.62; filter: brightness(0.8) saturate(0.7); }
+.portrait-slot.bench:hover{ opacity:0.9; }
+.portrait-slot svg{ width:70%; height:70%; }
+.slot-label{
+  position:absolute; bottom:-15px; font-size:8px; letter-spacing:0.05em; color: var(--ink-2); text-transform:uppercase; white-space:nowrap;
+}
+
+/* portrait popover */
+#portrait-popover{
+  position:absolute; bottom: 15%; left:50%;
+  transform: translateX(-50%) translateY(8px);
+  width: 220px;
+  padding: 10px 12px 12px;
+  opacity:0; pointer-events:none;
+  transition: opacity .15s, transform .15s;
+  z-index:8;
+}
+#portrait-popover.show{ opacity:1; transform: translateX(-50%) translateY(0); pointer-events:auto; }
+#portrait-popover h3{ margin:0 0 4px; font-size:13px; color: var(--gold-bright); letter-spacing:0.04em; }
+#portrait-popover .pp-stats{ display:flex; gap:14px; margin:6px 0; font-size:11px; color: var(--teal-bright); }
+#portrait-popover .pp-flavor{ font-size:11px; color: var(--ink-1); font-style:italic; line-height:1.4; }
+
+/* ---------- WORKSPACE DOCKS ---------- */
+.ws-dock{
+  position: fixed;
+  display:flex; flex-direction:column;
+  width: 240px; height: 160px;
+  padding: 0;
+  opacity:0; z-index:4;
+  transition: opacity .5s ease, transform .5s cubic-bezier(.65,0,.35,1);
+}
+body.workspace-active .ws-dock{ opacity:1; }
+.ws-dock .body{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; padding:10px; }
+.ws-dock .body svg{ width:38px; height:38px; opacity:0.85; }
+.ws-dock .body .soon{ font-size:9.5px; letter-spacing:0.1em; text-transform:uppercase; color: var(--ink-2); }
+.ws-dock .body .flavor{ font-size:10.5px; color: var(--ink-1); text-align:center; line-height:1.4; padding:0 6px; }
+
+#dock-motherboard{ top: 6%; left: 4%; transform: translate(-40px,-40px); }
+body.workspace-active #dock-motherboard{ transform: translate(0,0); }
+#dock-forge{ top: 6%; right: 4%; transform: translate(40px,-40px); }
+body.workspace-active #dock-forge{ transform: translate(0,0); }
+#dock-cipher{ bottom: 6%; left: 4%; transform: translate(-40px,40px); }
+body.workspace-active #dock-cipher{ transform: translate(0,0); }
+#dock-dossier{ bottom: 6%; right: 4%; transform: translate(40px,40px); }
+body.workspace-active #dock-dossier{ transform: translate(0,0); }
+
+#workspace-close{
+  position: fixed; top: 4%; left:50%; transform: translateX(-50%) translateY(-30px);
+  opacity:0; z-index:9; transition: opacity .4s ease, transform .4s ease;
+}
+body.workspace-active #workspace-close{ opacity:1; transform: translateX(-50%) translateY(0); }
+
+/* ============================================================
+   BATTLE HUD
+   ============================================================ */
+#battle-hud{
+  position:fixed; inset:0; pointer-events:none; z-index:7;
+  opacity:0; transition: opacity .35s ease;
+}
+body.battle-active #battle-hud{ opacity:1; pointer-events:none; }
+body.battle-active #battle-hud .hud-el{ pointer-events:auto; }
+
+.hud-el{ position:absolute; }
+#hud-topleft{ top:16px; left:16px; padding:8px 14px; display:flex; gap:16px; }
+#hud-topright{ top:16px; right:16px; padding:8px 14px; display:flex; gap:16px; }
+.hud-stat{ display:flex; flex-direction:column; align-items:center; }
+.hud-stat .v{ font-size:16px; font-weight:700; color: var(--gold-bright); }
+.hud-stat .l{ font-size:8.5px; letter-spacing:0.08em; text-transform:uppercase; color: var(--ink-2); }
+
+#phase-indicator{
+  top: 16px; left:50%; transform: translateX(-50%);
+  padding: 8px 22px;
+  display:flex; align-items:center; gap:10px;
+}
+#phase-indicator .phase-dot{ width:8px; height:8px; border-radius:50%; background: var(--gold); box-shadow:0 0 8px var(--gold); transition: all .3s; }
+#phase-indicator.exec .phase-dot{ background: var(--teal); box-shadow:0 0 10px var(--teal); animation: pulse 0.6s infinite alternate; }
+#phase-indicator .phase-text{ font-size:12px; letter-spacing:0.12em; text-transform:uppercase; font-weight:700; color: var(--gold-bright); }
+#phase-indicator.exec .phase-text{ color: var(--teal-bright); }
+@keyframes pulse{ from{ opacity:1; } to{ opacity:0.4; } }
+
+#hud-bottom-actions{
+  bottom: 5%; left:50%; transform: translateX(-50%);
+  display:flex; gap:10px;
+}
+
+#hud-info-card{
+  bottom: 5%; left: 3%;
+  width: 240px; min-height: 70px;
+  padding: 8px 12px;
+}
+#hud-info-card .info-title{ font-size:11px; color: var(--gold-bright); letter-spacing:0.05em; margin-bottom:4px; text-transform:uppercase;}
+#hud-info-card .info-body{ font-size:11px; color: var(--ink-1); line-height:1.4; }
+
+.dmg-float{
+  position:absolute; font-weight:800; font-size:20px; color: var(--crimson);
+  text-shadow: 0 0 6px rgba(0,0,0,0.8), 0 0 10px rgba(217,82,74,0.6);
+  pointer-events:none; z-index:12;
+  animation: floatUp 0.9s ease-out forwards;
+}
+@keyframes floatUp{
+  0%{ transform: translate(-50%,-50%) scale(0.6); opacity:0; }
+  15%{ opacity:1; transform: translate(-50%,-70%) scale(1.1); }
+  100%{ transform: translate(-50%,-140%) scale(1); opacity:0; }
+}
+
+.hidden{ display:none !important; }
+</style>
+</head>
+<body>
+
+<!-- ================= SCREEN 1: FOUNDATION SELECT ================= -->
+<div id="screen-foundation">
+  <div class="fs-title">
+    <h1>MY<span>THOR</span>AS</h1>
+    <p>Select a Foundation</p>
+  </div>
+
+  <div class="fs-main">
+    <div class="fs-art frame" id="fs-art">
+      <div class="glow" id="fs-glow"></div>
+      <svg id="fs-art-svg" viewBox="0 0 200 260" width="220" height="260"></svg>
+    </div>
+    <div class="fs-card frame">
+      <h2 id="fs-name">—</h2>
+      <div class="flavor" id="fs-flavor">—</div>
+      <div class="fs-stats" id="fs-stats"></div>
+    </div>
+  </div>
+
+  <div class="fs-thumbs" id="fs-thumbs"></div>
+
+  <div class="fs-actions">
+    <button class="btn" id="fs-back">Back</button>
+    <button class="btn primary" id="fs-confirm">Confirm &amp; Enter World</button>
+  </div>
+</div>
+
+<!-- ================= SCREEN 2/3/4: WORLD + WORKSPACE + BATTLE ================= -->
+<div id="screen-world">
+
+  <div id="world-core">
+    <div id="grid-wrap">
+      <svg id="grid-svg" viewBox="0 0 900 600" preserveAspectRatio="xMidYMid meet">
+        <g id="tiles-layer"></g>
+        <g id="markers-layer"></g>
+      </svg>
+
+      <div class="world-hint"><b>[Tab]</b> Workspace &nbsp;·&nbsp; click a tile to move</div>
+
+      <div class="view-toggle frame">
+        <button id="btn-view-top" data-mode="top">Top-Down</button>
+        <button id="btn-view-iso" data-mode="iso" class="active">Isometric</button>
+      </div>
+
+      <div id="portrait-rail"></div>
+      <div id="portrait-popover" class="frame"></div>
+    </div>
+  </div>
+
+  <!-- workspace docks -->
+  <button class="btn teal" id="workspace-close">Close Workspace [Tab]</button>
+
+  <div class="ws-dock frame-teal frame" id="dock-motherboard">
+    <div class="panel-title"><span class="dot" style="background:var(--teal); box-shadow:0 0 6px var(--teal);"></span>Motherboard Grid</div>
+    <div class="body">
+      <svg viewBox="0 0 48 48"><rect x="4" y="4" width="40" height="40" fill="none" stroke="var(--teal)" stroke-width="2"/><circle cx="14" cy="14" r="3" fill="var(--teal)"/><circle cx="34" cy="14" r="3" fill="var(--teal)"/><circle cx="14" cy="34" r="3" fill="var(--teal)"/><circle cx="34" cy="34" r="3" fill="var(--teal)"/><line x1="14" y1="14" x2="34" y2="34" stroke="var(--teal)" stroke-width="1.5"/><line x1="34" y1="14" x2="14" y2="34" stroke="var(--teal)" stroke-width="1.5"/></svg>
+      <div class="soon">Coming Soon</div>
+      <div class="flavor">Wire creature circuitry into build paths.</div>
+    </div>
+  </div>
+
+  <div class="ws-dock frame" id="dock-forge">
+    <div class="panel-title"><span class="dot"></span>Forge Terminal</div>
+    <div class="body">
+      <svg viewBox="0 0 48 48"><polygon points="24,4 40,14 40,34 24,44 8,34 8,14" fill="none" stroke="var(--gold)" stroke-width="2"/><rect x="19" y="19" width="10" height="10" fill="var(--gold)"/></svg>
+      <div class="soon">Coming Soon</div>
+      <div class="flavor">Reforge relics at the instrument's heart.</div>
+    </div>
+  </div>
+
+  <div class="ws-dock frame-teal frame" id="dock-cipher">
+    <div class="panel-title"><span class="dot" style="background:var(--teal); box-shadow:0 0 6px var(--teal);"></span>Cipher Console</div>
+    <div class="body">
+      <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" fill="none" stroke="var(--teal)" stroke-width="2"/><path d="M24 10 L24 24 L34 30" stroke="var(--teal)" stroke-width="2" fill="none"/></svg>
+      <div class="soon">Coming Soon</div>
+      <div class="flavor">Decode the latent protocol beneath the stone.</div>
+    </div>
+  </div>
+
+  <div class="ws-dock frame" id="dock-dossier">
+    <div class="panel-title"><span class="dot"></span>Dossier Log</div>
+    <div class="body">
+      <svg viewBox="0 0 48 48"><rect x="10" y="6" width="28" height="36" fill="none" stroke="var(--gold)" stroke-width="2"/><line x1="15" y1="16" x2="33" y2="16" stroke="var(--gold)" stroke-width="1.5"/><line x1="15" y1="24" x2="33" y2="24" stroke="var(--gold)" stroke-width="1.5"/><line x1="15" y1="32" x2="27" y2="32" stroke="var(--gold)" stroke-width="1.5"/></svg>
+      <div class="soon">Coming Soon</div>
+      <div class="flavor">A record of foundations, choices, and lore.</div>
+    </div>
+  </div>
+
+  <!-- battle hud -->
+  <div id="battle-hud">
+    <div class="hud-el frame" id="hud-topleft">
+      <div class="hud-stat"><div class="v" id="hud-turn">1</div><div class="l">Turn</div></div>
+      <div class="hud-stat"><div class="v" id="hud-resource">3/5</div><div class="l">Aether</div></div>
+    </div>
+    <div class="hud-el frame" id="hud-topright">
+      <div class="hud-stat"><div class="v" id="hud-enemies">2</div><div class="l">Enemies</div></div>
+      <div class="hud-stat"><div class="v">—</div><div class="l">Objective</div></div>
+    </div>
+    <div class="hud-el frame" id="phase-indicator">
+      <div class="phase-dot"></div>
+      <div class="phase-text" id="phase-text">Planning Phase</div>
+    </div>
+    <div class="hud-el frame" id="hud-info-card">
+      <div class="info-title">Field Report</div>
+      <div class="info-body" id="hud-info-body">Hover a tile to inspect it.</div>
+    </div>
+    <div class="hud-el" id="hud-bottom-actions">
+      <button class="btn primary" id="btn-end-turn">End Turn</button>
+      <button class="btn" id="btn-retreat">Retreat</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ============================================================
+   DATA — placeholder content only
+   ============================================================ */
+var FOUNDATIONS = [
+  {
+    name: "Ashen Warden",
+    flavor: "“The old stones remember every siege. So do I.”",
+    color: "rgba(217,165,74,0.28)",
+    stats: [["Vigor","78"],["Resolve","64"],["Affinity","Stone / Ember"]],
+    art: "warden"
+  },
+  {
+    name: "Wraithbind Seer",
+    flavor: "“The circuitry beneath the chapel floor still hums, if you listen.”",
+    color: "rgba(63,217,199,0.26)",
+    stats: [["Vigor","41"],["Resolve","52"],["Affinity","Aether / Cipher"]],
+    art: "seer"
+  },
+  {
+    name: "Gale Ranger",
+    flavor: "“I've crossed every waystone from the Vale to the Hollow Reach.”",
+    color: "rgba(122,200,140,0.22)",
+    stats: [["Vigor","58"],["Resolve","47"],["Affinity","Wind / Thorn"]],
+    art: "ranger"
+  },
+  {
+    name: "Ironbound Smith",
+    flavor: "“Every relic was broken once. That's how you learn its shape.”",
+    color: "rgba(217,120,74,0.24)",
+    stats: [["Vigor","69"],["Resolve","70"],["Affinity","Forge / Bronze"]],
+    art: "smith"
+  }
+];
+
+var SQUAD = [
+  { name:"Emberling Cub", role:"Field", stats:[["ATK","12"],["SPD","8"]], flavor:"A hatchling that smoulders when startled." },
+  { name:"Stone Warden", role:"Field", stats:[["ATK","7"],["DEF","16"]], flavor:"Carved centuries ago; still keeps watch." },
+  { name:"Glasswing Sprite", role:"Field", stats:[["ATK","9"],["SPD","14"]], flavor:"Its wings chime faintly with each beat." },
+  { name:"Mossback Elder", role:"Bench", stats:[["ATK","5"],["DEF","11"]], flavor:"Prefers the bench until truly needed." },
+  { name:"Cinder Whelp", role:"Bench", stats:[["ATK","10"],["SPD","6"]], flavor:"Restless. Waiting for its turn." }
+];
+
+/* ============================================================
+   STATE
+   ============================================================ */
+var GRID = 8;
+var ENCOUNTER = { x: 6, y: 6 };
+
+var state = {
+  selectedFoundation: 0,
+  viewMode: "iso", // "iso" | "top"
+  token: { x: 1, y: 1 },
+  animating: false,
+  workspaceOpen: false,
+  battleActive: false,
+  phase: "planning", // "planning" | "execution"
+  turn: 1,
+  enemies: [],
+  popoverOpen: -1
+};
+
+/* ============================================================
+   GEOMETRY HELPERS
+   ============================================================ */
+var ISO = { tileW: 70, tileH: 35, sideH: 26, ox: 450, oy: 70 };
+var TOP = { size: 56, gap: 2, ox: 219, oy: 90 };
+
+function tileCenter(mode, gx, gy){
+  if(mode === "top"){
+    var s = TOP.size + TOP.gap;
+    return { x: TOP.ox + gx * s + TOP.size/2, y: TOP.oy + gy * s + TOP.size/2 };
+  } else {
+    return {
+      x: ISO.ox + (gx - gy) * (ISO.tileW/2),
+      y: ISO.oy + (gx + gy) * (ISO.tileH/2)
+    };
+  }
+}
+
+function inBounds(x,y){ return x>=0 && y>=0 && x<GRID && y<GRID; }
+
+function svgEl(tag, attrs){
+  var el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+  for(var k in attrs){ el.setAttribute(k, attrs[k]); }
+  return el;
+}
+
+/* ============================================================
+   TILE GRID RENDERING
+   ============================================================ */
+var tilesLayer = document.getElementById("tiles-layer");
+var markersLayer = document.getElementById("markers-layer");
+
+function isEncounter(x,y){ return x === ENCOUNTER.x && y === ENCOUNTER.y; }
+
+function buildTiles(){
+  tilesLayer.innerHTML = "";
+  var order = [];
+  for(var x=0;x<GRID;x++){ for(var y=0;y<GRID;y++){ order.push({x:x,y:y}); } }
+  order.sort(function(a,b){ return (a.x+a.y) - (b.x+b.y); });
+
+  order.forEach(function(t){
+    var g = svgEl("g", { "class":"tile-group", "data-gx":t.x, "data-gy":t.y });
+    var special = isEncounter(t.x, t.y);
+    var enemyHere = state.enemies.some(function(e){ return e.x===t.x && e.y===t.y; });
+
+    var topColor  = special ? "#2f6f66" : (enemyHere ? "#5c2b2b" : "#484756");
+    var leftColor = special ? "#204f48" : (enemyHere ? "#421f1f" : "#333140");
+    var rightColor= special ? "#173a35" : (enemyHere ? "#301616" : "#282634");
+
+    if(state.viewMode === "top"){
+      var c = tileCenter("top", t.x, t.y);
+      var half = TOP.size/2;
+      var rect = svgEl("rect", {
+        x: c.x-half, y: c.y-half, width: TOP.size, height: TOP.size,
+        fill: topColor, stroke: special ? "#3fd9c7" : "rgba(0,0,0,0.5)",
+        "stroke-width": special ? 2 : 1, rx: 2, class:"tile-top-td"
+      });
+      g.appendChild(rect);
+    } else {
+      var c2 = tileCenter("iso", t.x, t.y);
+      var tw = ISO.tileW/2, th = ISO.tileH/2, sh = ISO.sideH;
+      var top = c2.y - th, bottom = c2.y + th, left = c2.x - tw, right = c2.x + tw;
+
+      var topPoly = svgEl("polygon", {
+        points: [c2.x+","+top, right+","+c2.y, c2.x+","+bottom, left+","+c2.y].join(" "),
+        fill: topColor, stroke: special ? "#3fd9c7" : "rgba(0,0,0,0.45)",
+        "stroke-width": special ? 1.6 : 1, "class":"tile-top"
+      });
+      var leftPoly = svgEl("polygon", {
+        points: [left+","+c2.y, c2.x+","+bottom, c2.x+","+(bottom+sh), left+","+(c2.y+sh)].join(" "),
+        fill: leftColor, stroke:"rgba(0,0,0,0.5)", "stroke-width":1
+      });
+      var rightPoly = svgEl("polygon", {
+        points: [c2.x+","+bottom, right+","+c2.y, right+","+(c2.y+sh), c2.x+","+(bottom+sh)].join(" "),
+        fill: rightColor, stroke:"rgba(0,0,0,0.5)", "stroke-width":1
+      });
+      g.appendChild(leftPoly);
+      g.appendChild(rightPoly);
+      g.appendChild(topPoly);
+    }
+    tilesLayer.appendChild(g);
+  });
+}
+
+function renderMarkers(tokenX, tokenY){
+  markersLayer.innerHTML = "";
+
+  // encounter glow (only outside battle)
+  if(!state.battleActive){
+    var ec = tileCenter(state.viewMode, ENCOUNTER.x, ENCOUNTER.y);
+    var glowY = state.viewMode === "iso" ? ec.y : ec.y;
+    var glow = svgEl("circle", { cx: ec.x, cy: glowY, r: 10, fill:"none", stroke:"#3fd9c7", "stroke-width":2, opacity:0.85 });
+    glow.innerHTML = '<animate attributeName="r" values="8;16;8" dur="1.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;0.15;0.9" dur="1.6s" repeatCount="indefinite"/>';
+    markersLayer.appendChild(glow);
+  }
+
+  // enemies
+  state.enemies.forEach(function(e){
+    var ec = tileCenter(state.viewMode, e.x, e.y);
+    var yOff = state.viewMode === "iso" ? -6 : 0;
+    var tri = svgEl("polygon", {
+      points: [ec.x+","+(ec.y+yOff-11), (ec.x-10)+","+(ec.y+yOff+8), (ec.x+10)+","+(ec.y+yOff+8)].join(" "),
+      fill: "#d9524a", stroke:"#7a1f1a", "stroke-width":1.5,
+      "data-enemy-id": e.id
+    });
+    markersLayer.appendChild(tri);
+  });
+
+  // token
+  var tc = tileCenter(state.viewMode, tokenX, tokenY);
+  var tYOff = state.viewMode === "iso" ? -9 : 0;
+  var ring = svgEl("circle", { cx: tc.x, cy: tc.y+tYOff, r: 13, fill:"none", stroke:"#f3c268", "stroke-width":2, opacity:0.7 });
+  var dot = svgEl("circle", { cx: tc.x, cy: tc.y+tYOff, r: 8, fill:"#f3c268", stroke:"#8a6a30", "stroke-width":2 });
+  markersLayer.appendChild(ring);
+  markersLayer.appendChild(dot);
+}
+
+/* ============================================================
+   TOKEN MOVEMENT
+   ============================================================ */
+function moveTokenTo(gx, gy){
+  if(state.animating || state.workspaceOpen) return;
+  if(!inBounds(gx,gy)) return;
+  if(state.token.x === gx && state.token.y === gy) return;
+
+  state.animating = true;
+  var startX = state.token.x, startY = state.token.y;
+  var t0 = null;
+  var dur = 350;
+
+  function step(ts){
+    if(t0 === null) t0 = ts;
+    var p = Math.min(1, (ts - t0) / dur);
+    var cx = startX + (gx - startX) * p;
+    var cy = startY + (gy - startY) * p;
+    renderMarkers(cx, cy);
+    if(p < 1){
+      requestAnimationFrame(step);
+    } else {
+      state.token.x = gx; state.token.y = gy;
+      state.animating = false;
+      renderMarkers(gx, gy);
+      onTokenArrived(gx, gy);
+    }
+  }
+  requestAnimationFrame(step);
+}
+
+function onTokenArrived(gx, gy){
+  if(!state.battleActive && isEncounter(gx, gy)){
+    startBattle();
+  }
+}
+
+/* ============================================================
+   TILE CLICK / HOVER DELEGATION
+   ============================================================ */
+tilesLayer.addEventListener("click", function(e){
+  var g = e.target.closest ? e.target.closest("g.tile-group") : null;
+  if(!g) return;
+  var gx = parseInt(g.getAttribute("data-gx"), 10);
+  var gy = parseInt(g.getAttribute("data-gy"), 10);
+  moveTokenTo(gx, gy);
+});
+
+tilesLayer.addEventListener("mousemove", function(e){
+  if(!state.battleActive) return;
+  var g = e.target.closest ? e.target.closest("g.tile-group") : null;
+  if(!g) return;
+  var gx = parseInt(g.getAttribute("data-gx"), 10);
+  var gy = parseInt(g.getAttribute("data-gy"), 10);
+  var enemy = state.enemies.find(function(en){ return en.x===gx && en.y===gy; });
+  var body = document.getElementById("hud-info-body");
+  if(enemy){
+    body.textContent = "Tile ("+gx+","+gy+") — Hostile presence detected.";
+  } else if(gx===state.token.x && gy===state.token.y){
+    body.textContent = "Tile ("+gx+","+gy+") — Your position.";
+  } else {
+    body.textContent = "Tile ("+gx+","+gy+") — Clear ground.";
+  }
+});
+
+/* ============================================================
+   VIEW MODE TOGGLE
+   ============================================================ */
+document.getElementById("btn-view-top").addEventListener("click", function(){ setViewMode("top"); });
+document.getElementById("btn-view-iso").addEventListener("click", function(){ setViewMode("iso"); });
+
+function setViewMode(mode){
+  if(state.viewMode === mode) return;
+  state.viewMode = mode;
+  document.getElementById("btn-view-top").classList.toggle("active", mode==="top");
+  document.getElementById("btn-view-iso").classList.toggle("active", mode==="iso");
+  buildTiles();
+  renderMarkers(state.token.x, state.token.y);
+}
+
+/* ============================================================
+   PORTRAIT RAIL
+   ============================================================ */
+function creatureIconSVG(idx){
+  var hues = ["#d9524a","#4a90d9","#7ac88c","#d9a54a","#a55ad9"];
+  var h = hues[idx % hues.length];
+  return '<svg viewBox="0 0 40 40"><circle cx="20" cy="16" r="10" fill="'+h+'" opacity="0.85"/><path d="M6 36 Q20 22 34 36 Z" fill="'+h+'" opacity="0.6"/></svg>';
+}
+
+function buildPortraitRail(){
+  var rail = document.getElementById("portrait-rail");
+  rail.innerHTML = "";
+  SQUAD.forEach(function(c, i){
+    var isField = c.role === "Field";
+    var slot = document.createElement("div");
+    slot.className = "portrait-slot frame " + (isField ? "field" : "bench");
+    slot.innerHTML = creatureIconSVG(i) + '<div class="slot-label">'+(isField?"Field":"Bench")+'</div>';
+    slot.addEventListener("click", function(ev){
+      ev.stopPropagation();
+      togglePopover(i, slot);
+    });
+    rail.appendChild(slot);
+  });
+}
+
+function togglePopover(idx, slotEl){
+  var pop = document.getElementById("portrait-popover");
+  if(state.popoverOpen === idx){
+    pop.classList.remove("show");
+    state.popoverOpen = -1;
+    return;
+  }
+  var c = SQUAD[idx];
+  var statsHtml = c.stats.map(function(s){ return "<span>"+s[0]+" <b style=\"color:var(--gold-bright)\">"+s[1]+"</b></span>"; }).join("");
+  pop.innerHTML =
+    "<h3>"+c.name+"</h3>" +
+    "<div class=\"pp-stats\">"+statsHtml+"</div>" +
+    "<div class=\"pp-flavor\">"+c.flavor+"</div>";
+  pop.classList.add("show");
+  state.popoverOpen = idx;
+}
+
+document.addEventListener("click", function(e){
+  if(state.popoverOpen >= 0 && !e.target.closest("#portrait-popover") && !e.target.closest(".portrait-slot")){
+    document.getElementById("portrait-popover").classList.remove("show");
+    state.popoverOpen = -1;
+  }
+});
+
+/* ============================================================
+   WORKSPACE TRANSFORM
+   ============================================================ */
+function toggleWorkspace(){
+  if(state.battleActive) return; // keep it simple: no workspace during battle
+  state.workspaceOpen = !state.workspaceOpen;
+  document.body.classList.toggle("workspace-active", state.workspaceOpen);
+  if(state.workspaceOpen && state.popoverOpen >= 0){
+    document.getElementById("portrait-popover").classList.remove("show");
+    state.popoverOpen = -1;
+  }
+}
+document.getElementById("workspace-close").addEventListener("click", toggleWorkspace);
+
+/* ============================================================
+   BATTLE STUB
+   ============================================================ */
+function startBattle(){
+  state.battleActive = true;
+  document.body.classList.add("battle-active");
+  state.phase = "planning";
+  state.turn = 1;
+
+  // place placeholder enemies near the encounter tile
+  var candidates = [
+    { x: ENCOUNTER.x - 1, y: ENCOUNTER.y },
+    { x: ENCOUNTER.x, y: ENCOUNTER.y - 1 },
+    { x: ENCOUNTER.x - 1, y: ENCOUNTER.y - 1 }
+  ].filter(function(p){ return inBounds(p.x,p.y); });
+
+  state.enemies = candidates.slice(0,2).map(function(p, i){ return { id:"e"+i, x:p.x, y:p.y }; });
+
+  updateBattleHud();
+  buildTiles();
+  renderMarkers(state.token.x, state.token.y);
+}
+
+function endBattle(){
+  state.battleActive = false;
+  document.body.classList.remove("battle-active");
+  state.enemies = [];
+
+  // step the token off the encounter tile so it doesn't immediately retrigger
+  var nx = state.token.x, ny = state.token.y;
+  if(ny > 0) ny -= 1; else if(nx > 0) nx -= 1;
+  state.token.x = nx; state.token.y = ny;
+
+  buildTiles();
+  renderMarkers(state.token.x, state.token.y);
+}
+
+function updateBattleHud(){
+  document.getElementById("hud-turn").textContent = state.turn;
+  document.getElementById("hud-enemies").textContent = state.enemies.length;
+  var ind = document.getElementById("phase-indicator");
+  var txt = document.getElementById("phase-text");
+  if(state.phase === "execution"){
+    ind.classList.add("exec");
+    txt.textContent = "Execution Phase";
+  } else {
+    ind.classList.remove("exec");
+    txt.textContent = "Planning Phase";
+  }
+}
+
+document.getElementById("btn-end-turn").addEventListener("click", function(){
+  if(state.phase === "execution") return;
+  var btn = document.getElementById("btn-end-turn");
+  btn.disabled = true;
+  state.phase = "execution";
+  updateBattleHud();
+
+  // simulate resolution: floating combat text over enemies
+  state.enemies.forEach(function(e, i){
+    setTimeout(function(){
+      spawnDamageFloat(e.x, e.y);
+    }, 150 + i * 180);
+  });
+
+  setTimeout(function(){
+    state.phase = "planning";
+    state.turn += 1;
+    updateBattleHud();
+    btn.disabled = false;
+  }, 950);
+});
+
+document.getElementById("btn-retreat").addEventListener("click", endBattle);
+
+function spawnDamageFloat(gx, gy){
+  var c = tileCenter(state.viewMode, gx, gy);
+  var wrap = document.getElementById("grid-wrap");
+  var rect = document.getElementById("grid-svg").getBoundingClientRect();
+  var wrapRect = wrap.getBoundingClientRect();
+  var scaleX = rect.width / 900, scaleY = rect.height / 600;
+  var px = (rect.left - wrapRect.left) + c.x * scaleX;
+  var py = (rect.top - wrapRect.top) + c.y * scaleY;
+
+  var dmg = document.createElement("div");
+  dmg.className = "dmg-float";
+  dmg.textContent = "-" + (4 + Math.floor(Math.random()*7));
+  dmg.style.left = px + "px";
+  dmg.style.top = py + "px";
+  wrap.appendChild(dmg);
+  setTimeout(function(){ dmg.remove(); }, 950);
+}
+
+/* ============================================================
+   KEYBOARD
+   ============================================================ */
+document.addEventListener("keydown", function(e){
+  if(document.getElementById("screen-foundation").classList.contains("hidden") === false) return;
+
+  if(e.key === "Tab" || e.key === "w" || e.key === "W"){
+    e.preventDefault();
+    toggleWorkspace();
+    return;
+  }
+  if(state.workspaceOpen) return;
+
+  var dx = 0, dy = 0;
+  if(e.key === "ArrowUp") dy = -1;
+  else if(e.key === "ArrowDown") dy = 1;
+  else if(e.key === "ArrowLeft") dx = -1;
+  else if(e.key === "ArrowRight") dx = 1;
+  else return;
+
+  e.preventDefault();
+  moveTokenTo(state.token.x + dx, state.token.y + dy);
+});
+
+/* ============================================================
+   FOUNDATION SELECT SCREEN
+   ============================================================ */
+function foundationArtSVG(kind, color){
+  var base = '<rect x="0" y="0" width="200" height="260" fill="none"/>' +
+    '<circle cx="100" cy="90" r="46" fill="'+color+'" />';
+  var shapes = {
+    warden: '<rect x="70" y="130" width="60" height="90" fill="'+color+'" rx="6"/><polygon points="100,20 130,60 70,60" fill="'+color+'"/>',
+    seer: '<polygon points="100,20 140,70 100,120 60,70" fill="'+color+'"/><rect x="75" y="120" width="50" height="100" fill="'+color+'" rx="20"/>',
+    ranger: '<polygon points="100,15 115,60 85,60" fill="'+color+'"/><rect x="80" y="120" width="40" height="100" fill="'+color+'" rx="14"/>',
+    smith: '<rect x="70" y="115" width="60" height="100" fill="'+color+'" rx="4"/><rect x="55" y="60" width="90" height="24" fill="'+color+'" rx="4"/>'
+  };
+  return '<svg viewBox="0 0 200 260">' + base + (shapes[kind]||"") + '</svg>';
+}
+
+function buildFoundationThumbs(){
+  var wrap = document.getElementById("fs-thumbs");
+  wrap.innerHTML = "";
+  FOUNDATIONS.forEach(function(f, i){
+    var el = document.createElement("div");
+    el.className = "fs-thumb frame" + (i === state.selectedFoundation ? " active" : "");
+    el.innerHTML = '<div class="ic">'+foundationArtSVG(f.art, f.color.replace("0.28","0.9").replace("0.26","0.9").replace("0.22","0.9").replace("0.24","0.9"))+'</div><div class="nm">'+f.name+'</div>';
+    el.addEventListener("click", function(){
+      state.selectedFoundation = i;
+      renderFoundationSelection();
+    });
+    wrap.appendChild(el);
+  });
+}
+
+function renderFoundationSelection(){
+  var f = FOUNDATIONS[state.selectedFoundation];
+  document.getElementById("fs-name").textContent = f.name;
+  document.getElementById("fs-flavor").textContent = f.flavor;
+  document.getElementById("fs-glow").style.background = "radial-gradient(circle at 50% 40%, " + f.color + ", transparent 65%)";
+  document.getElementById("fs-art-svg").outerHTML = '<svg id="fs-art-svg" viewBox="0 0 200 260" width="220" height="260">' +
+    foundationArtSVG(f.art, f.color.replace(/0\.\d+/, "0.9")) + '</svg>';
+
+  var statsWrap = document.getElementById("fs-stats");
+  statsWrap.innerHTML = "";
+  f.stats.forEach(function(s){
+    var row = document.createElement("div");
+    row.className = "fs-stat-row";
+    row.innerHTML = "<span>"+s[0]+"</span><b>"+s[1]+"</b>";
+    statsWrap.appendChild(row);
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll(".fs-thumb"), function(el, i){
+    el.classList.toggle("active", i === state.selectedFoundation);
+  });
+}
+
+document.getElementById("fs-back").addEventListener("click", function(){
+  state.selectedFoundation = 0;
+  renderFoundationSelection();
+});
+
+document.getElementById("fs-confirm").addEventListener("click", function(){
+  document.getElementById("screen-foundation").classList.add("hidden");
+  var world = document.getElementById("screen-world");
+  world.classList.add("active");
+  initWorld();
+});
+
+/* ============================================================
+   INIT
+   ============================================================ */
+var worldInitialized = false;
+function initWorld(){
+  if(worldInitialized) return;
+  worldInitialized = true;
+  buildPortraitRail();
+  buildTiles();
+  renderMarkers(state.token.x, state.token.y);
+}
+
+function init(){
+  buildFoundationThumbs();
+  renderFoundationSelection();
+}
+init();
+
+})();
+</script>
+</body>
+</html>
