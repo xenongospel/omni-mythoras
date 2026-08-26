@@ -1,0 +1,23 @@
+{
+  "name": "mythoras-ade-prototype",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "bun --hot ./index.ts",
+    "start": "bun --hot ./index.ts",
+    "desktop": "tauri dev",
+    "build": "bun build ./index.html --outdir dist"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.11.4",
+    "@types/bun": "latest",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "typescript": "~5.8.3"
+  }
+}
