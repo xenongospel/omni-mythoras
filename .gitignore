@@ -3,5 +3,12 @@
 *.mp4
 *.mov
 node_modules/
+dist/
 .env
 .env.*
+apps/*/node_modules/
+apps/*/dist/
+
+# Third-party game screenshots used as local agent reference only.
+# Kept on disk, never published — this repo is public.
+apps/*/reference/
