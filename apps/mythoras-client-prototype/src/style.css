@@ -1,0 +1,557 @@
+:root {
+  --plate: #100c09;
+  --ink: #e6d8c2;
+  --ink-dim: #a89880;
+  --hp: #9c241c;
+  --hp-track: #2a1210;
+  --load: #d4cbb8;
+  --load-track: #221e18;
+  --kw: #d4a24a;
+  --gold: #c4a66a;
+  --frame: #5a4a36;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #0c0907;
+  color: var(--ink);
+  font-family: Ubuntu, "Segoe UI", sans-serif;
+  font-size: 13px;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.shell {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.stage {
+  flex: 1 1 auto;
+  min-height: 0;
+  position: relative;
+}
+
+#app {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.squad-strip {
+  position: absolute;
+  left: 16px;
+  bottom: 8px;
+  display: flex;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.squad-strip .pip {
+  pointer-events: auto;
+}
+
+.pip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 0;
+  background: none;
+  border: 0;
+}
+
+.pip.is-on .portrait-face {
+  outline: 1px solid var(--gold);
+}
+
+.pip.is-bench {
+  opacity: 0.55;
+}
+
+.pip .portrait-face {
+  width: 36px;
+  height: 36px;
+  font-size: 16px;
+}
+
+.pip-hp {
+  width: 36px;
+  height: 4px;
+  background: var(--hp-track);
+}
+
+.pip-hp-fill {
+  height: 100%;
+  background: var(--hp);
+}
+
+.plate {
+  position: relative;
+  flex: 0 0 32vh;
+  min-height: 260px;
+  max-height: 380px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
+  background-color: var(--plate);
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(0, 0, 0, 0.22) 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 5px,
+      rgba(40, 28, 16, 0.18) 6px
+    );
+  border-top: 10px solid #1a140e;
+  box-shadow:
+    inset 0 0 0 2px #3a2e22,
+    inset 0 0 0 4px #0a0705,
+    inset 0 8px 0 #2a2016;
+}
+
+.crest {
+  position: absolute;
+  top: -18px;
+  width: 52px;
+  height: 78px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.crest-left { left: 6px; }
+.crest-right { right: 6px; transform: scaleX(-1); }
+
+.plate-left,
+.plate-right {
+  min-width: 0;
+  min-height: 0;
+}
+
+.plate-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 18px 12px 64px;
+  border-right: 1px solid #2a2218;
+}
+
+.plate-right {
+  display: flex;
+  gap: 0;
+  padding: 10px 8px 10px 12px;
+}
+
+.ident {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.portrait-face {
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  font-family: "UnifrakturCook", serif;
+  font-size: 28px;
+  border: 2px solid #4a3c2c;
+  box-shadow: inset 0 0 0 1px #0a0705;
+  flex: 0 0 auto;
+}
+
+.hero-name {
+  font-family: "UnifrakturCook", serif;
+  font-size: 30px;
+  line-height: 1;
+  color: #f0e4cc;
+}
+
+.hero-class {
+  margin-top: 3px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.skills {
+  display: flex;
+  gap: 5px;
+}
+
+.skill {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  color: #d2c4ac;
+  background: #0c0907;
+  border: 2px solid #5a4a36;
+  box-shadow: inset 0 0 0 1px #1a140e;
+}
+
+.skill svg {
+  width: 26px;
+  height: 26px;
+}
+
+.skill.is-on {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.skill.is-empty {
+  opacity: 0.28;
+  cursor: default;
+}
+
+.resbar {
+  display: grid;
+  grid-template-columns: 38px 1fr auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.res-ico {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--ink-dim);
+}
+
+.res-track {
+  height: 11px;
+  background: var(--hp-track);
+  box-shadow: inset 0 0 0 1px #4a2018;
+}
+
+.resbar-load .res-track {
+  background: var(--load-track);
+  box-shadow: inset 0 0 0 1px #3a362c;
+}
+
+.res-fill {
+  height: 100%;
+  background: var(--hp);
+}
+
+.resbar-load .res-fill {
+  background: var(--load);
+}
+
+.res-num {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  min-width: 70px;
+  text-align: right;
+}
+
+.lower {
+  display: grid;
+  grid-template-columns: minmax(0, 160px) auto;
+  gap: 16px;
+  align-items: start;
+  margin-top: 2px;
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stat {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 12px;
+}
+
+.stat-k {
+  color: var(--ink-dim);
+  letter-spacing: 0.08em;
+}
+
+.stat-v {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.trinkets {
+  display: flex;
+  gap: 6px;
+}
+
+.trinket {
+  width: 52px;
+  height: 52px;
+  border: 2px solid #5a4a36;
+  background: #0c0907;
+  display: grid;
+  place-items: center;
+  color: var(--gold);
+}
+
+.trinket svg {
+  width: 28px;
+  height: 28px;
+}
+
+.trinket.is-empty {
+  opacity: 0.28;
+}
+
+.float-tip {
+  position: absolute;
+  left: 64px;
+  bottom: 10px;
+  z-index: 4;
+  width: min(340px, 42%);
+  padding: 8px 10px;
+  background: #0a0705;
+  border: 1px solid #6a5840;
+}
+
+.skill-name {
+  font-family: "UnifrakturCook", serif;
+  font-size: 16px;
+  color: var(--gold);
+}
+
+.skill-line {
+  margin: 3px 0 0;
+  line-height: 1.35;
+}
+
+.kw {
+  color: var(--kw);
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 2px;
+}
+
+.kw:hover,
+.kw:focus-visible {
+  color: #f0c56a;
+}
+
+.glossary {
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid #3a3026;
+}
+
+.glossary-term {
+  font-family: "UnifrakturCook", serif;
+  font-size: 15px;
+  color: var(--gold);
+}
+
+.glossary-def {
+  margin: 2px 0 0;
+  color: var(--ink-dim);
+  line-height: 1.35;
+}
+
+.pane {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+}
+
+.tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 0 0 auto;
+  padding: 4px 4px 4px 8px;
+}
+
+.tab {
+  width: 34px;
+  height: 34px;
+  color: var(--ink-dim);
+  border: 1px solid #4a3c2c;
+  background: #0c0907;
+  display: grid;
+  place-items: center;
+}
+
+.tab svg {
+  width: 18px;
+  height: 18px;
+}
+
+.tab.is-on {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+.map,
+.inv {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 0;
+}
+
+.map-title {
+  font-family: "UnifrakturCook", serif;
+  font-size: 18px;
+  color: var(--gold);
+  padding-left: 4px;
+}
+
+.zone-graph {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 0;
+  overflow: visible;
+}
+
+.zone-graph .hall {
+  stroke: #6a5840;
+  stroke-width: 1.5;
+}
+
+.zone-graph .room rect {
+  fill: #16110c;
+  stroke: #6a5840;
+  stroke-width: 0.55;
+}
+
+.zone-graph .room.is-here rect {
+  fill: #5a2018;
+  stroke: var(--gold);
+  stroke-width: 0.9;
+}
+
+.zone-graph .room.is-cleared rect {
+  fill: #2a2218;
+}
+
+.zone-graph .room.is-ahead rect {
+  fill: #241c14;
+  stroke: #a89068;
+}
+
+.zone-graph .room.is-side rect {
+  fill: #1e1812;
+}
+
+.zone-graph .room.is-locked rect {
+  fill: #0c0a08;
+  stroke: #3a3228;
+}
+
+.zone-graph .room text {
+  fill: var(--ink);
+  font-size: 3.5px;
+  font-family: Ubuntu, sans-serif;
+}
+
+.zone-graph .room.is-locked text {
+  fill: #6a5e50;
+}
+
+.map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  font-size: 11px;
+  color: var(--ink-dim);
+  padding: 0 4px 2px;
+}
+
+.legend-chip::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 5px;
+  vertical-align: -1px;
+  border: 1px solid #6a5840;
+  background: #2a2218;
+}
+
+.legend-chip.is-here::before {
+  background: #5a2018;
+  border-color: var(--gold);
+}
+
+.legend-chip.is-ahead::before {
+  background: #241c14;
+  border-color: #a89068;
+}
+
+.legend-chip.is-locked::before {
+  background: #0c0a08;
+  border-color: #3a3228;
+}
+
+.inv-grid {
+  flex: 1 1 auto;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-auto-rows: minmax(40px, 1fr);
+  gap: 4px;
+  min-height: 0;
+  padding-right: 4px;
+}
+
+.inv-slot {
+  position: relative;
+  border: 2px solid #5a4a36;
+  background: #0c0907;
+  display: grid;
+  place-items: center;
+  color: var(--gold);
+}
+
+.inv-slot svg {
+  width: 22px;
+  height: 22px;
+}
+
+.inv-slot.is-empty {
+  opacity: 0.22;
+}
+
+.inv-qty {
+  position: absolute;
+  right: 3px;
+  bottom: 1px;
+  font-family: "UnifrakturCook", serif;
+  font-size: 13px;
+  line-height: 1;
+}
+
+@media (max-height: 720px) {
+  .plate {
+    flex-basis: 36vh;
+    min-height: 240px;
+  }
+  .hero-name { font-size: 24px; }
+  .skill, .trinket { width: 38px; height: 38px; }
+}
