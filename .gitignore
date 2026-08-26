@@ -9,6 +9,11 @@ dist/
 apps/*/node_modules/
 apps/*/dist/
 
-# Third-party game screenshots used as local agent reference only.
-# Kept on disk, never published — this repo is public.
-apps/*/reference/
+# Third-party game screenshots and extracted art used as local agent
+# reference only. Kept on disk, never published — this repo is public.
+# READMEs stay tracked so the expected structure is documented.
+apps/*/reference/**/*.jpg
+apps/*/reference/**/*.jpeg
+apps/*/reference/**/*.png
+apps/*/reference/**/*.webp
+apps/*/reference/**/*.gif

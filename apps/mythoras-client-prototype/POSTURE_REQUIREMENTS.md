@@ -6,6 +6,11 @@
 
 **Surfaces:** `apps/mythoras-client-prototype` only. ADE is out of this pass. Godot is later.
 
+**Two references, two jobs — do not cross them.** Darkest Dungeon 1 governs the
+**bottom console** (and later, parts of the menus and systems screens). Master
+of Pieces governs the **game view** — the board. DD1 has nothing to say about
+the board; MoP has nothing to say about the plate. See `reference/README.md`.
+
 ---
 
 ## 1. Method
@@ -119,6 +124,85 @@ Roster of 5 (3 Field + 2 Bench) may appear as small pips **above** the plate or 
 - Two-face plate, matching DD1’s actual mapping: **Dwarven Axe BB** for names / titles / inventory counts; **Ubuntu** for class labels, stats, tooltips, glossary definitions, HP figures.
 - Dark plate, parchment/off-white text, functional red for HP. Tracing may look gothic. That is allowed for this pass.
 
+### 5.1 Type scale — measured, not chosen (2026-08-26)
+
+Sizes below are **derived from pixel measurements** of both reference
+screenshots at 1920×1080, cross-checked against each other. Convert
+proportionally for other window sizes; the plate is a fixed fraction of window
+height, so type scales with it.
+
+| Job | Face | Size | Weight | Line-height | Case | Ink |
+| --- | --- | --- | --- | --- | --- | --- |
+| Creature name | UnifrakturCook | **48px** | 700 | 1.0 | Title | `#b6b48a` |
+| Class / species label | Ubuntu | **20px** | 400 | 1.1 | Title | `#acac91` |
+| HP figures | Ubuntu | **22px** | 700 | 1.0 | — | `#b6b48a` |
+| Stat label | Ubuntu | **19px** | 400 | **18px** (0.95) | UPPER | `#858682` |
+| Stat value | Ubuntu | **19px** | 400 | **18px** (0.95) | — | `#757572` |
+| Glossary term | UnifrakturCook | 19px | 700 | 1.2 | Title | `#b6b48a` |
+| Glossary definition | Ubuntu | 19px | 400 | 1.35 | — | `#acac91` |
+
+**How these were derived.** The stat grid is the anchor because it is the only
+block that repeats: six all-caps rows, cap-height band **13px**, pitch exactly
+**18px**, identical in both screenshots. Ubuntu's cap height is 0.693em, so
+13 ÷ 0.693 ≈ 18.8px — call it 19px on an 18px leading. Everything else follows
+the same method: the class label's ascender-to-descender band is 19px (≈20px
+type), HP digits are a 15px cap band (≈22px), and the name's cap band is 34px on
+"Vernon" and 37px on "Boissel" (≈48px blackletter).
+
+**The single most important fact in this table:** there is only *one* large
+step. The name is 48px and *everything else on the plate is 19–22px.* That is a
+2.5:1 scale with nothing in between — DD1's plate is not a rich type hierarchy,
+it is one display line over a wall of uniform body text. Building a five-step
+scale here will read as generic no matter which faces are loaded.
+
+The glossary rows are **not measured** — the glossary is a Neidfyre job and does
+not appear in the DD1 references. They are derived from the measured body size
+and Butterick's 120–145% leading guidance. Treat them as provisional.
+
+### 5.2 Palette — pinned
+
+Taken from `panel_hero.png` (720×224) in the Steam install, which is
+**uncompressed game art**, not a screenshot. The reference jpgs could not supply
+this: they are video captures with crushed blacks (56% of the first image is
+pure black) and cannot be trusted for colour. Read the art in place; do not copy
+it into the repo.
+
+**Core six** — these are the plate. Nothing outside this set without a reason.
+
+| Token | Hex | Role |
+| --- | --- | --- |
+| `--plate-void` | `#000000` | Plate ground. **83% of the panel art is literally this.** |
+| `--plate-raise` | `#242424` | Top of the ground ramp; the lightest the field ever gets |
+| `--chrome-edge` | `#919191` | Frame highlight, slot borders |
+| `--ink-primary` | `#b6b48a` | Name, HP figures, glossary terms |
+| `--ink-muted` | `#858682` | Stat labels, secondary text |
+| `--hp-red` | `#b80000` | HP bar, functional red only |
+
+**Supporting ramp**, if the frame needs modelling: ground steps `#0c0c0c`,
+`#141414`, `#1c1c1c`; chrome body `#434343`; HP shading `#8a0000`, `#4d0000`;
+body ink `#acac91`; dim ink `#757572`.
+
+**The rule that makes this not-SaaS.** DD1's neutrals are **pure grey — R = G = B
+exactly** (`#919191`, `#434343`, `#242424`), while the ink is **warm**
+(`#b6b48a` is a warm olive-cream). Slate is the opposite: `#64748b` and its
+family are blue-tinted greys carrying cool text. If a neutral on this plate has
+unequal channels, it is wrong.
+
+### 5.3 Geometry
+
+| Property | Measured | Note |
+| --- | --- | --- |
+| Plate height | **33.5%** of window height (362px at 1080p) | Confirms §2's "a real third" |
+| Stat row pitch | 18px at 1080p | 4.97% of plate height |
+
+### 5.4 Signature element
+
+DD1's is the ornate iron corner bookends flanking a pure-black void, with the
+blackletter name as the only large type on screen. The tracing inherits it.
+
+**Mythoras's own signature is not yet chosen** and must not be invented during a
+tracing pass. It is the first question of the peel, not of the trace.
+
 **Font facts (read from the Steam install, 2026-08-24)**
 
 Install: `~/Library/Application Support/Steam/steamapps/common/DarkestDungeon/_osx/Darkest.app/Contents/Resources/data/fonts/`
@@ -148,6 +232,12 @@ Shipped but **not** wired in `fonts.darkest`: `new_rocker-m.fnt` (New Rocker), `
 - Neutral “functional slate” SaaS (4px radius, `#3a5a8a` tabs, Inter/IBM Plex/JetBrains as the plate).
 - A prompt that says “match DD shape but do not copy gothic type.” That contradiction produced the last slop.
 - Treat the whole HUD as a gothic serif. Names are gothic; **body is Ubuntu**.
+- **A third typeface.** Two faces, no exceptions. No system-font fallback beyond the declared stack — a helpful agent will silently add Inter.
+- **A neutral with unequal channels.** See §5.2. Blue-tinted grey is the tell.
+- **A plate ground lighter than `#242424`.** The field is black; the frame does the work.
+- **A type step between 22px and 48px.** The gap is the design (§5.1).
+- **Uppercase anywhere except stat labels.** The reference uses caps in exactly one place.
+- **Rounded corners on plate chrome.** The slots and frame are square.
 
 Prototype ≠ poor: tiles readable, plate dense, type intentional. Not shaders, not final art.
 

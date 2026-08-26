@@ -12,9 +12,11 @@ Domain words from root `CONTEXT.md` (Technician, Squad, Field, Bench, AUTH / INV
 
 ## Picture
 
-Upper majority: a 3D isometric voxel / cube-tile board (Master of Piece tile language). Units on tiles. Walkable / threatened / special tiles are coloured facts.
+Two surfaces, two references — do not cross them. See `reference/README.md`.
 
-Lower third: one heavy framed plate copied from Darkest Dungeon 1 combat (see `reference/dd1_hero_panel.jpg` and `reference/dd1_hero_panel_2.jpg`).
+Upper majority: a 3D isometric voxel / cube-tile board (Master of Pieces tile language, `reference/gameview-mop/`). Units on tiles. Walkable / threatened / special tiles are coloured facts. **DD1 has nothing to say about the board.**
+
+Lower third: one heavy framed plate copied from Darkest Dungeon 1 combat (`reference/console-dd1/`). **MoP has nothing to say about the plate.**
 
 - **Left:** one selected creature — portrait, name (blackletter), class (Ubuntu), skill squares, HP bar, second resource bar, stat grid, two trinket slots.
 - **Right:** exactly two states — **Map** (real schematic of this footprint) and **Inventory** (real stub slot grid). Edge tabs. One visible at a time.
