@@ -2,7 +2,7 @@
 
 > Owner-direction / research / idea-vector only. **Not canon.**  
 > Visual analysis of the Montabi reference linked for succinct creature + empty-slot layout.  
-> Anchors: [RESEARCH_OWNER_ANSWERS_2026-08-06.md](RESEARCH_OWNER_ANSWERS_2026-08-06.md) § B5.
+> Anchors: [RESEARCH_OWNER_ANSWERS_2026-08-06.md](../../RESEARCH_OWNER_ANSWERS_2026-08-06.md) § B5.
 
 **Date:** 2026-08-06  
 **Status:** Research note — layout lessons from what appears on screen. Does not lock Mythoras UI.  

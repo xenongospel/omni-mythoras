@@ -21,10 +21,10 @@ These are **repo FACT** about Mythoras intent for this ticket — not claims abo
 
 | Source | What it says | How this note treats it |
 | --- | --- | --- |
-| [`RESEARCH_OWNER_ADE_NARROWING_2026-08-11.md`](RESEARCH_OWNER_ADE_NARROWING_2026-08-11.md) § Skills direction | Not following full Mewgenics pathway; overlapping fundamentals / variation only. Skill Cards may have been over-deep; owner leans **maybe not cards**. Proposed economy: **global bank** + **pocket/exceptional bank** (boss drops, exceptional-support-like rarity, unique-like skills, packs, utility, **creature-species skills**). ADE designing skills may help settle representation later. | Respect as owner idea vector; do **not** lock as canon. |
-| [`IDEA_LOG.md`](IDEA_LOG.md) IDEA-004 | Keep Skill Cards for MVP; revisit presentation later. Metaphor must stay physically imaginable. | Do not close card vs non-card. Prefer “skill” / bank language when discussing economy. |
-| [`SESSION_COMPILE_2026-08-11.md`](SESSION_COMPILE_2026-08-11.md) §2.2 | Keep Skill Cards for MVP UI scaffolds; park constellation; creature remains skill host. Mewgenics listed as later research (boss skill selection, ancestry on Grid, etc.). | Presentation = MVP scaffold, not economy lock. This note does **not** adopt breeding→Grid ancestry as a recommendation. |
-| [`CONTEXT.md`](CONTEXT.md) #9 + Skill vocabulary | Skill Cards / Frame / Supports are **creature-local**. Creatures learn/equip skills; no natural Pokémon move pool as the model (“Creatures have no natural moves” in Pokémon-transpose table — Skill Cards are the TM analogue). | Ownership stays creature-local regardless of bank membership. Bank = *where the skill comes from in the economy*, not who owns the installed instance. |
+| [`RESEARCH_OWNER_ADE_NARROWING_2026-08-11.md`](../../RESEARCH_OWNER_ADE_NARROWING_2026-08-11.md) § Skills direction | Not following full Mewgenics pathway; overlapping fundamentals / variation only. Skill Cards may have been over-deep; owner leans **maybe not cards**. Proposed economy: **global bank** + **pocket/exceptional bank** (boss drops, exceptional-support-like rarity, unique-like skills, packs, utility, **creature-species skills**). ADE designing skills may help settle representation later. | Respect as owner idea vector; do **not** lock as canon. |
+| [`IDEA_LOG.md`](../../IDEA_LOG.md) IDEA-004 | Keep Skill Cards for MVP; revisit presentation later. Metaphor must stay physically imaginable. | Do not close card vs non-card. Prefer “skill” / bank language when discussing economy. |
+| [`SESSION_COMPILE_2026-08-11.md`](../../SESSION_COMPILE_2026-08-11.md) §2.2 | Keep Skill Cards for MVP UI scaffolds; park constellation; creature remains skill host. Mewgenics listed as later research (boss skill selection, ancestry on Grid, etc.). | Presentation = MVP scaffold, not economy lock. This note does **not** adopt breeding→Grid ancestry as a recommendation. |
+| [`CONTEXT.md`](../../CONTEXT.md) #9 + Skill vocabulary | Skill Cards / Frame / Supports are **creature-local**. Creatures learn/equip skills; no natural Pokémon move pool as the model (“Creatures have no natural moves” in Pokémon-transpose table — Skill Cards are the TM analogue). | Ownership stays creature-local regardless of bank membership. Bank = *where the skill comes from in the economy*, not who owns the installed instance. |
 | Same — open inventory model | Skill Card inventory (shared items vs creature-bound) still OPEN in CONTEXT. | Two-bank idea must not silently decide tradability. |
 
 **Explicit non-goals for this note**
@@ -168,7 +168,7 @@ Mythoras’s proposed two-bank idea can sit **between** these poles without copy
 
 ## 4. Map to Mythoras two-bank idea (careful; non-canon)
 
-Owner shape ([ADE narrowing](RESEARCH_OWNER_ADE_NARROWING_2026-08-11.md)):
+Owner shape ([ADE narrowing](../../RESEARCH_OWNER_ADE_NARROWING_2026-08-11.md)):
 
 1. **Global bank** — available across the game.  
 2. **Pocket / exceptional bank** — boss drops, exceptional-support-like rarity, unique-like skills, packs, utility, creature-species skills — **smaller**, drives variability.
@@ -224,7 +224,7 @@ Do **not** treat “Skill Card” wording in CONTEXT as a closed presentation lo
 
 ## 5. Mythoras ADE implication — minimum useful Skills dictionary (later; do not build now)
 
-Mirror the anti-theatre standard from [`RESEARCH_TAGS_VS_MOD_CATALOGUE_ARPG_2026-08-10.md`](RESEARCH_TAGS_VS_MOD_CATALOGUE_ARPG_2026-08-10.md) §6.2: empty Skills chrome without an authoring job fails. Motherboard Grid / Skill Frame topology stay fog per ADE narrowing — **Skills dictionary ≠ Frame topology editor**.
+Mirror the anti-theatre standard from [`RESEARCH_TAGS_VS_MOD_CATALOGUE_ARPG_2026-08-10.md`](../../RESEARCH_TAGS_VS_MOD_CATALOGUE_ARPG_2026-08-10.md) §6.2: empty Skills chrome without an authoring job fails. Motherboard Grid / Skill Frame topology stay fog per ADE narrowing — **Skills dictionary ≠ Frame topology editor**.
 
 ### 5.1 Jobs the Skills face must enable
 
@@ -319,11 +319,11 @@ Mirror the anti-theatre standard from [`RESEARCH_TAGS_VS_MOD_CATALOGUE_ARPG_2026
 
 ### Mythoras repo fidelity
 
-- [`CONTEXT.md`](CONTEXT.md) — skill ownership #9; Skill Card / Frame vocabulary; Pokémon-transpose “no natural moves”
-- [`IDEA_LOG.md`](IDEA_LOG.md) — IDEA-004 presentation
-- [`RESEARCH_OWNER_ADE_NARROWING_2026-08-11.md`](RESEARCH_OWNER_ADE_NARROWING_2026-08-11.md) — skills direction / two-bank idea
-- [`SESSION_COMPILE_2026-08-11.md`](SESSION_COMPILE_2026-08-11.md) — MVP skill UI; Mewgenics later research bullets
-- [`RESEARCH_TAGS_VS_MOD_CATALOGUE_ARPG_2026-08-10.md`](RESEARCH_TAGS_VS_MOD_CATALOGUE_ARPG_2026-08-10.md) — ADE minimum dictionary surface pattern
+- [`CONTEXT.md`](../../CONTEXT.md) — skill ownership #9; Skill Card / Frame vocabulary; Pokémon-transpose “no natural moves”
+- [`IDEA_LOG.md`](../../IDEA_LOG.md) — IDEA-004 presentation
+- [`RESEARCH_OWNER_ADE_NARROWING_2026-08-11.md`](../../RESEARCH_OWNER_ADE_NARROWING_2026-08-11.md) — skills direction / two-bank idea
+- [`SESSION_COMPILE_2026-08-11.md`](../../SESSION_COMPILE_2026-08-11.md) — MVP skill UI; Mewgenics later research bullets
+- [`RESEARCH_TAGS_VS_MOD_CATALOGUE_ARPG_2026-08-10.md`](../../RESEARCH_TAGS_VS_MOD_CATALOGUE_ARPG_2026-08-10.md) — ADE minimum dictionary surface pattern
 
 ---
 

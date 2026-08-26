@@ -2,7 +2,7 @@
 
 **Date:** 2026-08-19
 **Status:** Exploratory synthesis only. **Not canon.** Answers no open question; may itself surface new ones.
-**Relation to prior work:** Third pass on the same owner thread as [RESEARCH_POE_LUMINARY_MERC_VECTOR_2026-08.md](RESEARCH_POE_LUMINARY_MERC_VECTOR_2026-08.md) (correction file) and [RESEARCH_MERC_PROGRESSION_VECTOR_BB_2026-08.md](RESEARCH_MERC_PROGRESSION_VECTOR_BB_2026-08.md) (superseded BB angle, kept for UX-only lessons). Read both in full before this file — this file does not restate their content, only extends it.
+**Relation to prior work:** Third pass on the same owner thread as [RESEARCH_POE_LUMINARY_MERC_VECTOR_2026-08.md](../../RESEARCH_POE_LUMINARY_MERC_VECTOR_2026-08.md) (correction file) and [RESEARCH_MERC_PROGRESSION_VECTOR_BB_2026-08.md](../../RESEARCH_MERC_PROGRESSION_VECTOR_BB_2026-08.md) (superseded BB angle, kept for UX-only lessons). Read both in full before this file — this file does not restate their content, only extends it.
 
 ---
 

@@ -1,7 +1,7 @@
 # Skill-as-circuit ("PathwayXL") + attribute-leaning gems — exploratory research
 
 **Date:** 2026-08-19
-**Status:** Research note. **Not canon.** Does not close any [`CONTEXT.md`](CONTEXT.md) Open Design Exploration or Open Question. Both threads below are exploratory framing for a future grill session, not a proposal to adopt.
+**Status:** Research note. **Not canon.** Does not close any [`CONTEXT.md`](../../CONTEXT.md) Open Design Exploration or Open Question. Both threads below are exploratory framing for a future grill session, not a proposal to adopt.
 **Audience:** Owner review before any grill on Skill Frame topology or item/skill Attribute-identity systems.
 **Triggers:** Owner recollection of a YouTube video re: "PathwayXL" and an "onboarding processing unit"; owner recollection of Chris Wilson calling the red PoE gem a "strength gem."
 
@@ -26,7 +26,7 @@ The owner's video link, `https://www.youtube.com/watch?v=PwBmzi9zuqU`, does **no
 
 ### 1. Mapping "skill as circuit" onto Mythoras's current architecture
 
-Per [`CONTEXT.md`](CONTEXT.md) (Progression & Build table, entries 9/12/13 in Critical Corrections):
+Per [`CONTEXT.md`](../../CONTEXT.md) (Progression & Build table, entries 9/12/13 in Critical Corrections):
 
 - **Skill Card** = an equippable card granting a creature a skill. Creature-local, installed in that creature's Skill Frame.
 - **Skill Frame** = the creature's intrinsic skill configuration network — **anchor nodes** (Skill Cards) and **satellite nodes** (Support Cards), species-specific topology. "Active skills are modularised by supports per skill; support count/rules are OPEN."
@@ -76,7 +76,7 @@ This is a **different surface** from the CONTEXT.md open question, and that dist
 
 | Surface | Where it lives in CONTEXT.md | What's open there |
 | --- | --- | --- |
-| **Item/gear affixes** | Open Design Explorations → "Modifier / Affix Classification System" | Whether items use prefix/suffix, a **quad classification aligned to the 4 Attributes** (Authority/Invictus/Animus/Order, max 4 affix slots), a hybrid, or something else. Explicitly unresolved; a prior research pass ([`RESEARCH_AFFIX_PREFIX_SUFFIX_LEAN_2026-08-11.md`](RESEARCH_AFFIX_PREFIX_SUFFIX_LEAN_2026-08-11.md)) found the owner **leans** prefix/suffix for gear with the quad idea still open, not decided. |
+| **Item/gear affixes** | Open Design Explorations → "Modifier / Affix Classification System" | Whether items use prefix/suffix, a **quad classification aligned to the 4 Attributes** (Authority/Invictus/Animus/Order, max 4 affix slots), a hybrid, or something else. Explicitly unresolved; a prior research pass ([`RESEARCH_AFFIX_PREFIX_SUFFIX_LEAN_2026-08-11.md`](../../RESEARCH_AFFIX_PREFIX_SUFFIX_LEAN_2026-08-11.md)) found the owner **leans** prefix/suffix for gear with the quad idea still open, not decided. |
 | **Skill Cards** | Not addressed by that section at all — Skill Card is defined structurally (creature-local, installed in Skill Frame) with no attribute-identity dimension mentioned anywhere in CONTEXT.md | Nothing currently proposes an Attribute-lean identity on Skill Cards. This would be a **new** open question, not an extension of an existing one. |
 
 **These are two different systems that the owner may be conflating** (his framing — "Chris Wilson called the red *gem* a strength gem" — is about PoE's *skill* gems, not PoE's *item* affixes; PoE doesn't have an attribute-color system on rare-item affixes at all). Mapping that onto Mythoras, "Authority gem" energy is a Skill Card question; "quad affix classification" is an item-mod question. They are not automatically the same design decision and should not be silently merged into one.
@@ -117,8 +117,8 @@ This is a **different surface** from the CONTEXT.md open question, and that dist
 ## Sources
 
 ### Primary / near-primary
-- [`CONTEXT.md`](CONTEXT.md) — Progression & Build (Skill Card, Skill Frame, Support Card, Motherboard Grid, Attributes); Critical Corrections #9, #12, #13; Open Design Explorations → Modifier / Affix Classification System.
-- [`RESEARCH_AFFIX_PREFIX_SUFFIX_LEAN_2026-08-11.md`](RESEARCH_AFFIX_PREFIX_SUFFIX_LEAN_2026-08-11.md) — prior owner lean on affix classification (prefix/suffix leaned, quad-Attribute still open).
+- [`CONTEXT.md`](../../CONTEXT.md) — Progression & Build (Skill Card, Skill Frame, Support Card, Motherboard Grid, Attributes); Critical Corrections #9, #12, #13; Open Design Explorations → Modifier / Affix Classification System.
+- [`RESEARCH_AFFIX_PREFIX_SUFFIX_LEAN_2026-08-11.md`](../../RESEARCH_AFFIX_PREFIX_SUFFIX_LEAN_2026-08-11.md) — prior owner lean on affix classification (prefix/suffix leaned, quad-Attribute still open).
 - YouTube oEmbed API response for `https://www.youtube.com/watch?v=PwBmzi9zuqU` (title/author verified directly).
 
 ### Secondary

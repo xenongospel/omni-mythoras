@@ -5,7 +5,7 @@
 **Date:** 2026-08-08  
 **Status:** Advisory visual / player-experience research. **Not Mythoras canon.**  
 **Scope:** What a player *sees and does* across campaign → maps → pinnacles — HUD, overlays, density, juice, session rhythm — complementary to existing systems docs (`POE_*.md`, endgame/crafting/currency).  
-**Mythoras lens (advisory only):** World View default + Workspace on demand; no permanent surrounding management chrome ([SESSION_DECISIONS_2026-07-15.md](SESSION_DECISIONS_2026-07-15.md), [PATHWAY_SINGULAR_PRACTICAL_BUILD_2026-08.md](PATHWAY_SINGULAR_PRACTICAL_BUILD_2026-08.md)). Steal principles, not PoE chrome.
+**Mythoras lens (advisory only):** World View default + Workspace on demand; no permanent surrounding management chrome ([SESSION_DECISIONS_2026-07-15.md](../../SESSION_DECISIONS_2026-07-15.md), [PATHWAY_SINGULAR_PRACTICAL_BUILD_2026-08.md](../../PATHWAY_SINGULAR_PRACTICAL_BUILD_2026-08.md)). Steal principles, not PoE chrome.
 
 Timestamps cite caption clock / frame filenames (`frame_tN.jpg` ≈ N seconds; `frame_extra_tN.jpg` = ffmpeg extracts).
 
@@ -150,7 +150,7 @@ Aligned to locked direction: **World View default; Workspace invoked; no permane
    Rolling maps/scarabs/mods is Workspace prep; combat is the consequence (~00:13:18–00:13:34). Prep should surface “can my build survive this?” before ACTIVATE — same spirit as Mythoras configuring a session, then playing it in World View.
 
 5. **Peripheral vitals, empty center — but keep vitals compact.**  
-   Corner anchoring leaves a stage for the character (`frame_extra_t240`). Steal the *layout intent* (center for action); do not steal globe bulk. Prefer a thin InfoBand / contextual vitals over Diablo-clone orbs ([PATHWAY…](PATHWAY_SINGULAR_PRACTICAL_BUILD_2026-08.md) visual language open).
+   Corner anchoring leaves a stage for the character (`frame_extra_t240`). Steal the *layout intent* (center for action); do not steal globe bulk. Prefer a thin InfoBand / contextual vitals over Diablo-clone orbs ([PATHWAY…](../../PATHWAY_SINGULAR_PRACTICAL_BUILD_2026-08.md) visual language open).
 
 6. **Layered tooltips beat always-visible spreadsheets.**  
    Advanced mod details on hold/toggle (`frame_extra_t550`) keep World View sane while still serving theorycrafters. Good pattern for Mythoras gear/skills: simple default, deep on demand.
