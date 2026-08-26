@@ -1,6 +1,6 @@
 # Idea Log — Parked / Under-Consideration Concepts
 
-> Ideas that are NOT canon and NOT scheduled, but explicitly worth revisiting. Each entry records the idea, its source session, owner sentiment, and blockers. Do not implement anything here without a Planning Room / grill session. Last updated: 2026-07-19.
+> Ideas that are NOT canon and NOT scheduled, but explicitly worth revisiting. Each entry records the idea, its source session, owner sentiment, and blockers. Do not implement anything here without a Planning Room / grill session. Last updated: 2026-08-24.
 
 ---
 
@@ -397,3 +397,33 @@
 - Juice loved
 - Learn PoE2 Ritual carefully — **not** sockets
 **Wave:** 2/3 as contrast only; Wave 1 must not treat AllFlame colour lesson as novel vs DOC_v3 soft-fail.
+
+---
+
+## Owner notes — 2026-08-16 (itemisation seeds)
+
+Not canon. Do not put in ADE. Affix classification (prefix/suffix vs other) is still OPEN in CONTEXT.md — the ring seed assumes prefix/suffix until that grill says otherwise.
+
+### IDEA-059 — Context (PoE Tattoo analogue): retarget Attribute scaling
+**Status:** Seed — keep in mind; not scheduled
+**Source:** 2026-08-16 owner
+**Summary:** A loot/farmable analogue to PoE Tattoos: apply something that **changes which Attribute a scaling provision uses** (Authority / Invictus / Animus / Order). Channel already means Attribute scaling navigation on the Grid plus modifier/tag shorthand — this would be a way to *re-provision* that mapping, not a fifth Attribute. Acquisition as farmable loot (and possibly other hooks) is part of the interest. **Name “Context” is not locked** (also collides with battle “context widgets” in the pathway notes).
+**Open:** Technician-global (Grid notables, like tattoos on the tree) vs creature-local (gear / Skill Card scaling) vs both. Do not invent the item.
+
+### IDEA-060 — Exclusive wacky bases; ring that eats a mod for prefix or suffix magnitude
+**Status:** Seed — keep in mind; owner already flagged the power-budget worry
+**Source:** 2026-08-16 owner
+**Summary:** Some base types exist only as drops (boss, mechanic, or otherwise exclusive) — not the normal shop/base pool. One ring sketch: a currency applied to that base **sacrifices a random modifier** to increase **either prefix or suffix magnitude**. Reminds of PoE’s Cogwork / Helical rings (static implicit: fewer prefixes, more suffixes, suffix magnitude up) but the Mythoras version is a **craft decision**, not a baked implicit. That extra capability is why it should stay exclusive if it exists at all.
+**Blocker / note:** Do not treat prefix/suffix as locked. Do not add this to the Mod Catalogue. Related-but-different: DOC variable P/S-ratio bases change slot counts; this changes magnitude by eating a mod.
+
+### IDEA-061 — Verbs: Fortify, Nullify, Oscillate, Bifurcate
+**Status:** Seed — keep in mind; not scheduled
+**Source:** 2026-08-23 owner
+**Summary:** Candidate verbs for certain mechanics and skills: **Fortify**, **Nullify**, **Oscillate**, and potentially **Bifurcate**. Names only. Do not invent the mechanics, do not put them on Skill Cards, do not treat them as locked Keywords.
+**Note:** Bifurcate is explicitly the least committed of the four.
+
+### IDEA-062 — Trigger-on-hit engine (PoE Mjölner / CoC-shaped)
+**Status:** Seed — keep in mind; not campaign baseline
+**Source:** 2026-08-24 owner
+**Summary:** PoE’s trigger layer is a **conditional barrier on hits**, not “press the spell.” Chance + cooldown + (on live PoE) server-tick rounding means **cooldown recovery rate** is a niche stacking stat you interface with *through breakpoints*, not a slider on the skill. **Mjölner**: attack hit → socketed lightning spells, fixed trigger cooldown (wiki: 0.25s on current item text; CDR applies). Owner wants some Mythoras builds to be designed around this kind of engine (unique/item or support that fires skills off hits), including the “math mouse” of matching hit rate to the trigger cap.
+**Blocker / note:** CONTEXT.md Critical Correction #5: flask-analogue and **trigger skills are future expansion, not campaign baseline.** Do not put this on the prototype HUD. Do not invent the Mythoras item. Park until a dedicated systems grill.

@@ -17,7 +17,7 @@
 | 3 | Information density experiment | Glanceables: **existing HP** + maybe attributes / whatever else proves necessary. Not full sheets at once. | **Answered — minimal glanceables** |
 | 4 | Spatial inventory | **Shared Technician stash** (multi-cell preferred — weight/feel). **Gear slots per creature.** Not per-creature bags for stash. | **Answered** |
 | 5 | Resist model | Prefer **Grim Dawn–leaning hybrid** (soft-cap / penalty / reduction feel) over PoE hard-cap culture; want **one layer of difficulty** framing rather than multiple cap ladders. Frontline/bench defensive acumen matters; sandbox configs, not rigid roles. Research Darkest Dungeon defenses too. | **Answered lean — GD hybrid; research DD** |
-| 6 | Dev Environment v1 | First generator: **creature**. Loot later. | **Answered** |
+| 6 | Dev Environment v1 | **Creature + Zone/Tile** in the first window (2026-08-07). Loot/Combat/etc. as nav stubs then later modules. | **Answered — both** |
 | 7 | Server-backed authoring | **Not now.** | **Answered — defer** |
 | 8 | Creature trait ↔ gear gates | Measure when more info exists; don’t force hardness yet. | **Defer measure** |
 | 9 | Cipher loot scaling | Important later; **not now.** | **Defer** |
@@ -113,7 +113,7 @@ Relative to [PATHWAYS_PRACTICAL_ACTUALIZATION_2026-08-05.md](PATHWAYS_PRACTICAL_
 | Path | Impact of answers |
 | --- | --- |
 | A–C Seam / greybox / Turn Program | Greybox bar clarified = **basic nets/colors**; still the play proof. |
-| D Mythoras Dev Env | v1 = **creature generator**; net2D maps; **no** server-backed yet; later attribute/loot labs. |
+| D Mythoras Dev Env | v1 = **Creature + Zone/Tile** window first; Combat/Loot stubbed; then greybox consumes fixtures |
 | E Composition lab | Elevated: DD-leaning layout experiments, shared multi-cell stash, per-creature gear, GD-hybrid resists — **after or thin-parallel** to seam, not instead of it. |
 | F Fusion/synchro | Explicitly demoted to soft idea vector — do not expand. |
 
@@ -124,6 +124,24 @@ Relative to [PATHWAYS_PRACTICAL_ACTUALIZATION_2026-08-05.md](PATHWAYS_PRACTICAL_
 1. Darkest Dungeon close-to-full exploration (owner-requested).  
 2. Montabi squad-layout video visual analysis.  
 3. Optional later: Battle Brothers merc progression / chase variables; PoE attribute association map; DD defensive model; skill action-bar vs card physical metaphor session with Gameplay Analysis.
+
+---
+
+## F. Delta 2026-08-06 (post-answers commentary)
+
+| Topic | Owner direction | Status |
+| --- | --- | --- |
+| InfoBand right-side widgets | Sequencing + battle context views on lower-right InfoBand | **Owner-direction** for layout experiments |
+| Layout grammar | DD lean OK; BB was lean only; Mythoras may invent own grammar | **Clarified** |
+| Creature backlog | Not Pokémon collecting; cycle often; optional SSF-like storage for later-useful pieces | **Idea vector** |
+| Breeding / Synchro-breakdown / Influence-like mod pools | Possible later mechanisms on storage/traits | **Idea vector only** |
+| Stress Affliction shell | Liked; pair with Pokémon-like status carry; rename; don’t full-copy DD | **Idea vector** — note CONTEXT **Load** already exists; grill before merging |
+| Mortality | Meme/scarce invest, stacking potential | **Idea vector** |
+| Semi-Nuzlocke / hardcore | Planned challenge mode (permanent creature death) | **Parked mode** — not seam |
+| Merc research target | **PoE 3.29 Luminary + Trarthus mercs**, not Battle Brothers | **Corrected** → [RESEARCH_POE_LUMINARY_MERC_VECTOR_2026-08.md](RESEARCH_POE_LUMINARY_MERC_VECTOR_2026-08.md) |
+| Skills emergence | Materia→gems ethos; active + support/utility; representation still open | **Owner-direction** |
+| Ascendancy origin | Curiosity — answered in Luminary research note | Research |
+| Consolidation | Prefer singular practical pathway for build prep | → [PATHWAY_SINGULAR_PRACTICAL_BUILD_2026-08.md](PATHWAY_SINGULAR_PRACTICAL_BUILD_2026-08.md) |
 
 ---
 

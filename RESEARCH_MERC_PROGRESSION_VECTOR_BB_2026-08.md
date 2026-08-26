@@ -1,5 +1,7 @@
 # Research — Merc Progression Vector (Battle Brothers → Mythoras)
 
+> **CORRECTION (2026-08-06):** Owner’s “mercenaries” ask targeted **PoE 3.29 Luminary + Mercenaries of Trarthus**, not Battle Brothers. See [RESEARCH_POE_LUMINARY_MERC_VECTOR_2026-08.md](RESEARCH_POE_LUMINARY_MERC_VECTOR_2026-08.md). This file remains useful for **shared-stash / per-unit gear UX** and optional unit-economy chase ideas only — not Technician Foundation design.
+>
 > Owner-direction / research / idea-vector only. **Not canon.**  
 > Transposes Battle Brothers–style **mercenary chase** into guidelines for Mythoras **creature management**, not a BB clone.  
 > Anchors: [RESEARCH_OWNER_ANSWERS_2026-08-06.md](RESEARCH_OWNER_ANSWERS_2026-08-06.md) §§ B1–B2; owner BB screenshots (2026-08-06).

@@ -1,6 +1,7 @@
 # Plan — Feedback Capture + Sequenced Research (2026-07-19)
 
 > **Status:** Waves 0–3 COMPLETE 2026-07-19. Wave 4 (naming / grill prep) not started.
+> **Latest owner compile:** `SESSION_COMPILE_2026-08-11.md` — supersedes research errata + grilling queue for next sequence.
 > **Constraint:** All future research must be in-depth (designer + systems + pitfalls + creative), GDD-aware (no orphan proposals), and must search existing docs before inventing “new” mechanics. Token-efficient prose; do not thin the analysis.
 
 ### Model assignment (2026-07-19)
