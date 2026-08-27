@@ -13,6 +13,49 @@ the board; MoP has nothing to say about the plate. See `reference/README.md`.
 
 ---
 
+## 0. The principle under the references
+
+**The references are evidence for a principle. They are not the principle.**
+
+What is actually wanted is **information co-present with play**: you read state
+without leaving the game, and you are not opening a context menu to find out
+what you have. The game view does **not** need to dominate the window — often
+the information you have collated deserves more space than the board does.
+RuneScape is the clearest expression of this: persistent, customisable panels
+you arrange once and then play inside.
+
+Darkest Dungeon's console is **one instance** of that principle — a fixed,
+non-customisable one. It is being traced because it is dense, legible, and
+already solved, which makes it a good teacher. Not because a fixed console is
+the answer.
+
+**Naming a reference does not close the question.** A proposal that serves
+information-co-present-with-play better than DD1 does is not off course. Say
+which part of the principle it serves and what it costs. Rearranging *how* the
+information is presented is in scope at any time; quietly dropping the
+information, or hiding it behind a menu, is not.
+
+## How to read this document
+
+Statements are graded. Everything here has been read as equally binding, which
+is why naming one reference has felt like bolting the door on every other idea.
+
+| Grade | Means |
+| --- | --- |
+| **[LOCK]** | Decided, and the reason still holds. Deviating is a bug. Ask before changing one. |
+| **[LEAN]** | The current direction, with its reason. Revisable. If the reason stops applying, say so and propose the change — do not silently drift. |
+| **[MEASURED]** | A fact about a reference, not a commitment by Mythoras. `#b6b48a` is Darkest Dungeon's ink. Using it is a choice made each time, not an obligation. |
+
+Unmarked MUST / MUST NOT from earlier passes should be read as **[LEAN]**,
+except where the stated reason is legal (do not ship other people's assets) or
+where it protects a decision recorded in `docs/adr/`.
+
+The one thing that is not negotiable in either direction: **do not silently
+change a LOCK, and do not silently obey a LEAN you think is wrong.** Both are
+failures of the same kind.
+
+---
+
 ## 1. Method
 
 1. Write this requirements set (this file). **Done.**
@@ -124,12 +167,16 @@ Roster of 5 (3 Field + 2 Bench) may appear as small pips **above** the plate or 
 - Two-face plate, matching DD1’s actual mapping: **Dwarven Axe BB** for names / titles / inventory counts; **Ubuntu** for class labels, stats, tooltips, glossary definitions, HP figures.
 - Dark plate, parchment/off-white text, functional red for HP. Tracing may look gothic. That is allowed for this pass.
 
-### 5.1 Type scale — measured, not chosen (2026-08-26)
+### 5.1 [MEASURED] Darkest Dungeon's type scale (2026-08-26)
 
-Sizes below are **derived from pixel measurements** of both reference
-screenshots at 1920×1080, cross-checked against each other. Convert
-proportionally for other window sizes; the plate is a fixed fraction of window
-height, so type scales with it.
+**This table describes Darkest Dungeon, not Mythoras.** It is reference data —
+what the thing we are learning from actually does. Adopting a row is a decision
+you make and can revisit; the numbers themselves are just true.
+
+Sizes are **derived from pixel measurements** of both reference screenshots at
+1920×1080, cross-checked against each other. Convert proportionally for other
+window sizes; the plate is a fixed fraction of window height, so type scales
+with it.
 
 | Job | Face | Size | Weight | Line-height | Case | Ink |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -159,7 +206,7 @@ The glossary rows are **not measured** — the glossary is a Neidfyre job and do
 not appear in the DD1 references. They are derived from the measured body size
 and Butterick's 120–145% leading guidance. Treat them as provisional.
 
-### 5.2 Palette — pinned
+### 5.2 [MEASURED] Darkest Dungeon's palette
 
 Taken from `panel_hero.png` (720×224) in the Steam install, which is
 **uncompressed game art**, not a screenshot. The reference jpgs could not supply
@@ -232,12 +279,20 @@ Shipped but **not** wired in `fonts.darkest`: `new_rocker-m.fnt` (New Rocker), `
 - Neutral “functional slate” SaaS (4px radius, `#3a5a8a` tabs, Inter/IBM Plex/JetBrains as the plate).
 - A prompt that says “match DD shape but do not copy gothic type.” That contradiction produced the last slop.
 - Treat the whole HUD as a gothic serif. Names are gothic; **body is Ubuntu**.
-- **A third typeface.** Two faces, no exceptions. No system-font fallback beyond the declared stack — a helpful agent will silently add Inter.
+**[LEAN] — consequences of tracing DD1.** These hold *while* the trace is the
+job. They are what stops the corpus mean filling an axis nobody pinned; they are
+not eternal Mythoras law, and every one of them is expected to be revisited at
+the peel.
+
+- **A third typeface.** Two faces while tracing. No system-font fallback beyond the declared stack — a helpful agent will silently add Inter, and that is the slop arriving.
 - **A neutral with unequal channels.** See §5.2. Blue-tinted grey is the tell.
 - **A plate ground lighter than `#242424`.** The field is black; the frame does the work.
 - **A type step between 22px and 48px.** The gap is the design (§5.1).
 - **Uppercase anywhere except stat labels.** The reference uses caps in exactly one place.
 - **Rounded corners on plate chrome.** The slots and frame are square.
+
+**[LOCK]** Do not copy Red Hook's `.fnt`, `.tga`, or panel `.png` files into this
+repository. Measure them in place. This one is legal, not aesthetic.
 
 Prototype ≠ poor: tiles readable, plate dense, type intentional. Not shaders, not final art.
 

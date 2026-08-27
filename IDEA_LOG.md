@@ -427,3 +427,30 @@ Not canon. Do not put in ADE. Affix classification (prefix/suffix vs other) is s
 **Source:** 2026-08-24 owner
 **Summary:** PoE’s trigger layer is a **conditional barrier on hits**, not “press the spell.” Chance + cooldown + (on live PoE) server-tick rounding means **cooldown recovery rate** is a niche stacking stat you interface with *through breakpoints*, not a slider on the skill. **Mjölner**: attack hit → socketed lightning spells, fixed trigger cooldown (wiki: 0.25s on current item text; CDR applies). Owner wants some Mythoras builds to be designed around this kind of engine (unique/item or support that fires skills off hits), including the “math mouse” of matching hit rate to the trigger cap.
 **Blocker / note:** CONTEXT.md Critical Correction #5: flask-analogue and **trigger skills are future expansion, not campaign baseline.** Do not put this on the prototype HUD. Do not invent the Mythoras item. Park until a dedicated systems grill.
+
+---
+
+## Owner notes — 2026-08-27 (references and vectors)
+
+### IDEA-063 — Mushoku Tensei's six facing worlds as a shape for the Protocol
+**Status:** Reference / seed — not a mechanic, not lore canon
+**Source:** 2026-08-27 owner ("we don't need to use a similar function but given our network architecture for the world, a distinct binary and interesting reasons for them could be cool")
+**Summary:** Mushoku Tensei structures its cosmology as a set of parallel worlds that face one another, with traffic and consequence between them. The borrowable part is **not** the count or the fiction — it is the idea that a network cosmology can have a small number of *named, distinct* poles with **interesting reasons** for the distinction, rather than being an undifferentiated mesh. The Protocol is already described as a network with biological properties; it currently has no such poles.
+**Why it might fit:** OD-001 (Domain naming, [DOMAIN_A]–[DOMAIN_D]) is an open question about exactly this — four fundamental alignments that need names and reasons. A facing-worlds structure is one candidate answer shape for what a Domain *is* cosmologically, as opposed to a label on a table.
+**Owner's word to keep:** "distinct binary" — the interest is in the poles being genuinely opposed and legible, not in there being six of them.
+**Blocker / note:** Do not write Protocol cosmology from this. Do not assume the number six. Feeds a future OD-001 naming grill; does not pre-empt it.
+
+### IDEA-064 — Linear ability VFX in Three.js (parked technique)
+**Status:** Parked — technique reference, correct engine, wrong moment
+**Source:** 2026-08-27 owner, via [@TokenGremlin](https://x.com/TokenGremlin/status/2091967294582727005) → [achrefelouafi/LinearAbilityExtThreeJS](https://github.com/achrefelouafi/LinearAbilityExtThreeJS)
+**Summary:** Linear/beam ability VFX implemented in Three.js — the same stack the client prototype already runs. Directly usable for skill effects on the board when there are skills to show.
+**Why park rather than try:** the board currently has no resolved combat to attach an effect to, and POSTURE's quality bar for this pass is readable tiles, not effects. Nijman's point stands though — *response* (tile flash, bar jolt, impact) is the cheapest identity win available and is closer to this than to chrome. This is the first thing to reach for when that tranche starts.
+**Blocker / note:** Do not add VFX to the tracing pass. Check the licence before vendoring any of it.
+
+### IDEA-065 — Buildable dungeon as a lead mechanic; the juiced repeatable run
+**Status:** Seed — owner flagged as possibly external to the planned endgame
+**Source:** 2026-08-27 owner ("perhaps we have something like the Darkest Dungeon concept as a lead mechanic, which meshes well with the Vile Temple consideration")
+**Summary:** A Darkest-Dungeon-shaped hub mechanic where the player **navigates and builds out a dungeon over time**, investing into it until it becomes a highly juiced repeatable run returning far more crafting currency and rewards than a normal zone. Meshes with the Vile Temple consideration ([`POE2_TEMPLE_RESEARCH.md`](POE2_TEMPLE_RESEARCH.md)) — an owned, upgraded, re-entered structure rather than a consumable.
+**Why it is interesting:** it is a **long-term investment vector**, which suits the stated identity. Mythoras is a campaign with an endgame, not a roguelike (CONTEXT #7), and the owner's framing here is explicit that this game is longer-term than PoE mercenaries or a single PoE character. An owned dungeon you improve across a campaign expresses that better than another consumable.
+**Relationship to planned endgame:** owner's read is that this sits **external to** the Cipher Network / atlas-surrogate mapping layer, not inside it — a parallel vector, not a replacement. Two investment surfaces competing for the same time budget is the obvious risk and the thing a grill would need to test.
+**Blocker / note:** Do not fold into the Cipher Network design. Do not name it. Requires a dedicated session against [`CIPHER_NETWORK_PROGRESSION_DESIGN.md`](CIPHER_NETWORK_PROGRESSION_DESIGN.md) to check it is additive rather than a second endgame.

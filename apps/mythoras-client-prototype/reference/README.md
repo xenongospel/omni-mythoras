@@ -52,11 +52,44 @@ overlay would be better than either jpg, and takes about two minutes.
 
 ## `gameview-mop/`
 
-**Empty — needs populating.** Master of Pieces screenshots covering the board:
-tile grammar and facet shading, the locked camera angle, how units sit on tiles,
-and how threatened / walkable / special tiles are coloured.
+**Populated 2026-08-27** by `scripts/grab-reference-frames.sh`, which pulls
+scene-distinct frames out of gameplay video. Frames live in `frames-<slug>/`
+subfolders and are gitignored like everything else here.
 
-Until this folder has images, the board has no reference to trace, which is
-exactly the case where generating several structurally different variants is
-the right method rather than the wrong one. See
-`RESEARCH_DISCOVERY_TO_PROTOTYPE_2026-08-26.md`.
+| Folder | Source | Covers |
+| --- | --- | --- |
+| `frames-mop-15sec-trailer/` | "My indie game in 15 seconds — Master of Piece" | Boss battle board, mid-ability VFX |
+| `frames-mop-hideout-world-battle/` | "Bosses Hate This Ability in Master of Piece! (#65)", first 15 min | Hideout, world map, battles |
+
+Re-run the script to refresh; it reuses already-downloaded segments.
+
+### What the frames actually show
+
+Recorded here because it contradicts an assumption the specs were carrying.
+
+**MoP has no console.** The board is very nearly full-bleed. Chrome is thin and
+edge-anchored: a slim top bar (resources, zone title, menu icons), small corner
+clusters, a narrow pictographic "Battle log" docked right, and a thin bottom
+strip. Nothing resembling Darkest Dungeon's heavy framed plate.
+
+**Information rides on the units, not in a panel.** Each unit carries small
+hexagonal and square stat badges — HP, attack, and status — pinned directly to
+its tile. You read the fight by looking at the board. This is a *third* answer
+to "information co-present with play" (POSTURE §0) and, unlike a panel, it costs
+almost no screen.
+
+**Board grammar.** Chunky isometric cubes with visibly extruded sides at a fixed
+camera angle, floating in near-black void. Terrain reads through props and
+surface texture, not tile colour — because **colour is reserved for state**:
+translucent red wash for threatened tiles, purple and teal for other conditions.
+Heavy black outlines on every element; a warm tan/ochre ground against the void.
+
+**VFX register.** Abilities fire as bright, high-chroma vertical light columns
+with glyph accents, saturated well above the muted board so they read instantly.
+See IDEA-064 for the Three.js technique reference.
+
+**Consequence for the specs.** The board-plus-plate layout in POSTURE comes from
+Darkest Dungeon alone. The reference we chose for the *board* solves the same
+problem a different way. That is not a reason to abandon the plate, but it is
+live evidence for ADR-0002 option D and it should be weighed before the layout
+is treated as settled.

@@ -1,6 +1,6 @@
-> **STALE / SUPERSEDED (2026-07-15):** This prompt predates the expanded OD-004 session. World View / Workspace View decisions are captured in `SESSION_DECISIONS_2026-07-15.md`; the permanent shell and Field Studio umbrella identity are retired. Use this file only as historical preparation material.
+> **STALE.** Do not paste this. Current resume: [`docs/sessions/SESSION_2026-08-27.md`](docs/sessions/SESSION_2026-08-27.md). This file is July 2026 history.
 
-# NEXT SESSION — Paste Prompt
+# NEXT SESSION — Paste Prompt (historical, 2026-07-11)
 
 > **Workspace:** `/Users/xenonheat/sites/omniagents-mythoras`
 > **Saved:** 2026-07-11

@@ -14,7 +14,8 @@ inform a decision. Only `CONTEXT.md`, `docs/adr/`, and a surface's own
 
 | Document | Holds | Read it when |
 | --- | --- | --- |
-| [`CONTEXT.md`](CONTEXT.md) | Domain vocabulary and the critical corrections | Always. Every session, first. |
+| [`docs/sessions/SESSION_2026-08-27.md`](docs/sessions/SESSION_2026-08-27.md) | Current handoff and the paste prompt for the next chat | Starting a new session. This is the resume file. |
+| [`CONTEXT.md`](CONTEXT.md) | Domain vocabulary and the critical corrections | Always, after the handoff. |
 | [`docs/adr/`](docs/adr/README.md) | Decisions that have actually been made | Before working in any area it touches |
 | [`AGENTS.md`](AGENTS.md) | Which agent skills apply and where their config lives | Starting any agent session |
 
@@ -32,6 +33,8 @@ One surface per session. Holding both at once is how the two got confused.
 | Document | Holds |
 | --- | --- |
 | [`IDEA_LOG.md`](IDEA_LOG.md) | Running idea capture, numbered IDEA-NNN |
+| [`TYPOGRAPHY_CANDIDATES.md`](TYPOGRAPHY_CANDIDATES.md) | Menu of candidate typefaces per job, plus what DD1 / PoE / Diablo verifiably use. A menu, not a decision. |
+| [`OPEN_DESIGN_EXPLORATIONS.md`](OPEN_DESIGN_EXPLORATIONS.md) | Design essays lifted out of `CONTEXT.md` — captured, unresolved |
 | [`BACKLOG.xml`](BACKLOG.xml) · [`AGENT_STATE.xml`](AGENT_STATE.xml) | Older structured backlog and state; predate the move to GitHub Issues |
 
 Work items now live as **GitHub issues** on `xenongospel/omni-mythoras`, not in
@@ -45,7 +48,7 @@ Recorded so they stop being rediscovered.
 
 | Conflict | Where | Status |
 | --- | --- | --- |
-| `CONTEXT.md` #8 (compact HUD, no permanent panels) vs POSTURE (permanent third-of-screen plate) | [ADR-0002](docs/adr/0002-ui-architecture-world-view-vs-combat-plate.md) | **Proposed, unresolved** — needs a grill |
+| `CONTEXT.md` #8 (compact HUD, no permanent panels) vs POSTURE (permanent third-of-screen plate) | [ADR-0002](docs/adr/0002-ui-architecture-world-view-vs-combat-plate.md) | **Proposed.** Principle (information co-present with play) is settled; arrangement is not. MoP frames add a fourth layout (badges on units, no console). Next session grills a LEAN for this pass. |
 | `CONTEXT.md` defines Turn Program; POSTURE §4.3 bans the word from the HUD | Same ADR | Deferred by POSTURE on purpose |
 
 ---
@@ -129,7 +132,7 @@ Decisions that survived should be promoted to `docs/adr/`.
 - [`RESEARCH_OWNER_ANSWERS_2026-08-06.md`](RESEARCH_OWNER_ANSWERS_2026-08-06.md) · [`RESEARCH_OWNER_DIRECTION_PRACTICAL_TURN_2026-08-05.md`](RESEARCH_OWNER_DIRECTION_PRACTICAL_TURN_2026-08-05.md)
 - [`SESSION_DECISIONS_2026-07-15.md`](SESSION_DECISIONS_2026-07-15.md) · [`SESSION_FEEDBACK_2026-07-19.md`](SESSION_FEEDBACK_2026-07-19.md) · [`SESSION_COMPILE_2026-08-11.md`](SESSION_COMPILE_2026-08-11.md)
 - [`PLAN_FEEDBACK_RESEARCH_2026-07-19.md`](PLAN_FEEDBACK_RESEARCH_2026-07-19.md) · [`RESEARCH_SYNTHESIS_2026-07-17.md`](RESEARCH_SYNTHESIS_2026-07-17.md)
-- [`docs/sessions/`](docs/sessions/) — game thesis, identity and prototype, inspiration delta, soundness pass
+- [`docs/sessions/`](docs/sessions/) — **current:** [`SESSION_2026-08-27.md`](docs/sessions/SESSION_2026-08-27.md). Also: game thesis, identity and prototype, inspiration delta, soundness pass
 
 ## Planning passes
 
@@ -137,7 +140,7 @@ Historical route-finding. Useful as reasoning, stale as instructions.
 
 - [`PATHWAY_SINGULAR_PRACTICAL_BUILD_2026-08.md`](PATHWAY_SINGULAR_PRACTICAL_BUILD_2026-08.md) · [`PATHWAYS_PRACTICAL_ACTUALIZATION_2026-08-05.md`](PATHWAYS_PRACTICAL_ACTUALIZATION_2026-08-05.md)
 - [`WAYFINDER_PASS_COHERENCE.md`](WAYFINDER_PASS_COHERENCE.md) · [`WAYFINDER_PASS_MVP_VERTICALS.md`](WAYFINDER_PASS_MVP_VERTICALS.md)
-- [`GRILL_HANDOFF.md`](GRILL_HANDOFF.md) · [`SESSION_HANDOFF.md`](SESSION_HANDOFF.md) · [`NEXT_SESSION_PROMPT.md`](NEXT_SESSION_PROMPT.md)
+- [`GRILL_HANDOFF.md`](GRILL_HANDOFF.md) · [`SESSION_HANDOFF.md`](SESSION_HANDOFF.md) · [`NEXT_SESSION_PROMPT.md`](NEXT_SESSION_PROMPT.md) — July 2026; banners point at the 2026-08-27 session file
 
 ## Superseded
 

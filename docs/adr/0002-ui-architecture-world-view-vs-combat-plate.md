@@ -54,9 +54,61 @@ plus invokable docks is the *traversal* posture. #8's World View already
 distinguishes traversal from battle. Cost: two HUD systems to build and keep
 coherent, which is how the layout zoo happened the first time.
 
+**D — Persistent customisable panels (the RuneScape reading).** Added 2026-08-27
+after the owner articulated the principle underneath their references, which
+neither #8 nor POSTURE states.
+
+The thing actually wanted is **information co-present with play**: state is
+readable without leaving the game, and the game view does *not* need to dominate
+— the information collated is often worth more screen than the board. RuneScape
+is the reference: persistent, customisable panels arranged once, played inside.
+
+This reframes the conflict rather than picking a side. Both existing positions
+are instances of one principle, and both are constrained instances:
+
+| | Persistent? | Customisable? | Game view dominates? |
+| --- | --- | --- | --- |
+| CONTEXT #8 World View | No — compact HUD only | Docks, but only in the invoked Workspace | **Yes** |
+| POSTURE plate | Yes | No — fixed layout | No, one third is chrome |
+| **D (RuneScape)** | **Yes** | **Yes** | **No** |
+
+Read this way, #8's error is not the docks — it is the twin assumptions that the
+viewport should dominate and that configurability must be quarantined into a
+separate invoked mode. POSTURE's limitation is not that the console is permanent
+— that part matches the principle — but that it is fixed.
+
+Cost: customisable layout is materially more work than a fixed plate, and it is
+the direction with the clearest path back to the layout zoo if it is started
+before the *content* of the panels is known. The mitigation is order — trace the
+fixed DD1 plate first to learn what information the panels must carry, then make
+arrangement configurable once the payload is settled. That keeps the current
+tracing pass valid rather than discarding it.
+
 ## Decision
 
 None yet. Do not let a session pick one implicitly by building it.
+
+**Evidence (2026-08-27).** Master of Pieces reference frames were captured and,
+on inspection, MoP resolves this same question a **fourth** way: a near-full-bleed
+board with thin edge-anchored chrome, where per-unit stat badges pinned to the
+tiles carry the information a panel would otherwise hold. It is information
+co-present with play at almost no screen cost.
+
+This matters because MoP is already the chosen reference for the game view. The
+board-plus-heavy-plate split in POSTURE is inherited from Darkest Dungeon alone,
+and the other reference in the same prototype disagrees with it. Weigh this
+before treating the split as settled. See `reference/README.md`.
+
+**Working note (2026-08-27).** Option D states the principle the other three
+were groping at, and the owner has confirmed it is what they actually care
+about. That does not make it the decision — the customisability question is
+genuinely open and expensive. But it does mean any future framing of this ADR
+should argue about *how* information is arranged, never about *whether* it is
+co-present. The latter is settled.
+
+A practical consequence: naming a reference is not a decision. DD1 being traced
+does not decide this ADR, and a proposal that serves the principle better is not
+off course. See POSTURE §0.
 
 ## Consequences of leaving this open
 

@@ -1,5 +1,7 @@
 # Session Handoff — Mythoras Harness Workspace
 
+> **STALE.** Current resume: [`docs/sessions/SESSION_2026-08-27.md`](docs/sessions/SESSION_2026-08-27.md). This file is July 2026 history and still contains false claims (no application code in this repo; ADE lives only in omni-agents).
+
 > **Workspace root:** `/Users/xenonheat/sites/omniagents-mythoras`  
 > **Updated:** 2026-07-11  
 > **Read this first** in every new agent session before BOOTSTRAP.md or AGENT_STATE.xml.  
