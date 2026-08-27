@@ -19,6 +19,14 @@ Darkest Dungeon has **nothing** to say about the board. Master of Pieces has
 nothing to say about the console. A pass that traces DD1 into the game view, or
 MoP into the plate, is wrong regardless of how good it looks.
 
+### A third folder that is not a third reference
+
+`shell-stitch/` holds screens the **owner** generated in Google Stitch. It is not
+another studio's game and it does not govern a surface. It is evidence about
+*arrangement* for [ADR-0002](../../../docs/adr/0002-ui-architecture-world-view-vs-combat-plate.md)
+— the shell, the panel manager, and where the game view sits — and it carries no
+usable finish. Do not trace it. See `shell-stitch/README.md`.
+
 ## `console-dd1/`
 
 Currently holds two 1920×1080 screenshots (`dd1_hero_panel.jpg`,

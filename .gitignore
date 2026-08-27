@@ -6,6 +6,9 @@ node_modules/
 dist/
 .env
 .env.*
+
+# Local MCP server config. Holds API keys in plain text — this repo is public.
+.cursor/mcp.json
 apps/*/node_modules/
 apps/*/dist/
 

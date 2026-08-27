@@ -62,6 +62,10 @@ coherent, which is how the layout zoo happened the first time.
 after the owner articulated the principle underneath their references, which
 neither #8 nor POSTURE states.
 
+> **Dated wrong.** This option was written up on 2026-08-27, but the owner had
+> already drawn it in Stitch on **2026-04-04**. It is the oldest of the four, not
+> the newest. See *Evidence: the owner's own Stitch shell* below.
+
 The thing actually wanted is **information co-present with play**: state is
 readable without leaving the game, and the game view does *not* need to dominate
 — the information collated is often worth more screen than the board. RuneScape
@@ -163,6 +167,44 @@ between board and plate — where the squad pips already sit, and where MoP puts
 its own turn track and end turn — with queued actions ghosted onto the board
 tiles, since they are spatial. **None of this is built in this pass**, and
 POSTURE §4.3 still governs: the plate does not teach that noun.
+
+### Evidence: the owner's own Stitch shell (made 2026-04-04, found 2026-08-27)
+
+Option D was described above as the newest reading, articulated on 2026-08-27.
+That is wrong about its age. A set of screens in the owner's Google Stitch
+project — "Mythoras Stitch Prompts", created **2026-04-04** — already draws it,
+five months before this ADR was written.
+
+The `App Shell` screen contains a docked panel manager with `SAVE LAYOUT`,
+`LOAD LAYOUT`, `RESET LAYOUT`, a `PANEL WIZARD` toggle, and an **ADD PANELS**
+list reading: Game View, Inventory, World Map, Map Designer, Chat, Passive Tree,
+Creatures, Squad. A companion screen renders the game view as a draggable,
+minimisable **window** with its own tabs.
+
+Three things this settles about what option D actually meant to the owner:
+
+1. **Game View is an entry in the panel list.** It is not the viewport the rest
+   of the UI hangs off. The claim that the game view need not dominate was not a
+   late rationalisation; it was drawn first and argued afterwards.
+2. **Layout is saved and restored player state.** The expensive half of option D
+   — configurability, not persistence — is the half that was drawn.
+3. **Map Designer is one of the panels.** An authoring surface inside the game
+   shell. That is a direct question mark over whether the ADE is a separate
+   application, and it belongs in the discussion on issue #6 rather than here.
+
+**This does not change the LEAN.** The screens are about *arrangement* and carry
+no usable finish: the project's theme is Inter for headline and body with a 4px
+corner radius and a violet accent, and Stitch's font enumeration contains no
+Ubuntu and no blackletter at all — very close to the "functional slate SaaS"
+POSTURE §5 rules out. They also predate the payload argument entirely; nothing in
+them shows what a panel would have to carry. Tracing DD1's density first remains
+the stated mitigation.
+
+**What it does change** is the standing of option D. It can no longer be
+described as the newest and least examined option. It is the oldest, and the
+thing that has never been done is not imagining it — it is costing it. See
+`apps/mythoras-client-prototype/reference/shell-stitch/README.md` for the screens
+and how to re-fetch them.
 
 ## Consequences of leaving this open
 
