@@ -67,10 +67,17 @@ Re-run the script to refresh; it reuses already-downloaded segments.
 
 Recorded here because it contradicts an assumption the specs were carrying.
 
-**MoP has no console.** The board is very nearly full-bleed. Chrome is thin and
-edge-anchored: a slim top bar (resources, zone title, menu icons), small corner
-clusters, a narrow pictographic "Battle log" docked right, and a thin bottom
-strip. Nothing resembling Darkest Dungeon's heavy framed plate.
+**MoP has no framed plate — but it is not chrome-free.** An earlier reading of
+these frames recorded "MoP has no console", which overstates it. Chrome runs
+along all four edges: a slim top bar (HP, resources, zone title, menu icons), a
+left icon column, a titled pictographic "Battle log" docked right, and a bottom
+strip carrying reserve units, a turn-order track, and end turn. That bottom strip
+is a console by function.
+
+What MoP lacks is a **frame**. Its chrome is drawn directly onto the same black
+void the board floats in, with no plate object behind it, which is why the board
+reads as near-full-bleed. The axis between the two references is therefore
+*framed plate vs frameless chrome on void*, not *panel vs no panel*.
 
 **Information rides on the units, not in a panel.** Each unit carries small
 hexagonal and square stat badges — HP, attack, and status — pinned directly to
@@ -93,3 +100,9 @@ Darkest Dungeon alone. The reference we chose for the *board* solves the same
 problem a different way. That is not a reason to abandon the plate, but it is
 live evidence for ADR-0002 option D and it should be weighed before the layout
 is treated as settled.
+
+It was weighed on 2026-08-27 and the plate held, on the grounds that MoP's badges
+carry roughly three numbers per unit while a Mythoras creature carries far more.
+See the *Lean for this pass* section of ADR-0002. **MoP has still never been
+measured** — there is no type table or palette for it the way §5.1 and §5.2 exist
+for DD1, which is a real gap if the board is ever the surface being traced.

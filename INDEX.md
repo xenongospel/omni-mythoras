@@ -48,7 +48,7 @@ Recorded so they stop being rediscovered.
 
 | Conflict | Where | Status |
 | --- | --- | --- |
-| `CONTEXT.md` #8 (compact HUD, no permanent panels) vs POSTURE (permanent third-of-screen plate) | [ADR-0002](docs/adr/0002-ui-architecture-world-view-vs-combat-plate.md) | **Proposed.** Principle (information co-present with play) is settled; arrangement is not. MoP frames add a fourth layout (badges on units, no console). Next session grills a LEAN for this pass. |
+| `CONTEXT.md` #8 (compact HUD, no permanent panels) vs POSTURE (permanent third-of-screen plate) | [ADR-0002](docs/adr/0002-ui-architecture-world-view-vs-combat-plate.md) | **Proposed, with a LEAN (2026-08-27):** trace DD1's finish and density, not its single-creature architecture. Principle (information co-present with play) is settled; arrangement is not. MoP was re-read — it has edge chrome on all four sides, so the real axis is framed vs frameless, not panel vs no panel. |
 | `CONTEXT.md` defines Turn Program; POSTURE §4.3 bans the word from the HUD | Same ADR | Deferred by POSTURE on purpose |
 
 ---

@@ -1,6 +1,14 @@
 # Prototype posture — HUD + scene (2026-08-24)
 
-**Status:** Tracing pass executed 2026-08-24. Spec still governs.
+**Status:** Tracing pass executed 2026-08-24. Measured type scale and palette
+applied to the prototype 2026-08-27 (§5.1, §5.2). Spec still governs.
+
+The arrangement this document specifies is a **[LEAN] for the current pass**, not
+a settled architecture — it was weighed against the MoP evidence on 2026-08-27
+and held, on the grounds of information payload. See *Lean for this pass* in
+[ADR-0002](../../docs/adr/0002-ui-architecture-world-view-vs-combat-plate.md).
+The lean is DD1's **finish and density**, explicitly not its single-creature
+information architecture.
 
 **Job:** One playable picture: a voxel/MoP-like board over a **traced Darkest Dungeon 1 combat console**, then peel costume later. Prototype, not poor. Not a layout lab.
 
@@ -206,6 +214,19 @@ The glossary rows are **not measured** — the glossary is a Neidfyre job and do
 not appear in the DD1 references. They are derived from the measured body size
 and Butterick's 120–145% leading guidance. Treat them as provisional.
 
+**Adopted by the client prototype 2026-08-27.** The table is implemented
+proportionally rather than as fixed pixels, per "convert proportionally" above:
+the stylesheet derives one reference pixel from plate height
+(`--sp: calc(var(--plate-h) / 362)`) and writes every size as the measured number
+times `--sp`. The plate is a true 33.5% at any window size and the type scales
+with it, so the measured numbers hold at 1080p and the ratios hold everywhere
+else. Verified: name 47.97px, class 19.99px, HP 21.99px, stat 18.99px on a
+17.98px pitch, plate 33.50% of window height.
+
+Sizes with no measured row — skill name, map title, inventory count — were placed
+at body size rather than given steps of their own, to preserve the single-large-
+step finding above.
+
 ### 5.2 [MEASURED] Darkest Dungeon's palette
 
 Taken from `panel_hero.png` (720×224) in the Steam install, which is
@@ -234,6 +255,23 @@ exactly** (`#919191`, `#434343`, `#242424`), while the ink is **warm**
 (`#b6b48a` is a warm olive-cream). Slate is the opposite: `#64748b` and its
 family are blue-tinted greys carrying cool text. If a neutral on this plate has
 unequal channels, it is wrong.
+
+**Adopted by the client prototype 2026-08-27**, replacing a warm-brown palette
+(`#5a4a36` frame, `#100c09` ground) that had none of these values in it and
+inverted the rule — warm chrome carrying cream ink, where DD1 is grey chrome
+carrying warm ink.
+
+**[LEAN] There is no accent hue, so brightness carries state.** The measured six
+contain no accent, but the prototype had been using a gold `#c4a66a` for
+selection, keyword links, glossary terms, and titles — a colour absent from the
+reference entirely. It was removed rather than kept as a deviation. Selection now
+steps chrome `#434343` → `#919191`; emphasis steps ink `#acac91` → `#b6b48a`;
+keyword links change underline style rather than colour. **Red stays functional
+and HP-only** — including on the map, where "you are here" is marked with the
+chrome step, not red.
+
+This does not apply to portraits. Creature portraits keep a per-creature hue,
+because DD1's portraits are painted colour art and identity colour is not chrome.
 
 ### 5.3 Geometry
 

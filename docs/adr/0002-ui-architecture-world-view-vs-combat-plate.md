@@ -6,6 +6,10 @@
 deferred a third time. It records the conflict, not a decision. Resolving it
 requires a grill session with the owner.
 
+A **[LEAN] for the current pass** was recorded 2026-08-27 — see *Lean for this
+pass* below. A LEAN names a direction and its reason so work can proceed without
+drifting; it is not the decision, and the arrangement question stays open.
+
 ## Context
 
 Two current documents describe two different games, and both are treated as
@@ -109,6 +113,56 @@ co-present. The latter is settled.
 A practical consequence: naming a reference is not a decision. DD1 being traced
 does not decide this ADR, and a proposal that serves the principle better is not
 off course. See POSTURE §0.
+
+**Correction to the MoP evidence (2026-08-27).** The paragraph above, and
+`reference/README.md`, said MoP "has no console". Re-reading the frames, that
+overstates it. MoP carries chrome on all four edges: a top bar (HP, resources,
+zone title, menu icons), a left icon column, a titled "Battle log" dock down the
+right, and a bottom strip holding reserve units, a turn-order track, and end
+turn. What MoP lacks is a *frame* — its chrome sits directly on the same black
+void the board floats in.
+
+So the real axis between the two references is **framed plate vs frameless
+chrome on void**, not panel vs no panel. Both references are persistent and both
+are fixed; they differ in whether the chrome is drawn as an object. That is a
+narrower and more tractable question than the one this ADR opened with, and it
+does not change option D, which is about customisability rather than framing.
+
+### Lean for this pass (2026-08-27)
+
+**[LEAN] Trace the DD1 plate — its finish and density, not its information
+architecture.** Adopt the measured type scale (POSTURE §5.1), the measured
+palette (§5.2), and the framed plate at 33.5%. Do not inherit DD1's
+single-creature focus as the model for how Mythoras shows a squad.
+
+Three things decided it:
+
+1. **The payload does not fit badges.** MoP pins about three numbers and a status
+   to each unit. A Mythoras Field creature carries HP, Load, four Attributes,
+   Speed, species tags, four keyworded Skill Cards, two trinkets, and ailments
+   with three separate scaling vectors. Badges cannot hold that, and POSTURE §0
+   forbids dropping information to make an arrangement work.
+2. **Only DD1 has been measured.** §5.1 and §5.2 are DD1 type metrics and DD1
+   palette. MoP has been described qualitatively and never measured, so a MoP
+   lean would have had no tokens to apply and would have meant inventing them.
+3. **This ADR already prescribes the order.** Option D's stated mitigation is to
+   trace the fixed plate first to learn what information the panels must carry,
+   then make arrangement configurable once the payload is settled. The lean is
+   that mitigation, not a rejection of the principle.
+
+**Cost, stated plainly.** The plate takes a third of the window height from an
+isometric board. DD1 could afford that because its fight is a flat row of four
+sprites; a tactical voxel board spends height on depth. If the board turns out to
+need that height, this LEAN is the thing that gives — not the principle.
+
+**Where a plan would live.** Recorded so the arrangement is not chosen with no
+room for the one piece of information neither reference has to carry. Turn
+Program queues three Field creatures at once; DD1 resolves one hero at a time and
+so its plate never had to show a plan. If built, planning would occupy the band
+between board and plate — where the squad pips already sit, and where MoP puts
+its own turn track and end turn — with queued actions ghosted onto the board
+tiles, since they are spatial. **None of this is built in this pass**, and
+POSTURE §4.3 still governs: the plate does not teach that noun.
 
 ## Consequences of leaving this open
 

@@ -92,7 +92,7 @@ function renderKeywords(text: string, onTerm: (term: string) => void): HTMLEleme
 
 function bar(kind: "hp" | "load", value: number, max: number): HTMLElement {
   const wrap = el("div", `resbar resbar-${kind}`);
-  wrap.appendChild(el("span", "res-ico", kind === "hp" ? "HP" : "LOAD"));
+  wrap.appendChild(el("span", "res-ico", kind === "hp" ? "HP" : "Load"));
   const track = el("div", "res-track");
   const fill = el("div", "res-fill");
   fill.style.width = `${Math.max(0, Math.min(100, (value / max) * 100))}%`;
@@ -114,20 +114,16 @@ function crest(side: "left" | "right"): SVGSVGElement {
     "d",
     "M6 8 h36 v10 c0 22 -8 36 -18 48 C14 54 6 40 6 18 z",
   );
-  frame.setAttribute("fill", "#1a120c");
-  frame.setAttribute("stroke", "#6a5840");
-  frame.setAttribute("stroke-width", "1.6");
+  frame.setAttribute("class", "crest-frame");
   const hood = svgEl("path");
   hood.setAttribute("d", "M24 16 c-8 0 -12 6 -12 14 v6 c0 8 5 12 12 18 7 -6 12 -10 12 -18 v-6 c0 -8 -4 -14 -12 -14 z");
-  hood.setAttribute("fill", "#2e2418");
-  hood.setAttribute("stroke", "#8a7352");
-  hood.setAttribute("stroke-width", "1.2");
+  hood.setAttribute("class", "crest-hood");
   const face = svgEl("ellipse");
   face.setAttribute("cx", "24");
   face.setAttribute("cy", "30");
   face.setAttribute("rx", "5");
   face.setAttribute("ry", "6");
-  face.setAttribute("fill", "#0e0a08");
+  face.setAttribute("class", "crest-face");
   g.appendChild(frame);
   g.appendChild(hood);
   g.appendChild(face);

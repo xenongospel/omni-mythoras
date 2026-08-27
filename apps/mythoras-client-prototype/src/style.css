@@ -1,14 +1,37 @@
 :root {
-  --plate: #100c09;
-  --ink: #e6d8c2;
-  --ink-dim: #a89880;
-  --hp: #9c241c;
-  --hp-track: #2a1210;
-  --load: #d4cbb8;
-  --load-track: #221e18;
-  --kw: #d4a24a;
-  --gold: #c4a66a;
-  --frame: #5a4a36;
+  /* Palette: POSTURE §5.2, measured from Darkest Dungeon's own panel art.
+     Neutrals are pure grey (R = G = B); only the ink is warm. A neutral with
+     unequal channels is the bug. */
+  --plate-void: #000000;
+  --ground-1: #0c0c0c;
+  --ground-2: #141414;
+  --ground-3: #1c1c1c;
+  --plate-raise: #242424;
+  --chrome-body: #434343;
+  --chrome-edge: #919191;
+  --ink-primary: #b6b48a;
+  --ink-body: #acac91;
+  --ink-muted: #858682;
+  --ink-dim: #757572;
+  --hp-red: #b80000;
+  --hp-shade: #8a0000;
+  --hp-track: #4d0000;
+
+  /* There is no accent hue. State is carried by brightness: chrome steps
+     --chrome-body -> --chrome-edge, ink steps --ink-body -> --ink-primary.
+     Red stays functional, HP only. */
+
+  /* The plate is a fixed fraction of window height (POSTURE §5.3), so type
+     scales with it. --sp is one reference pixel at 1080p, which lets the
+     measured table in §5.1 be written out literally and still be responsive. */
+  --plate-h: 33.5vh;
+  --sp: calc(var(--plate-h) / 362);
+
+  --t-name: calc(var(--sp) * 48);
+  --t-hp: calc(var(--sp) * 22);
+  --t-class: calc(var(--sp) * 20);
+  --t-body: calc(var(--sp) * 19);
+  --t-pitch: calc(var(--sp) * 18);
 }
 
 * {
@@ -20,10 +43,11 @@ body {
   margin: 0;
   height: 100%;
   overflow: hidden;
-  background: #0c0907;
-  color: var(--ink);
-  font-family: Ubuntu, "Segoe UI", sans-serif;
-  font-size: 13px;
+  background: var(--plate-void);
+  color: var(--ink-body);
+  font-family: Ubuntu, sans-serif;
+  font-size: var(--t-body);
+  line-height: 1.35;
 }
 
 button {
@@ -55,10 +79,10 @@ button {
 
 .squad-strip {
   position: absolute;
-  left: 16px;
-  bottom: 8px;
+  left: calc(var(--sp) * 16);
+  bottom: calc(var(--sp) * 8);
   display: flex;
-  gap: 6px;
+  gap: calc(var(--sp) * 6);
   pointer-events: none;
 }
 
@@ -70,14 +94,15 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
+  gap: calc(var(--sp) * 3);
   padding: 0;
   background: none;
   border: 0;
 }
 
 .pip.is-on .portrait-face {
-  outline: 1px solid var(--gold);
+  border-color: var(--chrome-edge);
+  color: var(--ink-primary);
 }
 
 .pip.is-bench {
@@ -85,61 +110,80 @@ button {
 }
 
 .pip .portrait-face {
-  width: 36px;
-  height: 36px;
-  font-size: 16px;
+  width: calc(var(--sp) * 36);
+  height: calc(var(--sp) * 36);
+  font-size: var(--t-class);
 }
 
 .pip-hp {
-  width: 36px;
-  height: 4px;
+  width: calc(var(--sp) * 36);
+  height: calc(var(--sp) * 4);
   background: var(--hp-track);
 }
 
 .pip-hp-fill {
   height: 100%;
-  background: var(--hp);
+  background: var(--hp-red);
 }
 
+/* The field is black; the frame does the work (§5.2). The only lift is the
+   ground ramp at the top edge, which is the lightest the plate ever gets. */
 .plate {
   position: relative;
-  flex: 0 0 32vh;
-  min-height: 260px;
-  max-height: 380px;
+  flex: 0 0 var(--plate-h);
+  /* Without this the map SVG's intrinsic height pushes the plate past its
+     basis, since a flex item's min-height defaults to its content. */
+  min-height: 0;
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
-  background-color: var(--plate);
-  background-image:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 3px,
-      rgba(0, 0, 0, 0.22) 4px
+  grid-template-columns: minmax(0, 1.05fr) minmax(calc(var(--sp) * 300), 0.95fr);
+  background:
+    linear-gradient(
+      180deg,
+      var(--plate-raise) 0,
+      var(--ground-3) calc(var(--sp) * 6),
+      var(--ground-1) calc(var(--sp) * 18),
+      var(--plate-void) calc(var(--sp) * 44)
     ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 5px,
-      rgba(40, 28, 16, 0.18) 6px
-    );
-  border-top: 10px solid #1a140e;
+    var(--plate-void);
+  border-top: calc(var(--sp) * 2) solid var(--chrome-edge);
   box-shadow:
-    inset 0 0 0 2px #3a2e22,
-    inset 0 0 0 4px #0a0705,
-    inset 0 8px 0 #2a2016;
+    inset 0 0 0 calc(var(--sp) * 2) var(--chrome-body),
+    inset 0 0 0 calc(var(--sp) * 4) var(--plate-void);
 }
 
 .crest {
   position: absolute;
-  top: -18px;
-  width: 52px;
-  height: 78px;
+  top: calc(var(--sp) * -18);
+  width: calc(var(--sp) * 52);
+  height: calc(var(--sp) * 78);
   pointer-events: none;
   z-index: 2;
 }
 
-.crest-left { left: 6px; }
-.crest-right { right: 6px; transform: scaleX(-1); }
+.crest-frame {
+  fill: var(--ground-2);
+  stroke: var(--chrome-edge);
+  stroke-width: 1.6;
+}
+
+.crest-hood {
+  fill: var(--plate-raise);
+  stroke: var(--chrome-body);
+  stroke-width: 1.2;
+}
+
+.crest-face {
+  fill: var(--plate-void);
+}
+
+.crest-left {
+  left: calc(var(--sp) * 6);
+}
+
+.crest-right {
+  right: calc(var(--sp) * 6);
+  transform: scaleX(-1);
+}
 
 .plate-left,
 .plate-right {
@@ -150,74 +194,78 @@ button {
 .plate-left {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 14px 18px 12px 64px;
-  border-right: 1px solid #2a2218;
+  gap: calc(var(--sp) * 8);
+  padding: calc(var(--sp) * 14) calc(var(--sp) * 18) calc(var(--sp) * 12)
+    calc(var(--sp) * 64);
+  border-right: 1px solid var(--chrome-body);
 }
 
+/* Right padding mirrors .plate-left's, reserving the corner bookend's column
+   so it never sits on top of the tab controls. */
 .plate-right {
   display: flex;
   gap: 0;
-  padding: 10px 8px 10px 12px;
+  padding: calc(var(--sp) * 10) calc(var(--sp) * 64) calc(var(--sp) * 10)
+    calc(var(--sp) * 12);
 }
 
 .ident {
   display: flex;
-  gap: 10px;
+  gap: calc(var(--sp) * 10);
   align-items: center;
 }
 
 .portrait-face {
-  width: 56px;
-  height: 56px;
+  width: calc(var(--sp) * 56);
+  height: calc(var(--sp) * 56);
   display: grid;
   place-items: center;
   font-family: "UnifrakturCook", serif;
-  font-size: 28px;
-  border: 2px solid #4a3c2c;
-  box-shadow: inset 0 0 0 1px #0a0705;
+  font-size: var(--t-hp);
+  color: var(--ink-primary);
+  background: var(--plate-void);
+  border: calc(var(--sp) * 2) solid var(--chrome-body);
   flex: 0 0 auto;
 }
 
 .hero-name {
   font-family: "UnifrakturCook", serif;
-  font-size: 30px;
+  font-weight: 700;
+  font-size: var(--t-name);
   line-height: 1;
-  color: #f0e4cc;
+  color: var(--ink-primary);
 }
 
 .hero-class {
-  margin-top: 3px;
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-dim);
+  margin-top: calc(var(--sp) * 3);
+  font-size: var(--t-class);
+  line-height: 1.1;
+  color: var(--ink-body);
 }
 
 .skills {
   display: flex;
-  gap: 5px;
+  gap: calc(var(--sp) * 5);
 }
 
 .skill {
-  width: 46px;
-  height: 46px;
+  width: calc(var(--sp) * 46);
+  height: calc(var(--sp) * 46);
   display: grid;
   place-items: center;
-  color: #d2c4ac;
-  background: #0c0907;
-  border: 2px solid #5a4a36;
-  box-shadow: inset 0 0 0 1px #1a140e;
+  color: var(--ink-muted);
+  background: var(--plate-void);
+  border: calc(var(--sp) * 2) solid var(--chrome-body);
 }
 
 .skill svg {
-  width: 26px;
-  height: 26px;
+  width: calc(var(--sp) * 26);
+  height: calc(var(--sp) * 26);
 }
 
 .skill.is-on {
-  border-color: var(--gold);
-  color: var(--gold);
+  border-color: var(--chrome-edge);
+  color: var(--ink-primary);
 }
 
 .skill.is-empty {
@@ -227,94 +275,95 @@ button {
 
 .resbar {
   display: grid;
-  grid-template-columns: 38px 1fr auto;
-  gap: 8px;
+  grid-template-columns: calc(var(--sp) * 52) 1fr auto;
+  gap: calc(var(--sp) * 8);
   align-items: center;
 }
 
 .res-ico {
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  color: var(--ink-dim);
+  font-size: var(--t-body);
+  color: var(--ink-muted);
 }
 
 .res-track {
-  height: 11px;
+  height: calc(var(--sp) * 14);
   background: var(--hp-track);
-  box-shadow: inset 0 0 0 1px #4a2018;
+  box-shadow: inset 0 0 0 1px var(--hp-shade);
 }
 
 .resbar-load .res-track {
-  background: var(--load-track);
-  box-shadow: inset 0 0 0 1px #3a362c;
+  background: var(--ground-3);
+  box-shadow: inset 0 0 0 1px var(--chrome-body);
 }
 
 .res-fill {
   height: 100%;
-  background: var(--hp);
+  background: var(--hp-red);
 }
 
 .resbar-load .res-fill {
-  background: var(--load);
+  background: var(--chrome-edge);
 }
 
 .res-num {
   font-weight: 700;
   font-variant-numeric: tabular-nums;
-  font-size: 12px;
-  min-width: 70px;
+  font-size: var(--t-hp);
+  line-height: 1;
+  color: var(--ink-primary);
+  min-width: calc(var(--sp) * 84);
   text-align: right;
 }
 
 .lower {
   display: grid;
-  grid-template-columns: minmax(0, 160px) auto;
-  gap: 16px;
+  grid-template-columns: minmax(0, calc(var(--sp) * 180)) auto;
+  gap: calc(var(--sp) * 16);
   align-items: start;
-  margin-top: 2px;
+  margin-top: calc(var(--sp) * 2);
 }
 
 .stats {
   display: flex;
   flex-direction: column;
-  gap: 2px;
 }
 
+/* The stat grid is the anchor of the measured scale: 19px on an 18px pitch. */
 .stat {
   display: flex;
   justify-content: space-between;
-  gap: 16px;
-  font-size: 12px;
+  gap: calc(var(--sp) * 16);
+  font-size: var(--t-body);
+  line-height: var(--t-pitch);
 }
 
 .stat-k {
-  color: var(--ink-dim);
-  letter-spacing: 0.08em;
+  color: var(--ink-muted);
 }
 
 .stat-v {
-  font-weight: 700;
+  color: var(--ink-dim);
   font-variant-numeric: tabular-nums;
 }
 
 .trinkets {
   display: flex;
-  gap: 6px;
+  gap: calc(var(--sp) * 6);
 }
 
 .trinket {
-  width: 52px;
-  height: 52px;
-  border: 2px solid #5a4a36;
-  background: #0c0907;
+  width: calc(var(--sp) * 52);
+  height: calc(var(--sp) * 52);
+  border: calc(var(--sp) * 2) solid var(--chrome-body);
+  background: var(--plate-void);
   display: grid;
   place-items: center;
-  color: var(--gold);
+  color: var(--ink-muted);
 }
 
 .trinket svg {
-  width: 28px;
-  height: 28px;
+  width: calc(var(--sp) * 28);
+  height: calc(var(--sp) * 28);
 }
 
 .trinket.is-empty {
@@ -323,28 +372,31 @@ button {
 
 .float-tip {
   position: absolute;
-  left: 64px;
-  bottom: 10px;
+  left: calc(var(--sp) * 64);
+  bottom: calc(var(--sp) * 10);
   z-index: 4;
-  width: min(340px, 42%);
-  padding: 8px 10px;
-  background: #0a0705;
-  border: 1px solid #6a5840;
+  width: min(calc(var(--sp) * 420), 46%);
+  padding: calc(var(--sp) * 8) calc(var(--sp) * 10);
+  background: var(--plate-void);
+  border: 1px solid var(--chrome-body);
 }
 
 .skill-name {
   font-family: "UnifrakturCook", serif;
-  font-size: 16px;
-  color: var(--gold);
+  font-weight: 700;
+  font-size: var(--t-body);
+  line-height: 1.2;
+  color: var(--ink-primary);
 }
 
 .skill-line {
-  margin: 3px 0 0;
+  margin: calc(var(--sp) * 3) 0 0;
+  color: var(--ink-body);
   line-height: 1.35;
 }
 
 .kw {
-  color: var(--kw);
+  color: var(--ink-primary);
   text-decoration: underline;
   text-decoration-style: dotted;
   text-underline-offset: 2px;
@@ -352,24 +404,26 @@ button {
 
 .kw:hover,
 .kw:focus-visible {
-  color: #f0c56a;
+  text-decoration-style: solid;
 }
 
 .glossary {
-  margin-top: 6px;
-  padding-top: 6px;
-  border-top: 1px solid #3a3026;
+  margin-top: calc(var(--sp) * 6);
+  padding-top: calc(var(--sp) * 6);
+  border-top: 1px solid var(--chrome-body);
 }
 
 .glossary-term {
   font-family: "UnifrakturCook", serif;
-  font-size: 15px;
-  color: var(--gold);
+  font-weight: 700;
+  font-size: var(--t-body);
+  line-height: 1.2;
+  color: var(--ink-primary);
 }
 
 .glossary-def {
-  margin: 2px 0 0;
-  color: var(--ink-dim);
+  margin: calc(var(--sp) * 2) 0 0;
+  color: var(--ink-body);
   line-height: 1.35;
 }
 
@@ -382,29 +436,30 @@ button {
 .tabs {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: calc(var(--sp) * 6);
   flex: 0 0 auto;
-  padding: 4px 4px 4px 8px;
+  padding: calc(var(--sp) * 4) calc(var(--sp) * 4) calc(var(--sp) * 4)
+    calc(var(--sp) * 8);
 }
 
 .tab {
-  width: 34px;
-  height: 34px;
-  color: var(--ink-dim);
-  border: 1px solid #4a3c2c;
-  background: #0c0907;
+  width: calc(var(--sp) * 34);
+  height: calc(var(--sp) * 34);
+  color: var(--ink-muted);
+  border: 1px solid var(--chrome-body);
+  background: var(--plate-void);
   display: grid;
   place-items: center;
 }
 
 .tab svg {
-  width: 18px;
-  height: 18px;
+  width: calc(var(--sp) * 18);
+  height: calc(var(--sp) * 18);
 }
 
 .tab.is-on {
-  color: var(--gold);
-  border-color: var(--gold);
+  color: var(--ink-primary);
+  border-color: var(--chrome-edge);
 }
 
 .map,
@@ -412,15 +467,17 @@ button {
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: calc(var(--sp) * 6);
   min-height: 0;
 }
 
 .map-title {
   font-family: "UnifrakturCook", serif;
-  font-size: 18px;
-  color: var(--gold);
-  padding-left: 4px;
+  font-weight: 700;
+  font-size: var(--t-body);
+  line-height: 1.2;
+  color: var(--ink-primary);
+  padding-left: calc(var(--sp) * 4);
 }
 
 .zone-graph {
@@ -431,107 +488,111 @@ button {
 }
 
 .zone-graph .hall {
-  stroke: #6a5840;
+  stroke: var(--chrome-body);
   stroke-width: 1.5;
 }
 
 .zone-graph .room rect {
-  fill: #16110c;
-  stroke: #6a5840;
+  fill: var(--ground-1);
+  stroke: var(--chrome-body);
   stroke-width: 0.55;
 }
 
 .zone-graph .room.is-here rect {
-  fill: #5a2018;
-  stroke: var(--gold);
+  fill: var(--plate-raise);
+  stroke: var(--chrome-edge);
   stroke-width: 0.9;
 }
 
 .zone-graph .room.is-cleared rect {
-  fill: #2a2218;
+  fill: var(--ground-3);
 }
 
 .zone-graph .room.is-ahead rect {
-  fill: #241c14;
-  stroke: #a89068;
+  fill: var(--ground-2);
+  stroke: var(--ink-muted);
 }
 
 .zone-graph .room.is-side rect {
-  fill: #1e1812;
+  fill: var(--ground-2);
 }
 
 .zone-graph .room.is-locked rect {
-  fill: #0c0a08;
-  stroke: #3a3228;
+  fill: var(--plate-void);
+  stroke: var(--chrome-body);
 }
 
 .zone-graph .room text {
-  fill: var(--ink);
+  fill: var(--ink-body);
   font-size: 3.5px;
   font-family: Ubuntu, sans-serif;
 }
 
+.zone-graph .room.is-here text {
+  fill: var(--ink-primary);
+}
+
 .zone-graph .room.is-locked text {
-  fill: #6a5e50;
+  fill: var(--ink-dim);
 }
 
 .map-legend {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 12px;
-  font-size: 11px;
-  color: var(--ink-dim);
-  padding: 0 4px 2px;
+  gap: calc(var(--sp) * 6) calc(var(--sp) * 12);
+  font-size: var(--t-body);
+  line-height: var(--t-pitch);
+  color: var(--ink-muted);
+  padding: 0 calc(var(--sp) * 4) calc(var(--sp) * 2);
 }
 
 .legend-chip::before {
   content: "";
   display: inline-block;
-  width: 8px;
-  height: 8px;
-  margin-right: 5px;
-  vertical-align: -1px;
-  border: 1px solid #6a5840;
-  background: #2a2218;
+  width: calc(var(--sp) * 10);
+  height: calc(var(--sp) * 10);
+  margin-right: calc(var(--sp) * 5);
+  border: 1px solid var(--chrome-body);
+  background: var(--ground-3);
 }
 
 .legend-chip.is-here::before {
-  background: #5a2018;
-  border-color: var(--gold);
+  background: var(--plate-raise);
+  border-color: var(--chrome-edge);
 }
 
 .legend-chip.is-ahead::before {
-  background: #241c14;
-  border-color: #a89068;
+  background: var(--ground-2);
+  border-color: var(--ink-muted);
 }
 
 .legend-chip.is-locked::before {
-  background: #0c0a08;
-  border-color: #3a3228;
+  background: var(--plate-void);
+  border-color: var(--chrome-body);
 }
 
 .inv-grid {
   flex: 1 1 auto;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-  grid-auto-rows: minmax(40px, 1fr);
-  gap: 4px;
+  grid-auto-rows: minmax(calc(var(--sp) * 40), 1fr);
+  gap: calc(var(--sp) * 4);
   min-height: 0;
-  padding-right: 4px;
+  padding-right: calc(var(--sp) * 4);
 }
 
 .inv-slot {
   position: relative;
-  border: 2px solid #5a4a36;
-  background: #0c0907;
+  border: calc(var(--sp) * 2) solid var(--chrome-body);
+  background: var(--plate-void);
   display: grid;
   place-items: center;
-  color: var(--gold);
+  color: var(--ink-muted);
 }
 
 .inv-slot svg {
-  width: 22px;
-  height: 22px;
+  width: calc(var(--sp) * 22);
+  height: calc(var(--sp) * 22);
 }
 
 .inv-slot.is-empty {
@@ -540,18 +601,11 @@ button {
 
 .inv-qty {
   position: absolute;
-  right: 3px;
-  bottom: 1px;
+  right: calc(var(--sp) * 3);
+  bottom: calc(var(--sp) * 1);
   font-family: "UnifrakturCook", serif;
-  font-size: 13px;
+  font-weight: 700;
+  font-size: var(--t-body);
   line-height: 1;
-}
-
-@media (max-height: 720px) {
-  .plate {
-    flex-basis: 36vh;
-    min-height: 240px;
-  }
-  .hero-name { font-size: 24px; }
-  .skill, .trinket { width: 38px; height: 38px; }
+  color: var(--ink-primary);
 }
