@@ -454,3 +454,31 @@ Not canon. Do not put in ADE. Affix classification (prefix/suffix vs other) is s
 **Why it is interesting:** it is a **long-term investment vector**, which suits the stated identity. Mythoras is a campaign with an endgame, not a roguelike (CONTEXT #7), and the owner's framing here is explicit that this game is longer-term than PoE mercenaries or a single PoE character. An owned dungeon you improve across a campaign expresses that better than another consumable.
 **Relationship to planned endgame:** owner's read is that this sits **external to** the Cipher Network / atlas-surrogate mapping layer, not inside it — a parallel vector, not a replacement. Two investment surfaces competing for the same time budget is the obvious risk and the thing a grill would need to test.
 **Blocker / note:** Do not fold into the Cipher Network design. Do not name it. Requires a dedicated session against [`CIPHER_NETWORK_PROGRESSION_DESIGN.md`](CIPHER_NETWORK_PROGRESSION_DESIGN.md) to check it is additive rather than a second endgame.
+
+---
+
+## Owner notes — 2026-08-28
+
+### IDEA-066 — The wager: escalating stake with a bail-out, as the missing endgame grammar
+**Status:** Seed — the surrounding pillars already exist; this is the grammar they lack
+**Source:** 2026-08-28 owner (Delve, Pokémon Battle Tower, PoE2 Trial of Chaos, Ultimatum and its 0.5.5 changes)
+
+**First, what already exists.** The owner's framing — "not a roguelike in the traditional sense; a campaign leading to an endgame, with long-term character saves" — is already canon in CONTEXT #7, and three non-mapping pillars are already named:
+
+| Pillar | Where | State |
+| --- | --- | --- |
+| **Ascension Framework** — "a Delve-inspired vertical infinite dungeon", floors, branching paths, a Catalyst resource to descend, Rest Sites, carry-forward, town departure, faint/wipe failure rules | [`DOC_v4.md`](DOC_v4.md) §35.6 | Sketched in one paragraph. **Name pending.** "Full design specification deferred," and §12 of the Cipher design hard-defers it out of MVP |
+| **The Proving** — 5 floors, 3 trial types, 10 Pathway points, one run per creature, unlocks Principal trees | [`DOC_v3.md`](DOC_v3.md) §15 | The Labyrinth / Trial-of-Chaos-shaped thing, and it is *already in the MVP set* (`SESSION_DECISIONS_2026-07-15`: "MVP endgame = Cipher + Proving + 1–2 Pinnacles") |
+| **Pinnacle bosses** — two-tier Standard / Apex | [`DOC_v4.md`](DOC_v4.md) §35.7 | Named, tiered, not designed |
+
+So the Delve analogue and the tower analogue both exist on paper. The gap is not conception — it is that **the only endgame pillar with real design behind it is the mapping one.**
+
+**What is actually new here.** None of the three has a **wager**. Ultimatum and Trial of Chaos are not "floors with rising difficulty" — they are a rising *stake* with a repeated player decision: bank what you have, or run the next round for more. §35.6's Catalyst is a **gate** (do you have the resource to descend) not a **wager** (do you dare descend). Delve's depth pressure and the Battle Tower's streak are the same shape: the run's value is destroyed by the loss that ends it, so the interesting decision is when to stop.
+
+That grammar appears nowhere in the current endgame. Cipher runs price risk **upfront** via Threat dials and Overrides (`CIPHER_NETWORK_PROGRESSION_DESIGN.md` §8) and then resolve. Upfront staking and mid-run bail-out are different feelings and can coexist — the argument for adding it is exactly the owner's word **asymmetry**: pillars should demand different things of a build, not be the same fight at different lengths.
+
+**The test to apply, in the owner's terms:** depth outside the mapping cadence · asymmetry between pillars · settled peaks · content that challenges *different* builds while staying a fair challenge. A pillar that fails these is a longer map, not a pillar.
+
+**Blocker / note:** Do not design this before the naming bug is fixed. [`WAYFINDER_PASS_COHERENCE.md`](WAYFINDER_PASS_COHERENCE.md) §D records that **"Ascension" is currently assigned to two incompatible systems** — the excavation pillar (July 15) and the creature Principal visual system (`DOC_v4`, `DOC_v6`) — and that resolution is documentation cleanup, not a design decision. Naming a wager mechanic on top of an already-colliding name will make it worse. Also do not fold this into the Cipher Network; §12's defer list exists to stop exactly that. Related: IDEA-065 (buildable dungeon) is a *third* claim on the same non-mapping budget, and the two should be grilled together rather than separately.
+
+**Reference to pull when this is scheduled:** PoE2 patch 0.5.5 (owner: releasing week of 2026-08-31) reportedly reworks Ultimatum's scaling. Worth a research pass at that point, not now.

@@ -189,8 +189,9 @@ Three things this settles about what option D actually meant to the owner:
 2. **Layout is saved and restored player state.** The expensive half of option D
    — configurability, not persistence — is the half that was drawn.
 3. **Map Designer is one of the panels.** An authoring surface inside the game
-   shell. That is a direct question mark over whether the ADE is a separate
-   application, and it belongs in the discussion on issue #6 rather than here.
+   shell. This was read here as a question mark over whether the ADE is a
+   separate application. **The owner answered it on 2026-08-28 in the opposite
+   direction — see below.** It is not an open question.
 
 **This does not change the LEAN.** The screens are about *arrangement* and carry
 no usable finish: the project's theme is Inter for headline and body with a 4px
@@ -205,6 +206,80 @@ described as the newest and least examined option. It is the oldest, and the
 thing that has never been done is not imagining it — it is costing it. See
 `apps/mythoras-client-prototype/reference/shell-stitch/README.md` for the screens
 and how to re-fetch them.
+
+### The owner's reading of those screens (2026-08-28)
+
+The owner reviewed the screens and separated what they had been reaching for from
+what the screens got wrong. **No decision was taken.** This records the reasons,
+because they narrow option D considerably.
+
+**What the owner still wants from them:**
+
+- **The informational orientation.** This was the reason for going that way at
+  all — the arrangement of the game view *among* the other panels let far more
+  be shown at once.
+- **A sized game view with reactive decks.** The player picks a size — quarter,
+  half, or full — and the surrounding components reflow to it. Aspect ratio is
+  always forced. Owner's own scoping: **half and quarter only** for a first pass,
+  because all three is a lot of work. The space this frees goes to a **bottom
+  deck** and possibly a **right deck**.
+- **Black with purple and green.**
+
+**What the owner discarded, with reasons:**
+
+- **Free-floating panels.** This is the owner's own conclusion from having drawn
+  it: a configuration system that permits free float is *incredibly expensive*.
+  Note what that kills — the SAVE / LOAD / RESET LAYOUT manager and the
+  draggable, minimisable game-view window are exactly the expensive half, and
+  exactly what the screens drew. **Option D as drawn is not the option D under
+  consideration.**
+- **Game View as its own panel.** Not required. What mattered was its orientation
+  relative to the others, not its window-ness.
+- **Map Designer inside the game frame.** It belongs in the ADE. The screens
+  embedded it during a period when the owner was still trying to differentiate
+  the game from the editor and had not yet separated the two.
+- **Debug mode in frame.** A deliberate convenience choice made when there was no
+  separate ADE to put it in. A separate ADE removes the reason for it.
+
+Option D therefore reduces from *arbitrary panel layout* to **fixed decks around
+a game view with two or three sizes**. That is a materially cheaper thing than
+what this ADR has been costing it at, and it is much closer to what `fortryv/`
+runs in production than to a window manager.
+
+**One tension this opens.** Black with purple and green is not the palette
+applied in POSTURE §5.2, which is DD1's pure greys, warm ink, and a functional
+red. Both cannot be true. Not resolved here, but flagged so that the next palette
+pass does not quietly assume the measured DD1 values are settled.
+
+### Counter-evidence to the payload argument (2026-08-28)
+
+The first of the three reasons given for the LEAN was that Mythoras's payload
+cannot fit MoP-style badges. A survey of four HUDs taken from owner-supplied
+video links shows that claim is doing less work than it appeared to. See
+[`apps/mythoras-client-prototype/reference/hud-survey/README.md`](../../apps/mythoras-client-prototype/reference/hud-survey/README.md).
+
+*Never's End* carries, with **no framed plate at all**: an initiative queue,
+per-unit HP and statuses, a running combat log, a stat block, an ability bar,
+keybind hints, and five equipment slots each with its own counter. All of it on
+the edges and corners of a full-bleed board. *Calame* runs a squad fight with a
+two-card bottom deck and a turn queue. *Fortryv* holds an entire ARPG inventory
+and paperdoll in a right deck.
+
+The honest correction: **heavy payload does not force a framed plate.** What it
+forces is *reserved edge space*. Decks provide that; badges alone do not. The
+distinction the payload argument was actually reaching for is badges-only versus
+reserved-space — not frameless versus framed. Those had been conflated.
+
+The other two reasons are untouched: DD1 remains the only measured reference, and
+trace-first-then-arrange remains this ADR's own prescribed order. **The LEAN
+stands, but it stands on measurement and sequencing, not on payload
+impossibility.** Anyone reopening this should not be told the payload settles it.
+
+**One device worth keeping whichever option wins.** Calame numbers each unit on
+the board and uses that same number as its tile in the turn queue. The badge is
+an *index into* the deck rather than a summary of the unit — which is how a
+squad-scale board stays readable without either surface having to carry
+everything on its own.
 
 ## Consequences of leaving this open
 
