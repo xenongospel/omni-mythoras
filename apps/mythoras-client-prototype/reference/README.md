@@ -19,13 +19,24 @@ Darkest Dungeon has **nothing** to say about the board. Master of Pieces has
 nothing to say about the console. A pass that traces DD1 into the game view, or
 MoP into the plate, is wrong regardless of how good it looks.
 
-### A third folder that is not a third reference
+### Three folders that are not a third reference
 
-`shell-stitch/` holds screens the **owner** generated in Google Stitch. It is not
-another studio's game and it does not govern a surface. It is evidence about
-*arrangement* for [ADR-0002](../../../docs/adr/0002-ui-architecture-world-view-vs-combat-plate.md)
-— the shell, the panel manager, and where the game view sits — and it carries no
-usable finish. Do not trace it. See `shell-stitch/README.md`.
+The two-surface rule above governs **tracing**. These three hold evidence, govern
+nothing, and must not be traced. Three studios' finish in one prototype is how
+the layout zoo happens.
+
+| Folder | What it is | What it is evidence about |
+| --- | --- | --- |
+| `shell-stitch/` | Screens the **owner** generated in Google Stitch, 2026-04-04 | *Arrangement* for [ADR-0002](../../../docs/adr/0002-ui-architecture-world-view-vs-combat-plate.md) — the shell, the panel manager, where the game view sits. Carries no usable finish |
+| `hud-survey/` | Four HUDs sampled from owner-supplied video links, 2026-08-28 | Whether edge chrome can carry a heavy information payload. It can — see ADR-0002, *Counter-evidence to the payload argument* |
+| `guildrun/` | Steam store assets for *Guildrun*, 2026-08-29 | Measured colour, and how a painted backdrop composites with a tile grid. See [`RESEARCH_GUILDRUN_UI_2026-08-29.md`](../../../docs/research/RESEARCH_GUILDRUN_UI_2026-08-29.md) |
+
+`guildrun/` needs one extra warning, because it is the only one of the three that
+is **measured**. It carries about thirty sampled hex values while
+`gameview-mop/` has never been measured at all. Measured numbers argue louder
+than prose, so the asymmetry is a live hazard: Guildrun will *feel* better
+evidenced than MoP on any question the two both touch, purely because someone
+pointed a script at one of them. Do not mistake that for it being more relevant.
 
 ## `console-dd1/`
 

@@ -80,6 +80,7 @@ Feeds OD-004 and ADR-0002. Nothing here is a locked look.
 - [`RESEARCH_POE_PLAYER_VISUAL_OVERVIEW_yLij_001vUU.md`](docs/research/RESEARCH_POE_PLAYER_VISUAL_OVERVIEW_yLij_001vUU.md)
 - [`RESEARCH_INSPIRATION_LINKS_2026-08-14.md`](RESEARCH_INSPIRATION_LINKS_2026-08-14.md) · [`VISUAL_AND_CIPHER_BOARD_NOTES.md`](VISUAL_AND_CIPHER_BOARD_NOTES.md)
 - [`RESEARCH_X_REFS_PALETTE_ASSET_PIPELINE_2026-08-11.md`](RESEARCH_X_REFS_PALETTE_ASSET_PIPELINE_2026-08-11.md) — palette and asset pipeline
+- [`RESEARCH_GUILDRUN_UI_2026-08-29.md`](docs/research/RESEARCH_GUILDRUN_UI_2026-08-29.md) — **the only measured colour in the pile.** ~30 sampled hex values, and how a painted backdrop composites with a tile grid
 
 ### Editor / ADE references
 

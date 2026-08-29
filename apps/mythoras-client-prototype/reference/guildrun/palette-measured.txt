@@ -1,0 +1,39 @@
+region                                       img        mode     share  mean     darkest  lightest
+card body, resting                           ss-06.jpg  #101417  100%  #101417 #101417 #101417
+docked panel body                            ss-09.jpg  #161B1E   93%  #161B1E #03070A #63665B
+modal plate body, over painted world         ss-08.jpg  #101415   45%  #121516 #0A0A0A #464A4B
+top bar ground                               ss-00.jpg  #0F1417   53%  #23231D #000401 #CABB78
+rail slot interior, empty                    ss-02.jpg  #1E1E1E   30%  #1F1F1F #000002 #424242
+screen corner vignette                       ss-08.jpg  #060606   97%  #060606 #060606 #060606
+secondary bar track, navy                    ss-02.jpg  #182035   16%  #142131 #000200 #20253B
+[thin] gold stile, outer                     ss-06.jpg  #040A08    5%  #625A34 #010100 #E4D09B
+[thin] gold stile, inner                     ss-06.jpg  #0F1B11    4%  #4C4C23 #000400 #BAA74B
+[thin] gold button rim                       ss-08.jpg  #E7E4B7    7%  #A8A678 #111B1C #E8E4B7
+gold corner bracket                          ss-08.jpg  #8D7F5A    2%  #666A52 #12120A #E3E5CF
+[thin] grey slot border                      ss-02.jpg  #7C7A7B   12%  #403F40 #000000 #807E7F
+[thin] panel edge line                       ss-09.jpg  #000100    8%  #362E29 #000000 #727564
+primary action fill (PROCEED)                ss-08.jpg  #225149    3%  #2C5A50 #153625 #FFFFEB
+hover wash, card upper body                  ss-06.jpg  #152824   30%  #172A25 #162721 #182D28
+hover wash, card lower body                  ss-06.jpg  #214539   43%  #21473A #224436 #214A3C
+active rail tab fill                         ss-02.jpg  #48D296   11%  #3ECA8F #3ABF88 #48D296
+class pennant fill, green                    ss-06.jpg  #5DD78C   28%  #54C07E #010D03 #6BEF9B
+selection glow core                          ss-08.jpg  #83FAFF   11%  #60C3DD #2C8BA1 #9EFDFF
+enemy HP fill                                ss-02.jpg  #9A1F17   11%  #9F1D1C #911B19 #A01F24
+stat bar segment, orange                     ss-09.jpg  #E96D51   25%  #E46B4B #E26C44 #E96D51
+stat bar segment, magenta                    ss-09.jpg  #D04ECA   15%  #C84CC8 #C549C3 #D14FCD
+stat bar segment, green                      ss-09.jpg  #499E1F    8%  #469C1E #419A18 #4F9E21
+currency token, Shards                       ss-00.jpg  #382818    1%  #C89746 #090000 #FFFFBF
+[thin] body ink, white                       ss-06.jpg  #131C1B   15%  #3B413B #070A00 #FFFFF6
+[thin] keyword ink, green                    ss-06.jpg  #131C1B   11%  #2B4233 #000400 #9AEDA5
+[thin] keyword ink, orange                   ss-06.jpg  #172321    2%  #313327 #001014 #F7AD58
+[thin] muted ink, subtitle                   ss-06.jpg  #101918   10%  #363C3C #000103 #9C9D9F
+painted backdrop, unlit forest               ss-02.jpg  #35260F    5%  #2F200D #040000 #706D7E
+painted ground, lit arena floor              ss-02.jpg  #71653F    9%  #756542 #37461B #AD946C
+hex fill, over tan slab                      ss-02.jpg  #898B38   29%  #8A8B38 #888A36 #908B39
+[thin] hex edge, over tan slab               ss-02.jpg  #8D8739    2%  #9E9448 #878530 #BBA866
+hex fill, over green ground                  ss-02.jpg  #8F8F39   40%  #8F8F39 #8D8D37 #938E3A
+[thin] hex edge, over green ground           ss-02.jpg  #C3A358    6%  #C1A35A #AD954D #D3B474
+ground outside grid, green                   ss-02.jpg  #799036   21%  #799136 #788F35 #7A9338
+hex edge, enemy half of board                ss-02.jpg  #000100    3%  #6B6538 #000000 #A1A044
+rank card red ground                         ss-03.jpg  #CE4058   19%  #B2384C #141318 #D64661
+ability VFX, magenta                         ss-09.jpg  #F45D88    1%  #F27D9B #EA567A #F7DAB8

@@ -281,6 +281,46 @@ an *index into* the deck rather than a summary of the unit — which is how a
 squad-scale board stays readable without either surface having to carry
 everything on its own.
 
+### Guildrun: a third position on the axis, and evidence on the palette (2026-08-29)
+
+The owner raised *Guildrun* (Steam 3669200) for its finish, colouring, and
+specifically for how it composites a painted backdrop with a tile grid. Measured
+in [`RESEARCH_GUILDRUN_UI_2026-08-29.md`](../research/RESEARCH_GUILDRUN_UI_2026-08-29.md).
+Three things bear on this ADR.
+
+**On the framed-plate-vs-frameless axis, it takes a third position.** Guildrun
+terminates its board with painted foreground props and a near-black corner
+vignette — no border object, no plate, and no bare void either. It **spends art
+where the other two spend screen or spend nothing.** That is a genuinely
+different answer to "what does the board sit in", and it is the question neither
+current reference addresses. Recorded, not adopted.
+
+**On the palette tension recorded above, it is uneven evidence.** Guildrun's
+entire functional accent language — primary action, hover, active tab, class
+identity, keyword ink — is a single green hue ramp on a near-black ground. So
+**black-plus-green is a working existence proof**: it carries a complete state
+language, not just decoration. But purple has **no structural or state job
+anywhere in Guildrun's chrome**; where a second accent is needed the game reaches
+for gold and cyan instead. That is evidence black-plus-green does not *need*
+purple to be complete — which is not evidence the owner shouldn't want purple,
+only that sufficiency is not the argument for it. The tension stays open and
+POSTURE is untouched.
+
+**One caution that is about method, not about Guildrun.** This is now the only
+reference in the prototype with measured colour values, and `gameview-mop/` still
+has none. Measured numbers argue louder than prose, so Guildrun will look better
+evidenced than MoP on anything they both touch, purely as an artefact of which
+one got a script pointed at it. The LEAN's surviving second reason is *"DD1 is
+the only measured reference"* — that sentence is no longer strictly true, and
+whoever next argues from measurement should say which surface they mean.
+
+**What does not transfer:** Guildrun's tiles. They are a translucent decal tuned
+to a quiet painted ground where MoP's are outlined geometry, they spend the colour
+channel MoP reserves for state, and the game switches its grid off entirely once
+combat resolves — which is precisely when a Turn Program board would need it, per
+the note on ghosting queued actions onto tiles. The layering transfers; the tile
+rendering does not.
+
 ## Consequences of leaving this open
 
 OD-004 (UI design language) cannot close, and anything built on the client HUD
